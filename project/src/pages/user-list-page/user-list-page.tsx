@@ -1,6 +1,3 @@
-import Footer from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
-import UserBlock from '../../components/user-block/user-block';
 import Catalog from '../../components/catalog/catalog';
 import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
 import { UserDataProps } from '../../types/user-data-type';
