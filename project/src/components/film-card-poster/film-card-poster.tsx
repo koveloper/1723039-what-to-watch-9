@@ -1,10 +1,10 @@
-import { PosterSize } from '../../types/poster-size-type';
+import { PosterSize } from '../../utils/constants';
 
 const getClasses = (type: PosterSize): string => {
   switch(type) {
-    case 'big': return 'film-card__poster film-card__poster--big';
-    case 'medium': return 'film-card__poster';
-    case 'small': return 'film-card__poster film-card__poster--small';
+    case PosterSize.Big: return 'film-card__poster film-card__poster--big';
+    case PosterSize.Medium: return 'film-card__poster';
+    case PosterSize.Small: return 'film-card__poster film-card__poster--small';
   }
 };
 

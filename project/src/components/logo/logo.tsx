@@ -1,4 +1,6 @@
-import { getBlankLink } from '../../utils/logic-utils';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../utils/constants';
+// import { getBlankLink } from '../../utils/logic-utils';
 
 const logoSign = 'WTW';
 
@@ -9,9 +11,9 @@ const getLogoLetter = (letter: string, letterNum: number): JSX.Element => (
 function Logo({isLight}: {isLight: boolean}): JSX.Element {
   return (
     <div className="logo">
-      <a className={isLight ? 'logo__link logo__link--light' : 'logo__link'} href={getBlankLink()}>
+      <Link className={isLight ? 'logo__link logo__link--light' : 'logo__link'} to={AppRoute.Root}>
         {[...logoSign].map((l, i) => getLogoLetter(l, i + 1))}
-      </a>
+      </Link>
     </div>
   );
 }

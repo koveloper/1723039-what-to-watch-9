@@ -1,6 +1,7 @@
 import FilmCardMain from '../film-card-main/film-card-main';
 import FilmCardPoster from '../film-card-poster/film-card-poster';
 import { FilmDataProps } from '../../types/film-data-type';
+import { PosterSize } from '../../utils/constants';
 
 function FilmCardContent(props: FilmDataProps): JSX.Element {
   return (
@@ -9,7 +10,7 @@ function FilmCardContent(props: FilmDataProps): JSX.Element {
         <FilmCardPoster
           title={props.title}
           posterUrl={props.posterImageUrl}
-          size='medium'
+          size={PosterSize.Medium}
         />
         <FilmCardMain
           title={props.title}
