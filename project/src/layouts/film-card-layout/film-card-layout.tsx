@@ -7,7 +7,7 @@ import ComponentWrapper from '../../components/component-wrapper/component-wrapp
 import { PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FilmDataProps } from '../../types/film-data-type';
-import { AppRoute, PageType, PosterSize } from '../../utils/constants';
+import { AppRoute, PosterSize } from '../../utils/constants';
 
 function FilmCardLayout(props: PropsWithChildren<FilmDataProps>): JSX.Element {
   const url = useLocation();
@@ -21,7 +21,7 @@ function FilmCardLayout(props: PropsWithChildren<FilmDataProps>): JSX.Element {
     <>
       <FilmCardBackground title={props.title} imageUrl={props.backgroundImageUrl}/>
       <h1 className="visually-hidden">WTW</h1>
-      <HeaderLayout pageType={PageType.Film}>
+      <HeaderLayout>
         <UserBlock/>
       </HeaderLayout>
       <div className="film-card__wrap">

@@ -7,12 +7,6 @@ export enum AppRoute {
     Player = '/player/:id'
 }
 
-export enum PageType {
-    User = 'user',
-    Film = 'film',
-    AddReview = 'add-review',
-}
-
 export enum FilmInfoType {
     Overview = 'overview',
     Details = 'details',

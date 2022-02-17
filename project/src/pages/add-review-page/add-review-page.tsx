@@ -4,7 +4,7 @@ import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import HeaderLayout from '../../layouts/header-layout/header-layout';
-import { PageType, PosterSize } from '../../utils/constants';
+import { PosterSize } from '../../utils/constants';
 
 function AddReviewPage(props: FilmDataProps): JSX.Element {
   return (
@@ -12,7 +12,7 @@ function AddReviewPage(props: FilmDataProps): JSX.Element {
       <div className="film-card__header">
         <FilmCardBackground title={props.title} imageUrl={props.backgroundImageUrl}/>
         <h1 className="visually-hidden">WTW</h1>
-        <HeaderLayout title={props.title} pageType={PageType.AddReview}>
+        <HeaderLayout title={props.title}>
           <UserBlock/>
         </HeaderLayout>
         <FilmCardPoster
