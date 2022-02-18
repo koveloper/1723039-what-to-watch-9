@@ -1,41 +1,28 @@
-import { Path } from 'history';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { FilmInfoType } from '../../utils/constants';
+import { FilmCardMenuProps } from './film-card-menu-props';
+import MenuLink from './menu-link';
 
-type FilmInfoLink = {
-  isActive: boolean;
-  url: string;
-  title: string;
-}
+function FilmCardMenu(props: FilmCardMenuProps): JSX.Element {
+  const [activeTab, setActiveTab] = useState(FilmInfoType.Overview);
 
-function FilmCardMenuLink(props: FilmInfoLink): JSX.Element {
-  const classes = props.isActive
-    ? 'film-nav__item film-nav__item--active'
-    : 'film-nav__item';
-  return (
-    <li className={classes}>
-      <Link to={props.url} className="film-nav__link">{props.title}</Link>
-    </li>
-  );
-}
-
-const createLinkInfo = (url: Path, type: FilmInfoType): FilmInfoLink => ({
-  isActive: url.hash === `#${type}`,
-  url: `${url.pathname}#${type}`,
-  title: type[0].toUpperCase() + type.substring(1),
-});
-
-function FilmCardMenu(): JSX.Element {
-  const url = useLocation();
-  const linksInfoArr: FilmInfoLink[] = Object.values(FilmInfoType).map((v) => createLinkInfo(url, v));
-  const active = linksInfoArr.find((linkInfo) => linkInfo.isActive);
-  linksInfoArr[0].isActive = linksInfoArr[0].isActive || active === undefined;
+  const onClickHandler = (tab: FilmInfoType) => {
+    setActiveTab(tab);
+    props.onTabSelect(tab);
+  };
 
   return (
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
-        {linksInfoArr.map((linkInfo, i) => <FilmCardMenuLink key="film-card-link" {...linkInfo}/>)}
+        <MenuLink isActive={activeTab === FilmInfoType.Overview} onClick={() => onClickHandler(FilmInfoType.Overview)}>
+          Overview
+        </MenuLink>
+        <MenuLink isActive={activeTab === FilmInfoType.Details} onClick={() => onClickHandler(FilmInfoType.Details)}>
+          Details
+        </MenuLink>
+        <MenuLink isActive={activeTab === FilmInfoType.Reviews} onClick={() => onClickHandler(FilmInfoType.Reviews)}>
+          Reviews
+        </MenuLink>
       </ul>
     </nav>
   );
