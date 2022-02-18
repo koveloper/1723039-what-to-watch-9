@@ -21,7 +21,7 @@ function MoviewPage(props: MoviePageProps): JSX.Element {
           </div>
         </div>
       </FilmCardLayout>
-      <CatalogLayout>
+      <CatalogLayout title='More like this' type='filtered'>
         <FilmsList films={props.otherFilms}/>
       </CatalogLayout>
     </>
