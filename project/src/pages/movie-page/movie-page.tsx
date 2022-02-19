@@ -9,7 +9,7 @@ import { PosterSize } from '../../utils/constants';
 function MoviewPage(props: MoviePageProps): JSX.Element {
   return (
     <>
-      <FilmCardLayout {...props.film}>
+      <FilmCardLayout film={props.film} type='full'>
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <FilmCardPoster

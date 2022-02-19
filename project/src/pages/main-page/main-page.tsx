@@ -14,7 +14,7 @@ function MainPage({filmData, filmsGallery, genres}: {
   <FilmCard {...filmData}/>;
   return (
     <>
-      <FilmCardLayout {...filmData} />
+      <FilmCardLayout film={filmData} type='reduced' />
       <CatalogLayout title='Catalog' titleHidden showMoreButton type='full'>
         <GenresList genres={genres} />
         <FilmsList films={filmsGallery}/>

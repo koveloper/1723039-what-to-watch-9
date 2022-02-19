@@ -1,9 +1,12 @@
 import { PropsWithChildren } from 'react';
 
 type ComponentWrapperProps  = {
-    wrapperClassName: string;
+    wrapperClassName?: string | null;
 }
 
 export default function ComponentWrapper(props: PropsWithChildren<ComponentWrapperProps>) {
-  return <div className={props.wrapperClassName}>{props.children}</div>;
+  return (props.wrapperClassName
+    ? <div className={props.wrapperClassName}>{props.children}</div>
+    : <>{props.children}{null}</>
+  );
 }
