@@ -3,7 +3,7 @@ import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
 
 function SignInPage({message, isError}: {message?: string, isError?: boolean}): JSX.Element {
   return (
-    <UserPageLayout>
+    <UserPageLayout title='Sign in' hideUserBlock>
       <div className="sign-in user-page__content">
         <SignInForm message={message} isError={isError} />
       </div>

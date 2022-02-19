@@ -2,21 +2,20 @@ import HeaderLayout from '../header-layout/header-layout';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import HeaderTitleSimple from '../header-layout/header-title-simple';
-import { useLocation } from 'react-router-dom';
-import { AppRoute } from '../../utils/constants';
-import { DefaultLayoutProps } from '../../types/common-types';
 import { HeaderType } from '../header-layout/header-type';
+import { PropsWithChildren } from 'react';
 
-function UserPageLayout(props: DefaultLayoutProps): JSX.Element {
-  const url = useLocation();
-  const title = (url.pathname === AppRoute.SignIn
-    ? 'Sign in'
-    : 'My list');
+type UserPageLayoutProps = {
+  hideUserBlock?: boolean;
+  title: string;
+}
+
+function UserPageLayout(props: PropsWithChildren<UserPageLayoutProps>): JSX.Element {
   return (
     <div className="user-page">
       <HeaderLayout type={HeaderType.UserOrSignIn}>
-        <HeaderTitleSimple>{title}</HeaderTitleSimple>
-        {url.pathname === AppRoute.SignIn ? null : <UserBlock />}
+        <HeaderTitleSimple>{props.title}</HeaderTitleSimple>
+        {props.hideUserBlock ? null : <UserBlock />}
       </HeaderLayout>
       {props.children}
       <Footer />

@@ -5,7 +5,7 @@ import { UserDataProps } from '../../types/user-data-type';
 
 function UserListPage(props: UserDataProps): JSX.Element {
   return (
-    <UserPageLayout>
+    <UserPageLayout title='My list'>
       <Catalog title='Catalog' titleHidden type='filtered'>
         <FilmsList films={props.favorites}/>
       </Catalog>
