@@ -1,11 +1,13 @@
 import FilmCardButtons from '../film-card-buttons/film-card-buttons';
 
-function FilmCardMain({title, genre, releaseYear, showAddReviewButton}: {
-    title: string;
-    genre: string;
-    releaseYear: number;
-    showAddReviewButton: boolean;
-  }): JSX.Element {
+type FilmCardMainProps = {
+  title: string;
+  genre: string;
+  releaseYear: number;
+  showAddReviewButton: boolean;
+}
+
+function FilmCardMain({title, genre, releaseYear, showAddReviewButton}: FilmCardMainProps): JSX.Element {
   return (
     <div className="film-card__desc">
       <h2 className="film-card__title">{title}</h2>

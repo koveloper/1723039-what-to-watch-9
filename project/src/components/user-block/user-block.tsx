@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { getBlankLink } from '../../utils/logic-utils';
 
 function UserBlock(): JSX.Element {
@@ -9,7 +10,7 @@ function UserBlock(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <a className="user-block__link" href={getBlankLink()}>Sign out</a>
+        <Link className="user-block__link" to={getBlankLink()}>Sign out</Link>
       </li>
     </ul>
   );

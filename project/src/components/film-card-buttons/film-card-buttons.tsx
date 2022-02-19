@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function FilmCardButtons({showAddReviewButton}: {showAddReviewButton: boolean}): JSX.Element {
   return (
     <div className="film-card__buttons">
@@ -13,7 +15,7 @@ function FilmCardButtons({showAddReviewButton}: {showAddReviewButton: boolean}):
         </svg>
         <span>My list</span>
       </button>
-      {showAddReviewButton ? <a href="add-review.html" className="btn film-card__button">Add review</a> : null}
+      {showAddReviewButton ? <Link to="review" className="btn film-card__button">Add review</Link> : null}
     </div>
   );
 }

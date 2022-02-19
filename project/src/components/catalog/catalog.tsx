@@ -1,23 +1,14 @@
-import GenresList from '../genres-list/genres-list';
-import FilmsList from '../films-list/films-list';
-import { FilmDataProps } from '../../types/film-data-type';
-import { GenreProps } from '../../types/genre-type';
+import ShowMoreButton from './show-more-button';
+import CatalogTitle from './catalog-title';
+import { PropsWithChildren } from 'react';
+import { CatalogProps } from './catalog-props';
 
-const getGenresListElement = (genres?: GenreProps[]): JSX.Element | null => genres ? <GenresList genres={genres} /> : null;
-
-const getShowMoreButton = (isShown: boolean): JSX.Element | null => isShown ? (
-  <div className="catalog__more">
-    <button className="catalog__button" type="button">Show more</button>
-  </div>
-) : null;
-
-function Catalog({genres, films, showMoreButton}: {genres?: GenreProps[], films: FilmDataProps[], showMoreButton: boolean}): JSX.Element {
+function Catalog(props: PropsWithChildren<CatalogProps>): JSX.Element {
   return (
-    <section className="catalog">
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
-      {getGenresListElement(genres)}
-      <FilmsList films={films}/>
-      {getShowMoreButton(showMoreButton)}
+    <section className={props.type === 'full' ? 'catalog' : 'catalog catalog--like-this'}>
+      <CatalogTitle isHidden={props.titleHidden}>{props.title}</CatalogTitle>
+      {props.children}
+      {props.showMoreButton ? <ShowMoreButton /> : null}
     </section>
   );
 }

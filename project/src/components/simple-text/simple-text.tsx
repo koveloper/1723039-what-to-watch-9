@@ -1,10 +1,13 @@
-function SimpleText({content, withNewLine}: {
-  content: string;
-    withNewLine: boolean;
-}): JSX.Element {
+import { PropsWithChildren } from 'react';
+
+type SimpleTextProps = {
+  addNewLine?: boolean;
+}
+
+function SimpleText(props: PropsWithChildren<SimpleTextProps>): JSX.Element {
   return (
     <>
-      {`${content}${withNewLine ? ', ' : ''}`}{withNewLine ? <br/> : null}
+      {`${props.children}${props.addNewLine ? ', ' : ''}`}{props.addNewLine ? <br/> : null}
     </>
   );
 }
