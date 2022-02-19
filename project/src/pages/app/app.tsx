@@ -32,7 +32,7 @@ function App(): JSX.Element {
       <Route path={AppRoute.Root} element={pages.main} />
       <Route path={AppRoute.SignIn} element={pages.signIn} />
       <Route path={AppRoute.User}
-        element={<AuthWrapper isLoggedIn component={pages.userListPage}/>}
+        element={<AuthWrapper isLoggedIn={false} component={pages.userListPage}/>}
       />
       <Route path={AppRoute.Film} element={pages.moviePage} />
       <Route path={AppRoute.AddReview} element={pages.addReview} />
