@@ -6,38 +6,35 @@ import UserListPage from '../user-list-page/user-list-page';
 import SignInPage from '../sign-in-page/sign-in-page';
 import Error404 from '../error-404/error-404';
 import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
-import { FilmDataProps } from '../../types/film-data-type';
-import { filmDataMock } from '../../mock/film-card-data';
-import { favoriteFilmsListMock, filmsListMock, reducedFilmsListMock } from '../../mock/films-list';
-import { genresMock } from '../../mock/genres';
+import { FilmDataType } from '../../types/film-data-type';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, FilmInfoType } from '../../utils/constants';
+import { AppRoute } from '../../utils/constants';
+import { FilmReviewType } from '../../types/film-review-type';
+import { reviews } from '../../mock/films';
 
-const filmData: FilmDataProps = filmDataMock;
+type AppProps = {
+  promoFilm: FilmDataType,
+  filmsGallery: FilmDataType[],
+  reviews: FilmReviewType[]
+}
 
-const pages = {
-  main: <MainPage genres={genresMock} filmData={filmData} filmsGallery={filmsListMock} />,
-  player: <Player progress={30} />,
-  addReview: <AddReviewPage {...filmData} />,
-  moviePage: <MoviePage selectedTab={FilmInfoType.Overview} film={filmData} otherFilms={reducedFilmsListMock} />,
-  userListPage: <UserListPage username='user' favorites={favoriteFilmsListMock}/>,
-  authWrapper: <AuthWrapper isLoggedIn={false} component={<UserListPage username='user' favorites={favoriteFilmsListMock}/>} />,
-  signIn: <SignInPage />,
-  error404: <Error404 />,
-};
-
-function App(): JSX.Element {
+function App(props: AppProps): JSX.Element {
+  const genres: {[index: string]: string} = props.filmsGallery.reduce((prev, curr) => Object.assign(prev, {[curr.genre]: curr.genre}), {});
   return (
     <Routes>
-      <Route path={AppRoute.Root} element={pages.main} />
-      <Route path={AppRoute.SignIn} element={pages.signIn} />
-      <Route path={AppRoute.User}
-        element={<AuthWrapper isLoggedIn={false} component={pages.userListPage}/>}
+      <Route path={AppRoute.Root}
+        element={<MainPage genres={Object.values(genres)} filmsGallery={props.filmsGallery} promoFilm={props.promoFilm}/>}
       />
-      <Route path={AppRoute.Film} element={pages.moviePage} />
-      <Route path={AppRoute.AddReview} element={pages.addReview} />
-      <Route path={AppRoute.Player} element={pages.player} />
-      <Route path="*" element={pages.error404} />
+      <Route path={AppRoute.SignIn} element={<SignInPage />} />
+      <Route path={AppRoute.User}
+        element={<AuthWrapper isLoggedIn={false} component={<UserListPage username='user' favorites={props.filmsGallery.slice(0, 8)}/>}/>}
+      />
+      <Route path={AppRoute.Film}
+        element={<MoviePage film={props.filmsGallery[0]} reviews={reviews.slice(0, 5)} otherFilms={props.filmsGallery.slice(0, 4)} />}
+      />
+      <Route path={AppRoute.AddReview} element={<AddReviewPage {...props.filmsGallery[0]} />} />
+      <Route path={AppRoute.Player} element={<Player progress={30} />} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 }

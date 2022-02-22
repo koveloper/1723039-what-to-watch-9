@@ -1,21 +1,21 @@
 import FilmCardMain from '../film-card-main/film-card-main';
 import FilmCardPoster from '../film-card-poster/film-card-poster';
-import { FilmDataProps } from '../../types/film-data-type';
+import { FilmDataType } from '../../types/film-data-type';
 import { PosterSize } from '../../utils/constants';
 
-function FilmCardContent(props: FilmDataProps): JSX.Element {
+function FilmCardContent(props: FilmDataType): JSX.Element {
   return (
     <div className="film-card__wrap">
       <div className="film-card__info">
         <FilmCardPoster
-          title={props.title}
-          posterUrl={props.posterImageUrl}
+          title={props.name}
+          posterUrl={props.posterImage}
           size={PosterSize.Medium}
         />
         <FilmCardMain
-          title={props.title}
+          title={props.name}
           genre={props.genre}
-          releaseYear={props.releaseYear}
+          releaseYear={props.released}
           showAddReviewButton={false}
         />
       </div>

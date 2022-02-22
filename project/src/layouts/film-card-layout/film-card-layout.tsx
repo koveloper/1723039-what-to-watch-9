@@ -5,20 +5,20 @@ import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
 import ComponentWrapper from '../../components/component-wrapper/component-wrapper';
 import { PropsWithChildren } from 'react';
-import { FilmDataProps } from '../../types/film-data-type';
+import { FilmDataType } from '../../types/film-data-type';
 import { HeaderType } from '../header-layout/header-type';
 import { PosterSize } from '../../utils/constants';
 
 type FilmCardLayoutProps = {
   type: 'full' | 'reduced';
-  film: FilmDataProps;
+  film: FilmDataType;
 }
 
 function FilmCardLayout(props: PropsWithChildren<FilmCardLayoutProps>): JSX.Element {
   return (
     <section className={props.type === 'full' ? 'film-card film-card--full' : 'film-card'}>
       <ComponentWrapper wrapperClassName={props.type === 'full' ? 'film-card__hero' : null}>
-        <FilmCardBackground title={props.film.title} imageUrl={props.film.backgroundImageUrl}/>
+        <FilmCardBackground title={props.film.name} imageUrl={props.film.backgroundImage}/>
         <h1 className="visually-hidden">WTW</h1>
         <HeaderLayout type={HeaderType.FilmCard}>
           <UserBlock/>
@@ -26,12 +26,12 @@ function FilmCardLayout(props: PropsWithChildren<FilmCardLayoutProps>): JSX.Elem
         <div className="film-card__wrap">
           <div className="film-card__info">
             {props.type === 'reduced'
-              ? <FilmCardPoster title={props.film.title} posterUrl={props.film.posterImageUrl} size={PosterSize.Medium}/>
+              ? <FilmCardPoster title={props.film.name} posterUrl={props.film.posterImage} size={PosterSize.Medium}/>
               : null}
             <FilmCardMain
-              title={props.film.title}
+              title={props.film.name}
               genre={props.film.genre}
-              releaseYear={props.film.releaseYear}
+              releaseYear={props.film.released}
               showAddReviewButton={props.type === 'full'}
             />
           </div>

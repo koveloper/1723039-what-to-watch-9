@@ -1,22 +1,21 @@
-import { FilmDataProps } from '../../types/film-data-type';
-import DescriptionParagraph from './description-paragraph';
+import { FilmDataType } from '../../types/film-data-type';
 
-function FilmCardOverview(props: FilmDataProps): JSX.Element {
+function FilmCardOverview(props: FilmDataType): JSX.Element {
 
   return (
     <>
       <div className="film-rating">
-        <div className="film-rating__score">{props.score}</div>
+        <div className="film-rating__score">{props.rating}</div>
         <p className="film-rating__meta">
           <span className="film-rating__level">{props.rating}</span>
-          <span className="film-rating__count">{props.ratingCount} ratings</span>
+          <span className="film-rating__count">{props.scoresCount} ratings</span>
         </p>
       </div>
       <div className="film-card__desc">
         <div className="film-card__text">
-          {props.description.map((descr) => <DescriptionParagraph key="descr-p" descr={descr}/>)}
+          <p>{props.description}</p>
           <p className="film-card__director"><strong>Director: {props.director}</strong></p>
-          <p className="film-card__starring"><strong>Starring: {props.actors.slice(0, 4).join(', ')} and other</strong></p>
+          <p className="film-card__starring"><strong>Starring: {props.starring.slice(0, 4).join(', ')} and other</strong></p>
         </div>
       </div>
     </>

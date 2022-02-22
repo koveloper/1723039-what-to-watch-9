@@ -1,7 +1,7 @@
-import { FilmReviewProps } from '../../types/film-reviews-type';
+import { FilmReviewType } from '../../types/film-review-type';
 import Review from './review';
 
-function FilmCardReviews({reviews}: {reviews: FilmReviewProps[]}): JSX.Element {
+function FilmCardReviews({reviews}: {reviews: FilmReviewType[]}): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">

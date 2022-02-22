@@ -1,6 +1,6 @@
-import {FilmDataProps} from './film-data-type';
+import {FilmDataType} from './film-data-type';
 
 export type UserDataProps = {
     username: string;
-    favorites: FilmDataProps[];
+    favorites: FilmDataType[];
 };
