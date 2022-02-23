@@ -13,6 +13,7 @@ function FilmCardContent(props: FilmDataType): JSX.Element {
           size={PosterSize.Medium}
         />
         <FilmCardMain
+          id={props.id}
           title={props.name}
           genre={props.genre}
           releaseYear={props.released}

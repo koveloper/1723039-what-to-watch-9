@@ -1,7 +1,12 @@
 import ErrorMessage from './error-message';
 import SignInField from './sign-in-field';
 
-function SignInForm({message, isError}: {message?: string, isError?: boolean}): JSX.Element {
+type SignInFormProps = {
+  message?: string;
+  isError?: boolean;
+}
+
+function SignInForm({message, isError}: SignInFormProps): JSX.Element {
   return (
     <form action="#" className="sign-in__form">
       {message ? <ErrorMessage>{message}</ErrorMessage> : null}

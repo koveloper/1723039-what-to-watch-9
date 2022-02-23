@@ -29,6 +29,7 @@ function FilmCardLayout(props: PropsWithChildren<FilmCardLayoutProps>): JSX.Elem
               ? <FilmCardPoster title={props.film.name} posterUrl={props.film.posterImage} size={PosterSize.Medium}/>
               : null}
             <FilmCardMain
+              id={props.film.id}
               title={props.film.name}
               genre={props.film.genre}
               releaseYear={props.film.released}

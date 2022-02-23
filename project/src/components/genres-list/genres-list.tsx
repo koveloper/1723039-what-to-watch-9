@@ -7,7 +7,7 @@ type GenresListProps = {
 function GenresList({genres}: GenresListProps): JSX.Element {
   return (
     <ul className="catalog__genres-list">
-      {genres.map((genre) => <GenresListItem key="genre-item" title={genre}></GenresListItem>)}
+      {genres.map((genre) => <GenresListItem key={`genre-item-${genre}`} title={genre}></GenresListItem>)}
     </ul>
   );
 }

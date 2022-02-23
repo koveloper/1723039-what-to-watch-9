@@ -451,16 +451,16 @@ const users: string[] = [
 
 films.forEach((film) => {
   if(Math.random() > 0.25) {
-    const userIndex = Math.round(Math.random() * users.length);
-    reviews.push(...new Array(Math.round(Math.random() * 5)).fill(0).map(() => ({
+    const userIndex = Math.floor(Math.random() * users.length);
+    reviews.push(...new Array(Math.floor(Math.random() * 5)).fill(0).map(() => ({
       id: film.id,
       user: {
         id: userIndex,
         name: users[userIndex],
       },
       raiting: +((Math.random() * 10).toFixed(1)),
-      comment: comments[Math.round(Math.random() * comments.length)],
-      date: Date.now().toLocaleString(),
+      comment: comments[Math.floor(Math.random() * comments.length)],
+      date: new Date().toISOString(),
     })));
   }
 });

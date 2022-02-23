@@ -1,10 +1,17 @@
 import FilmLogo from '../film-logo/film-logo';
 import { FilmDataType } from '../../types/film-data-type';
+import { useState } from 'react';
 
-function FilmsList({films}: {films: FilmDataType[]}): JSX.Element {
+type FilmsListProps = {
+  films: FilmDataType[];
+}
+
+function FilmsList({ films }: FilmsListProps): JSX.Element {
+  const [hoverCardId, setHoverCard] = useState(-1);
   return (
     <div className="catalog__films-list">
-      {films.map((props) => FilmLogo(props))}
+      {films.map((film) => <FilmLogo key={`film-preview-${film.id}`} film={film} onHover={(id) => setHoverCard(id)}/>)}
+      <div className='visually-hidden'>{hoverCardId}</div>
     </div>
   );
 }
