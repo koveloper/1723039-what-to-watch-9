@@ -27,7 +27,7 @@ function App(props: AppProps): JSX.Element {
         element={<SignInPage />}
       />
       <Route path={AppRoute.User}
-        element={<AuthWrapper isLoggedIn={false} component={<UserListPage username='user' favorites={props.filmsGallery.slice(0, 8)}/>}/>}
+        element={<AuthWrapper isLoggedIn={false} component={<UserListPage favorites={props.filmsGallery.slice(0, 8)}/>}/>}
       />
       <Route path={AppRoute.Film}
         element={<Films films={props.filmsGallery} reviews={props.reviews}></Films>}
