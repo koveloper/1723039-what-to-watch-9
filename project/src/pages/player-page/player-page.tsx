@@ -1,19 +1,24 @@
+import VideoComponent from './video-component';
+
 export type PlayerProps = {
+    title: string;
+    videoLink: string;
+    duration: number;
     progress: number;
 }
 
-function Player({progress}: PlayerProps): JSX.Element {
+function Player(props: PlayerProps): JSX.Element {
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <VideoComponent videoLink={props.videoLink} />
 
-      <button type="button" className="player__exit">Exit</button>
+      <button onClick={() => window.history.back()} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={progress} max="100"></progress>
-            <div className="player__toggler" style={{left: `${progress}%`}}>Toggler</div>
+            <progress className="player__progress" value={props.progress} max="100"></progress>
+            <div className="player__toggler" style={{left: `${props.progress}%`}}>Toggler</div>
           </div>
           <div className="player__time-value">1:30:29</div>
         </div>
@@ -25,7 +30,7 @@ function Player({progress}: PlayerProps): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{props.title}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

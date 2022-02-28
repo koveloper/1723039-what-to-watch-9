@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-
 type MenuLinkProps = {
     isActive: boolean;
     onClick: () => void;

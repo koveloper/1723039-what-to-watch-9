@@ -2,9 +2,11 @@ export enum AppRoute {
     Root = '/',
     SignIn = '/login',
     User = '/mylist',
-    Film = '/films/:id',
-    AddReview = '/films/:id/review',
-    Player = '/player/:id'
+    Films = '/films',
+    Film = '/films/:id/*',
+    AddReview = ':id/review',
+    Player = '/player/:id',
+    Err404 = '/err404',
 }
 
 export enum FilmInfoType {
@@ -17,4 +19,12 @@ export enum PosterSize {
     Big = 'big',
     Medium = 'medium',
     Small = 'small'
+}
+
+export enum FilmMark {
+    Bad = 'Bad',
+    Normal = 'Norma',
+    Good = 'Good',
+    VeryGood = 'Very good',
+    Awesome = 'Awesome'
 }
