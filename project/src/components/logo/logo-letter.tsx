@@ -1,4 +1,9 @@
-export default function LogoLetter({num, letter}: {num: number, letter: string}): JSX.Element {
+type LogoLetterProps = {
+  num: number;
+  letter: string;
+}
+
+export default function LogoLetter({num, letter}: LogoLetterProps): JSX.Element {
   return (
     <span key={`logo-letter-${num}`} className={`logo__letter logo__letter--${num}`}>{letter}</span>
   );

@@ -1,8 +1,23 @@
-function Star({key, value}: {key: string, value: number}): JSX.Element {
+type StarProps = {
+  value: number;
+  checked: boolean;
+  onClickCallback: (value: number) => void;
+}
+
+function Star(props: StarProps): JSX.Element {
+  const onChangeHandler = () => props.onClickCallback(props.value);
   return (
     <>
-      <input className="rating__input" id={`star-${value}`} type="radio" name="rating" value={`${value}`} />
-      <label className="rating__label" htmlFor={`star-${value}`}>Rating {`${value}`}</label>
+      <input
+        checked={props.checked}
+        onChange={onChangeHandler}
+        className="rating__input"
+        id={`star-${props.value}`}
+        type="radio"
+        name="rating"
+        value={`${props.value}`}
+      />
+      <label className="rating__label" htmlFor={`star-${props.value}`}>Rating {`${props.value}`}</label>
     </>
   );
 }

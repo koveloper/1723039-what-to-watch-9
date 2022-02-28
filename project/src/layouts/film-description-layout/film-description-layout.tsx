@@ -3,14 +3,16 @@ import FilmCardOverview from '../../components/film-card-overview/film-card-over
 import FilmCardDetails from '../../components/film-card-details/film-card-details';
 import FilmCardReviews from '../../components/film-card-reviews/film-card-reviews';
 import { FilmInfoType } from '../../utils/constants';
-import { FilmDataProps } from '../../types/film-data-type';
+import { FilmDataType } from '../../types/film-data-type';
 import { useState } from 'react';
+import { FilmReviewType } from '../../types/film-review-type';
 
 type FilmInfoLayoutProps = {
-  film: FilmDataProps;
+  film: FilmDataType;
+  reviews: FilmReviewType[];
 }
 
-function FilmInfoLayout({film}: FilmInfoLayoutProps): JSX.Element {
+function FilmInfoLayout({film, reviews}: FilmInfoLayoutProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(FilmInfoType.Overview);
   return (
     <div className="film-card__desc">
@@ -18,7 +20,7 @@ function FilmInfoLayout({film}: FilmInfoLayoutProps): JSX.Element {
       {
         (activeTab === FilmInfoType.Overview && <FilmCardOverview {...film} />)
         || (activeTab === FilmInfoType.Details && <FilmCardDetails {...film} />)
-        || (activeTab === FilmInfoType.Reviews && <FilmCardReviews reviews={film.reviews} />)
+        || (activeTab === FilmInfoType.Reviews && <FilmCardReviews reviews={reviews} />)
       }
     </div>
   );

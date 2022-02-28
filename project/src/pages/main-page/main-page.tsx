@@ -1,27 +1,25 @@
 import CatalogLayout from '../../layouts/catalog-layout/catalog-layout';
-import FilmCard from '../../components/film-card/film-card';
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import FilmCardLayout from '../../layouts/film-card-layout/film-card-layout';
-import { FilmDataProps } from '../../types/film-data-type';
-import { GenreProps } from '../../types/genre-type';
+import { FilmDataType } from '../../types/film-data-type';
 
-function MainPage({filmData, filmsGallery, genres}: {
-  filmData: FilmDataProps,
-  filmsGallery: FilmDataProps[],
-  genres: GenreProps[]
-}): JSX.Element {
-  <FilmCard {...filmData}/>;
+type MainPageProps = {
+  promoFilm: FilmDataType,
+  filmsGallery: FilmDataType[],
+  genres: string[]
+}
+
+function MainPage(props: MainPageProps): JSX.Element {
   return (
     <>
-      <FilmCardLayout film={filmData} type='reduced' />
+      <FilmCardLayout film={props.promoFilm} type='reduced' />
       <CatalogLayout title='Catalog' titleHidden showMoreButton type='full'>
-        <GenresList genres={genres} />
-        <FilmsList films={filmsGallery}/>
+        <GenresList genres={props.genres} />
+        <FilmsList films={props.filmsGallery}/>
       </CatalogLayout>
     </>
   );
-
 }
 
 export default MainPage;

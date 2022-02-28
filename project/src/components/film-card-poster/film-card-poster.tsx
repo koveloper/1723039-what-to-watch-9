@@ -6,11 +6,13 @@ const classes = {
   [PosterSize.Small]: 'film-card__poster film-card__poster--small',
 };
 
-function FilmCardPoster({size, posterUrl, title}: {
+type FilmCardPosterProps = {
   size: PosterSize;
   posterUrl: string;
   title: string;
-}): JSX.Element {
+}
+
+function FilmCardPoster({size, posterUrl, title}: FilmCardPosterProps): JSX.Element {
   return (
     <div className={classes[size]}>
       <img src={posterUrl} alt={title} width="218" height="327" />
