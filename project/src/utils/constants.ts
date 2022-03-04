@@ -28,3 +28,5 @@ export enum FilmMark {
     VeryGood = 'Very good',
     Awesome = 'Awesome'
 }
+
+export const ALL_GENRES = 'All genres';
