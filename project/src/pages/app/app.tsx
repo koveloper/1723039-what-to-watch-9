@@ -7,7 +7,7 @@ import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
 import Films from './films';
 import { FilmDataType } from '../../types/film-data-type';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../utils/constants';
+import { ALL_GENRES, AppRoute } from '../../utils/constants';
 import { FilmReviewType } from '../../types/film-review-type';
 
 type AppProps = {
@@ -17,11 +17,11 @@ type AppProps = {
 }
 
 function App(props: AppProps): JSX.Element {
-  const genres: {[index: string]: string} = props.filmsGallery.reduce((prev, curr) => Object.assign(prev, {[curr.genre]: curr.genre}), {});
+  const genres: {[index: string]: string} = Object.assign({[ALL_GENRES]: ALL_GENRES}, props.filmsGallery.reduce((prev, curr) => Object.assign(prev, {[curr.genre]: curr.genre}), {}));
   return (
     <Routes>
       <Route path={AppRoute.Root}
-        element={<MainPage genres={Object.values(genres)} filmsGallery={props.filmsGallery} promoFilm={props.promoFilm}/>}
+        element={<MainPage genres={Object.values(genres)} promoFilm={props.promoFilm}/>}
       />
       <Route path={AppRoute.SignIn}
         element={<SignInPage />}
