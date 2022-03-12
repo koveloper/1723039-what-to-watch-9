@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { State } from './types';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP } from '../utils/constants';
-import { setFilms, resetShownFilmsCount, setGenre, showMoreFilms, setPromoFilm, setAuthStatus, setUserData } from './action';
+import { setFilms, resetShownFilmsCount, setGenre, showMoreFilms, setPromoFilm, setAuthStatus, setUserData, setSelectedFilm, setFilmsLikeSelected, setComments } from './action';
 import { AuthStatus } from './constants';
 
 const initialState:State = {
@@ -11,6 +11,9 @@ const initialState:State = {
   maxFilmsOnPage: FILMS_ON_PAGE_INITIAL,
   authStatus: AuthStatus.Unknown,
   userData: null,
+  selectedFilm: undefined,
+  filmsLikeSelected: null,
+  comments: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -35,6 +38,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserData, (state, action) => {
       state.userData = action.payload;
+    })
+    .addCase(setSelectedFilm, (state, action) => {
+      state.selectedFilm = action.payload;
+    })
+    .addCase(setFilmsLikeSelected, (state, action) => {
+      state.filmsLikeSelected = action.payload;
+    })
+    .addCase(setComments, (state, action) => {
+      state.comments = action.payload;
     });
 });
 

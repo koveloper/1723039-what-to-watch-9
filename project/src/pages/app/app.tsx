@@ -40,7 +40,7 @@ function App(): JSX.Element {
         element={<AuthWrapper component={<UserListPage favorites={films.slice(0, 8)}/>}/>}
       />
       <Route path={AppRoute.Film}
-        element={<FilmsWrapper films={films} reviews={null}></FilmsWrapper>}
+        element={<FilmsWrapper />}
       />
       <Route path={AppRoute.Player}
         element={<PlayerPageWrapper films={films} />}
