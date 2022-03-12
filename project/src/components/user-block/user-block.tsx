@@ -1,17 +1,17 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getBlankLink } from '../../utils/logic-utils';
+import { AuthStatus } from '../../store/constants';
+import { State } from '../../store/types';
+import { AppRoute } from '../../utils/constants';
+import UserInfo from './user-info';
 
 function UserBlock(): JSX.Element {
+  const authStatus = useSelector((state: State) => state.authStatus);
   return (
     <ul className="user-block">
-      <li className="user-block__item">
-        <div className="user-block__avatar">
-          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-        </div>
-      </li>
-      <li className="user-block__item">
-        <Link className="user-block__link" to={getBlankLink()}>Sign out</Link>
-      </li>
+      {authStatus === AuthStatus.Authorized
+        ? <UserInfo />
+        : <Link className='user-block__link' to={AppRoute.SignIn}>Sign in</Link>}
     </ul>
   );
 }
