@@ -1,21 +1,12 @@
-import axios, { AxiosInstance } from 'axios';
 import { store } from '../store';
-import { BASE_TIMEOUT_MS, BASE_URL } from './constants';
-import { fetchFilmsAction, fetchPromoFilmAction } from './thunks';
+import { LoginData } from '../types/login-data';
+import { getNetworkInstance } from './network';
+import { checkAuthAction, fetchFilmsAction, fetchPromoFilmAction, loginAction } from './thunks';
 
-type Api = {
-    network: AxiosInstance;
-    fetchFilms: () => void;
-    fetchPromoFilm: () => void;
-}
-
-const network = axios.create({
-  baseURL: BASE_URL,
-  timeout: BASE_TIMEOUT_MS,
-});
-
-export const api:Api = {
-  network,
+export const api = {
+  network: getNetworkInstance(),
   fetchFilms: () => store.dispatch(fetchFilmsAction()),
   fetchPromoFilm: () => store.dispatch(fetchPromoFilmAction()),
+  checkAuth: () => store.dispatch(checkAuthAction()),
+  login: (props: LoginData) => store.dispatch(loginAction(props)),
 };
