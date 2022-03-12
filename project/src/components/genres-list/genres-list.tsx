@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setGenre } from '../../store/action';
-import { AppDispatch, State } from '../../types/state';
+import { AppDispatch, State } from '../../store/types';
 import GenresListItem from './genres-list-item';
 
 type GenresListProps = {

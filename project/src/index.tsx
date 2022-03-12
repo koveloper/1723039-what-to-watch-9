@@ -3,15 +3,19 @@ import ReactDOM from 'react-dom';
 import App from './pages/app/app';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { films, promoFilm, reviews } from './mock/films';
 import { store } from './store';
+import { api } from './api/api';
+
+api.fetchFilms();
+api.fetchPromoFilm();
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App filmsGallery={films} promoFilm={promoFilm} reviews={reviews}/>
+        <App />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root'));
+  document.getElementById('root'),
+);

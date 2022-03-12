@@ -8,10 +8,10 @@ import MoviePage from '../movie-page/movie-page';
 
 type FilmsProps = {
     films: FilmDataType[];
-    reviews: FilmReviewType[];
+    reviews: FilmReviewType[] | null;
 }
 
-function Films(props: FilmsProps): JSX.Element {
+function FilmsWrapper(props: FilmsProps): JSX.Element {
   const params = useParams();
   const film = props.films.find((m) => `${m.id}` === params.id);
   if(!film) {
@@ -19,7 +19,7 @@ function Films(props: FilmsProps): JSX.Element {
       <Navigate to={AppRoute.Err404}></Navigate>
     );
   }
-  const reviews = props.reviews.filter((r) => `${r.id}`  === params.id);
+  const reviews = (props.reviews || []).filter((r) => `${r.id}`  === params.id);
   const suchGenreFilms = props.films.filter((m)=> (film.genre === m.genre && film.id !== m.id)).slice(0, 4);
   return (
     <Routes>
@@ -32,4 +32,4 @@ function Films(props: FilmsProps): JSX.Element {
   );
 }
 
-export default Films;
+export default FilmsWrapper;
