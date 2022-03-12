@@ -37,7 +37,7 @@ function App(): JSX.Element {
         element={<SignInPage />}
       />
       <Route path={AppRoute.User}
-        element={<AuthWrapper isLoggedIn={false} component={<UserListPage favorites={films.slice(0, 8)}/>}/>}
+        element={<AuthWrapper component={<UserListPage favorites={films.slice(0, 8)}/>}/>}
       />
       <Route path={AppRoute.Film}
         element={<FilmsWrapper films={films} reviews={null}></FilmsWrapper>}
