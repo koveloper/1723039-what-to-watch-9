@@ -15,4 +15,7 @@ export type FilmDataType = {
   id: number;
   videoLink: string;
   previewVideoLink: string;
+  isFavorite: boolean;
 };
+
+export type Films = FilmDataType[];

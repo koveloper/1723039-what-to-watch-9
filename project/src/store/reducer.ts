@@ -1,31 +1,31 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { films as allFilms } from '../mock/films';
-import { State } from '../types/state';
+import { State } from './types';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP } from '../utils/constants';
-import { resetShownFilmsCount, setGenre, showMoreFilms } from './action';
+import { setFilms, resetShownFilmsCount, setGenre, showMoreFilms, setPromoFilm } from './action';
 
 const initialState:State = {
   genre: ALL_GENRES,
-  films: allFilms.slice(),
+  films: null,
+  promoFilm: null,
   maxFilmsOnPage: FILMS_ON_PAGE_INITIAL,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setGenre, (state, action) => {
-      if(state.genre === action.payload) {
-        return;
-      }
       state.genre = action.payload;
-      state.films = state.genre === ALL_GENRES
-        ? allFilms.slice()
-        : allFilms.filter((film) => film.genre === state.genre);
     })
     .addCase(showMoreFilms, (state) => {
       state.maxFilmsOnPage += FILMS_ON_PAGE_STEP;
     })
     .addCase(resetShownFilmsCount, (state) => {
       state.maxFilmsOnPage = FILMS_ON_PAGE_INITIAL;
+    })
+    .addCase(setFilms, (state, action) => {
+      state.films = action.payload;
+    })
+    .addCase(setPromoFilm, (state, action) => {
+      state.promoFilm = action.payload;
     });
 });
 

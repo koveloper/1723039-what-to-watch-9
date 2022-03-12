@@ -49,7 +49,7 @@ function FilmLogo({film} : FilmLogoProps): JSX.Element {
   return (
     <article onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
-        <video ref={videoRef} poster={film.previewImage} width="280" height="175"/>
+        <video ref={videoRef} poster={film.previewImage} width="280" height="175" muted/>
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`${AppRoute.Films}/${film.id}`}>{film.name}</Link>
