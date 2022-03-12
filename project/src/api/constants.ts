@@ -4,4 +4,5 @@ export const BASE_TIMEOUT_MS = 5000;
 export enum APIRoute {
     Films = '/films',
     PromoFilm = '/promo',
+    Login = '/login',
 }

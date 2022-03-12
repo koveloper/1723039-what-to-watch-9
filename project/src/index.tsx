@@ -8,6 +8,7 @@ import { api } from './api/api';
 
 api.fetchFilms();
 api.fetchPromoFilm();
+api.checkAuth();
 
 ReactDOM.render(
   <React.StrictMode>
