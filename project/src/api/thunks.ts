@@ -1,12 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { token } from '../services/token';
 import { store } from '../store';
-import { setAuthStatus, setFilms, setPromoFilm } from '../store/action';
+import { setAuthStatus, setFilms, setPromoFilm, setUserData } from '../store/action';
 import { AuthStatus } from '../store/constants';
 import { FilmDataType, Films } from '../types/film-data-type';
 import { UserType } from '../types/user-type';
 import { api } from './api';
 import { APIRoute } from './constants';
+import { LoginData } from '../types/login-data';
+import { token } from '../services/token';
 
 export const fetchFilmsAction = createAsyncThunk(
   'data/fetchFilms',
@@ -33,12 +34,26 @@ export const fetchPromoFilmAction = createAsyncThunk(
 );
 
 export const checkAuthAction = createAsyncThunk(
-  'data/auth',
+  'data/auth/get',
   async () => {
     try {
       const {data} = await api.network.get<UserType>(APIRoute.Login);
       store.dispatch(setAuthStatus(AuthStatus.Authorized));
+      store.dispatch(setUserData(data));
+    } catch (error) {
+      // errorHandle(error);
+    }
+  },
+);
+
+export const loginAction = createAsyncThunk(
+  'data/auth/post',
+  async ({login: email, password}: LoginData) => {
+    try {
+      const {data} = await api.network.post<UserType>(APIRoute.Login, {email, password});
       token.save(data.token);
+      store.dispatch(setAuthStatus(AuthStatus.Authorized));
+      store.dispatch(setUserData(data));
     } catch (error) {
       // errorHandle(error);
     }

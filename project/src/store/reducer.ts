@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { State } from './types';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP } from '../utils/constants';
-import { setFilms, resetShownFilmsCount, setGenre, showMoreFilms, setPromoFilm, setAuthStatus } from './action';
+import { setFilms, resetShownFilmsCount, setGenre, showMoreFilms, setPromoFilm, setAuthStatus, setUserData } from './action';
 import { AuthStatus } from './constants';
 
 const initialState:State = {
@@ -10,6 +10,7 @@ const initialState:State = {
   promoFilm: null,
   maxFilmsOnPage: FILMS_ON_PAGE_INITIAL,
   authStatus: AuthStatus.Unknown,
+  userData: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -31,6 +32,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthStatus, (state, action) => {
       state.authStatus = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });
 

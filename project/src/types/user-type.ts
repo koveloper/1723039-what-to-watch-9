@@ -5,3 +5,5 @@ export type UserType = {
     name: string;
     token: string;
 }
+
+export type UserWithoutTokenType = Omit<UserType, 'token'>

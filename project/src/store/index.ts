@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { api } from '../api/api';
+import { getNetworkInstance } from '../api/network';
 import { reducer } from './reducer';
+
+const axios = getNetworkInstance();
 
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     thunk: {
-      extraArgument: api,
+      extraArgument: axios,
     },
   }),
 });
