@@ -8,6 +8,9 @@ import { PropsWithChildren } from 'react';
 import { FilmDataType } from '../../types/film-data-type';
 import { HeaderType } from '../header-layout/header-type';
 import { PosterSize } from '../../utils/constants';
+import { useSelector } from 'react-redux';
+import { State } from '../../store/types';
+import { AuthStatus } from '../../store/constants';
 
 type FilmCardLayoutProps = {
   type: 'full' | 'reduced';
@@ -15,6 +18,7 @@ type FilmCardLayoutProps = {
 }
 
 function FilmCardLayout(props: PropsWithChildren<FilmCardLayoutProps>): JSX.Element {
+  const authStatus = useSelector((state: State) => state.authStatus);
   return (
     <section className={props.type === 'full' ? 'film-card film-card--full' : 'film-card'}>
       <ComponentWrapper wrapperClassName={props.type === 'full' ? 'film-card__hero' : null}>
@@ -33,7 +37,8 @@ function FilmCardLayout(props: PropsWithChildren<FilmCardLayoutProps>): JSX.Elem
               title={props.film.name}
               genre={props.film.genre}
               releaseYear={props.film.released}
-              showAddReviewButton={props.type === 'full'}
+              showAddReviewButton={props.type === 'full' && authStatus === AuthStatus.Authorized}
+              showAddToFavorsButton={authStatus === AuthStatus.Authorized}
             />
           </div>
         </div>

@@ -8,4 +8,6 @@ export type Comment = {
     user: Pick<UserType, 'id' | 'name'>;
 }
 
+export type CommentForPost = Pick<Comment, 'comment' | 'id' | 'rating'>;
+
 export type Comments = Comment[];

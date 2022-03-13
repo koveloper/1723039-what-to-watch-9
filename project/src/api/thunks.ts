@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { store } from '../store';
-import { setAuthStatus, setComments, setFilms, setFilmsLikeSelected, setPromoFilm, setSelectedFilm, setUserData } from '../store/action';
+import { setAuthStatus, setComments, setFilms, setFilmsLikeSelected, setPromoFilm, setSelectedFilm, setUserComment, setUserData } from '../store/action';
 import { AuthStatus } from '../store/constants';
 import { FilmDataType, Films } from '../types/film-data-type';
 import { UserType } from '../types/user-type';
@@ -8,7 +8,7 @@ import { api } from './api';
 import { APIRoute } from './constants';
 import { LoginData } from '../types/login-data';
 import { token } from '../services/token';
-import { Comments } from '../types/commentary';
+import { CommentForPost, Comments } from '../types/commentary';
 
 export const fetchFilmsAction = createAsyncThunk(
   'data/fetchFilms',
@@ -73,7 +73,7 @@ export const getSelectedFilmAction = createAsyncThunk(
   },
 );
 
-export const getFilmsLikeSelected = createAsyncThunk(
+export const getFilmsLikeSelectedAction = createAsyncThunk(
   'data/getFilmsLikeSelected',
   async (id: number) => {
     try {
@@ -85,14 +85,27 @@ export const getFilmsLikeSelected = createAsyncThunk(
   },
 );
 
-export const getComments = createAsyncThunk(
-  'data/getFilmsComments',
+export const getCommentsAction = createAsyncThunk(
+  'data/getFilmComments',
   async (id: number) => {
     try {
       const {data} = await api.network.get<Comments>(APIRoute.Comments(id));
       store.dispatch(setComments(data));
     } catch (error) {
       store.dispatch(setComments(null));
+    }
+  },
+);
+
+export const postCommentAction = createAsyncThunk(
+  'data/postFilmComment',
+  async ({id, rating, comment}: CommentForPost) => {
+    try {
+      const {data} = await api.network.post<Comments>(APIRoute.Comments(id), {comment, rating});
+      store.dispatch(setComments(data));
+      store.dispatch(setUserComment({id, rating, comment}));
+    } catch (error) {
+      store.dispatch(setUserComment(null));
     }
   },
 );

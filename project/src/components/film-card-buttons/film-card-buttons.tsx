@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 type FilmCardButtonsProps = {
   isShowAddReviewButton: boolean;
+  isShowAddToFavorsButton: boolean;
   onPlayButtonClick: () => void;
   onAddToFavorButtonClick: () => void;
 }
@@ -15,12 +16,18 @@ function FilmCardButtons(props: FilmCardButtonsProps): JSX.Element {
         </svg>
         <span>Play</span>
       </button>
-      <button onClick={() => props.onAddToFavorButtonClick()} className="btn btn--list film-card__button" type="button">
-        <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref="#add"></use>
-        </svg>
-        <span>My list</span>
-      </button>
+      {
+        props.isShowAddToFavorsButton
+          ? (
+            <button onClick={() => props.onAddToFavorButtonClick()} className="btn btn--list film-card__button" type="button">
+              <svg viewBox="0 0 19 20" width="19" height="20">
+                <use xlinkHref="#add"></use>
+              </svg>
+              <span>My list</span>
+            </button>
+          )
+          : null
+      }
       {props.isShowAddReviewButton ? <Link to="review" className="btn film-card__button">Add review</Link> : null}
     </div>
   );
