@@ -23,10 +23,7 @@ function AddReviewPage(props: FilmDataType): JSX.Element {
   const userComment = useSelector((state: State) => state.userComment);
   const navigate = useNavigate();
   useEffect(() => {
-    if(authStatus !== AuthStatus.Authorized) {
-      navigate(`${AppRoute.Films}/${selectedFilmId}`);
-    }
-    if(userComment) {
+    if(authStatus !== AuthStatus.Authorized || userComment) {
       navigate(`${AppRoute.Films}/${selectedFilmId}`);
     }
   }, [authStatus, userComment]);
