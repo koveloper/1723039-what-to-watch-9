@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import RatingChooser from './rating-chooser';
 
-function AddReviewForm(): JSX.Element {
+type AddReviewFormProps = {
+  onReviewSubmit: (rating: number, commentary: string) => void;
+}
+
+function AddReviewForm(props: AddReviewFormProps): JSX.Element {
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState('');
+  const onSubmitHandler = (evt: SyntheticEvent) => {
+    evt.preventDefault();
+    props.onReviewSubmit(rating, review);
+  };
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form onSubmit={onSubmitHandler} action="#" className="add-review__form">
         <RatingChooser rating={rating} onRatingChange={(userRate: number) => {setRating(userRate);}}/>
         <div className="add-review__text">
           <textarea

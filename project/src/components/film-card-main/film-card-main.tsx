@@ -8,24 +8,26 @@ type FilmCardMainProps = {
   genre: string;
   releaseYear: number;
   showAddReviewButton: boolean;
+  showAddToFavorsButton: boolean;
 }
 
-function FilmCardMain({id, title, genre, releaseYear, showAddReviewButton}: FilmCardMainProps): JSX.Element {
+function FilmCardMain(props: FilmCardMainProps): JSX.Element {
   const navigate = useNavigate();
-  const playButtonClickHandler = () => navigate(AppRoute.Player.replace(':id', `${id}`));
+  const playButtonClickHandler = () => navigate(AppRoute.Player.replace(':id', `${props.id}`));
   const addToFavorButtonClickHandler = () => {navigate(AppRoute.User);};
   return (
     <div className="film-card__desc">
-      <h2 className="film-card__title">{title}</h2>
+      <h2 className="film-card__title">{props.title}</h2>
       <p className="film-card__meta">
-        <span className="film-card__genre">{genre}</span>
-        <span className="film-card__year">{releaseYear}</span>
+        <span className="film-card__genre">{props.genre}</span>
+        <span className="film-card__year">{props.releaseYear}</span>
       </p>
 
       <FilmCardButtons
         onPlayButtonClick={playButtonClickHandler}
         onAddToFavorButtonClick={addToFavorButtonClickHandler}
-        isShowAddReviewButton={showAddReviewButton}
+        isShowAddReviewButton={props.showAddReviewButton}
+        isShowAddToFavorsButton={props.showAddToFavorsButton}
       />
     </div>
   );
