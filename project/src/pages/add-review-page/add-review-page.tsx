@@ -14,13 +14,13 @@ import { AuthStatus } from '../../store/constants';
 import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../../api/api';
 import { store } from '../../store';
-import { setUserComment } from '../../store/action';
+import { setUserComment } from '../../store/selected-film-process/selected-film-process';
 
 function AddReviewPage(props: FilmDataType): JSX.Element {
   const params = useParams();
   const selectedFilmId = +(params.id || 0);
-  const authStatus = useSelector((state: State) => state.authStatus);
-  const userComment = useSelector((state: State) => state.userComment);
+  const {authStatus} = useSelector((state: State) => state.user);
+  const {userComment} = useSelector((state: State) => state.selectedFilm);
   const navigate = useNavigate();
   useEffect(() => {
     if(authStatus !== AuthStatus.Authorized || userComment) {

@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { store } from '../store';
-import { setAuthStatus, setComments, setFilms, setFilmsLikeSelected, setPromoFilm, setSelectedFilm, setUserComment, setUserData } from '../store/action';
 import { AuthStatus } from '../store/constants';
 import { FilmDataType, Films } from '../types/film-data-type';
 import { UserType } from '../types/user-type';
@@ -9,6 +8,9 @@ import { APIRoute } from './constants';
 import { LoginData } from '../types/login-data';
 import { token } from '../services/token';
 import { CommentForPost, Comments } from '../types/commentary';
+import { setFilms, setPromoFilm } from '../store/films-process/films-process';
+import { setAuthStatus, setUserData } from '../store/user-process/user-process';
+import { setComments, setFilmsLikeSelected, setSelectedFilm, setUserComment } from '../store/selected-film-process/selected-film-process';
 
 export const fetchFilmsAction = createAsyncThunk(
   'data/fetchFilms',

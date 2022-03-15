@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { State } from '../../store/types';
 
 function MainPage(): JSX.Element | null {
-  const promoFilm = useSelector((state: State) => state.promoFilm);
+  const {promoFilm} = useSelector((state: State) => state.films);
   if(!promoFilm) {
     return null;
   }

@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux';
 import { State } from '../../store/types';
 
 function App(): JSX.Element {
-  const films = useSelector((state: State) => state.films);
-  const promoFilm = useSelector((state: State) => state.promoFilm);
+  const {films, promoFilm} = useSelector((state: State) => state.films);
+  console.log(films);
   if(films === null || promoFilm === null) {
     return <Spinner/>;
   }

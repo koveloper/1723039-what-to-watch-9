@@ -18,7 +18,7 @@ type FilmCardLayoutProps = {
 }
 
 function FilmCardLayout(props: PropsWithChildren<FilmCardLayoutProps>): JSX.Element {
-  const authStatus = useSelector((state: State) => state.authStatus);
+  const {authStatus} = useSelector((state: State) => state.user);
   return (
     <section className={props.type === 'full' ? 'film-card film-card--full' : 'film-card'}>
       <ComponentWrapper wrapperClassName={props.type === 'full' ? 'film-card__hero' : null}>

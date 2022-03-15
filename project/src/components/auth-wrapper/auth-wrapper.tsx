@@ -8,8 +8,8 @@ type AuthWrapperProps = {
 };
 
 function AuthWrapper(props: AuthWrapperProps): JSX.Element {
-  const authState = useSelector((state: State) => state.authStatus);
-  return authState === AuthStatus.Authorized
+  const {authStatus} = useSelector((state: State) => state.user);
+  return authStatus === AuthStatus.Authorized
     ? props.component
     : <Navigate to='/login'></Navigate>;
 }

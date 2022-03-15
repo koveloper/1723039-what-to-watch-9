@@ -8,11 +8,11 @@ import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP } from '../../uti
 import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
 
 function FilmsGallery(): JSX.Element {
-  const films = useSelector((state: State) => state.films) || [];
+  const {films} = useSelector((state: State) => state.films);
   const [genre, setGenre] = useState(ALL_GENRES);
   const [maxFilmsOnPage, setMaxFilmsOnPage] = useState(FILMS_ON_PAGE_INITIAL);
-  const genres: string[] = [ALL_GENRES, ...getGenresFromFilms(films)];
-  const filmsByGenre = filterFilmsByGenre(films, genre);
+  const genres: string[] = [ALL_GENRES, ...getGenresFromFilms(films || [])];
+  const filmsByGenre = filterFilmsByGenre(films || [], genre);
 
   return (
     <>
