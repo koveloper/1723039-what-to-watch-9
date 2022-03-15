@@ -6,32 +6,22 @@ import Error404 from '../error-404/error-404';
 import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
 import FilmsWrapper from './films-wrapper';
 import Spinner from '../../components/spinner/spinner';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import { ALL_GENRES, AppRoute, FILMS_ON_PAGE_INITIAL } from '../../utils/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, State } from '../../store/types';
-import { resetShownFilmsCount } from '../../store/action';
-import { filterFilmsByGenre, getGenresFromFilms } from './utils';
+import { Route, Routes } from 'react-router-dom';
+import { AppRoute } from '../../utils/constants';
+import { useSelector } from 'react-redux';
+import { State } from '../../store/types';
 
 function App(): JSX.Element {
+  console.log('render app');
   const films = useSelector((state: State) => state.films);
-  const genre = useSelector((state: State) => state.genre);
   const promoFilm = useSelector((state: State) => state.promoFilm);
-  const dispatch = useDispatch<AppDispatch>();
-  const filmsOnPage = useSelector((state: State) => state.maxFilmsOnPage);
-  const location = useLocation();
   if(films === null || promoFilm === null) {
     return <Spinner/>;
-  }
-  const genres: string[] = [ALL_GENRES, ...getGenresFromFilms(films)];
-  const filmsByGenre = filterFilmsByGenre(films, genre);
-  if(location.pathname !== AppRoute.Root && filmsOnPage !== FILMS_ON_PAGE_INITIAL) {
-    dispatch(resetShownFilmsCount());
   }
   return (
     <Routes>
       <Route path={AppRoute.Root}
-        element={<MainPage films={filmsByGenre} genres={Object.values(genres)} promoFilm={promoFilm}/>}
+        element={<MainPage promoFilm={promoFilm}/>}
       />
       <Route path={AppRoute.SignIn}
         element={<SignInPage />}
