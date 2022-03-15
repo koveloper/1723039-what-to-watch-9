@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 import { State } from '../../store/types';
 
 function App(): JSX.Element {
-  console.log('render app');
   const films = useSelector((state: State) => state.films);
   const promoFilm = useSelector((state: State) => state.promoFilm);
   if(films === null || promoFilm === null) {
@@ -21,7 +20,7 @@ function App(): JSX.Element {
   return (
     <Routes>
       <Route path={AppRoute.Root}
-        element={<MainPage promoFilm={promoFilm}/>}
+        element={<MainPage />}
       />
       <Route path={AppRoute.SignIn}
         element={<SignInPage />}
