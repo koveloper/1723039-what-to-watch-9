@@ -13,7 +13,6 @@ import { State } from '../../store/types';
 
 function App(): JSX.Element {
   const {films, promoFilm} = useSelector((state: State) => state.films);
-  console.log(films);
   if(films === null || promoFilm === null) {
     return <Spinner/>;
   }
