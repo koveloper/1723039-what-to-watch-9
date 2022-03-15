@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react';
+import { memo, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 type GenresListItemProps = {
@@ -19,4 +19,4 @@ function GenresListItem({title, selected, onSelect}: GenresListItemProps): JSX.E
   );
 }
 
-export default GenresListItem;
+export default memo(GenresListItem, (prevProps, newProps) => (prevProps.selected === newProps.selected));
