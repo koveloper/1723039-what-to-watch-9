@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type StarProps = {
   value: number;
   checked: boolean;
@@ -22,4 +24,4 @@ function Star(props: StarProps): JSX.Element {
   );
 }
 
-export default Star;
+export default memo(Star, (prevProps, newProps) => (prevProps.checked === newProps.checked));
