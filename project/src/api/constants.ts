@@ -8,4 +8,5 @@ export const APIRoute = {
   Film: (id: number) => `/films/${id}`,
   SimilarFilms: (id: number) => `/films/${id}/similar`,
   Comments: (id: number) => `/comments/${id}`,
+  FavoriteFilms: '/favorite',
 };

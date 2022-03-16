@@ -19,6 +19,7 @@ export type FilmsState = {
 export type UserState = {
     authStatus: AuthStatus;
     userData: UserWithoutTokenType | null;
+    favoriteFilms: Films | null;
 }
 
 export type State = ReturnType<typeof store.getState>;

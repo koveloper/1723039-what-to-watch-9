@@ -6,6 +6,7 @@ import { UserState } from '../types';
 const initialState: UserState = {
   authStatus: AuthStatus.Unknown,
   userData: null,
+  favoriteFilms: null,
 };
 
 export const userProcess = createSlice({
@@ -18,7 +19,10 @@ export const userProcess = createSlice({
     setUserData(state, action) {
       state.userData = action.payload;
     },
+    setFavoriteFilms(state, action) {
+      state.favoriteFilms = action.payload;
+    },
   },
 });
 
-export const {setAuthStatus, setUserData} = userProcess.actions;
+export const {setAuthStatus, setUserData, setFavoriteFilms} = userProcess.actions;

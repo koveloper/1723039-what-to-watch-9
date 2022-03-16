@@ -1,17 +1,21 @@
+import { useSelector } from 'react-redux';
+import { api } from '../../api/api';
 import Catalog from '../../components/catalog/catalog';
 import FilmsList from '../../components/films-list/films-list';
+import Spinner from '../../components/spinner/spinner';
 import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
-import { FilmDataType } from '../../types/film-data-type';
+import { State } from '../../store/types';
 
-type UserDataProps = {
-  favorites: FilmDataType[];
-};
-
-function UserListPage(props: UserDataProps): JSX.Element {
+function UserListPage(): JSX.Element {
+  const favoriteFilms = useSelector((state: State) => state.user.favoriteFilms);
+  if(favoriteFilms === null) {
+    api.fetchFavoriteFilms();
+    return <Spinner />;
+  }
   return (
     <UserPageLayout title='My list'>
       <Catalog title='Catalog' titleHidden type='filtered'>
-        <FilmsList films={props.favorites}/>
+        <FilmsList films={favoriteFilms}/>
       </Catalog>
     </UserPageLayout>
   );
