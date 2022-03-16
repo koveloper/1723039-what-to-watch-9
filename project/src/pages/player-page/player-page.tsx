@@ -1,47 +1,25 @@
-import VideoComponent from './video-component';
+import { useSelector } from 'react-redux';
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { State } from '../../store/types';
+import { AppRoute } from '../../utils/constants';
+import Player from '../../components/player/player';
 
-export type PlayerProps = {
-    title: string;
-    videoLink: string;
-    duration: number;
-    progress: number;
-}
-
-function Player(props: PlayerProps): JSX.Element {
+function PlayerPage(): JSX.Element {
+  const films = useSelector((state: State) => state.films.films) || [];
+  const params = useParams();
+  const film = films.find((m) => `${m.id}` === params.id);
+  if(!film) {
+    return (
+      <Navigate to={AppRoute.Err404}></Navigate>
+    );
+  }
   return (
-    <div className="player">
-      <VideoComponent videoLink={props.videoLink} />
-
-      <button onClick={() => window.history.back()} type="button" className="player__exit">Exit</button>
-
-      <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value={props.progress} max="100"></progress>
-            <div className="player__toggler" style={{left: `${props.progress}%`}}>Toggler</div>
-          </div>
-          <div className="player__time-value">1:30:29</div>
-        </div>
-
-        <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">{props.title}</div>
-
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
-            </svg>
-            <span>Full screen</span>
-          </button>
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route index
+        element={<Player title={film.name} videoLink={film.videoLink}/>}
+      />
+    </Routes>
   );
 }
 
-export default Player;
+export default PlayerPage;

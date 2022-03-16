@@ -11,7 +11,9 @@ type FilmLogoProps = {
 function FilmLogo({film} : FilmLogoProps): JSX.Element {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isHovered, setHovered] = useState(false);
+  const player = videoRef.current;
+  const [hovered, setHovered] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const onMouseEnterHandler = (evt: SyntheticEvent) => {
     evt.stopPropagation();
     setHovered(true);
@@ -21,29 +23,29 @@ function FilmLogo({film} : FilmLogoProps): JSX.Element {
     setHovered(false);
   };
   useEffect(() => {
-    const player = videoRef.current;
     const playFunc = () => {
       if(timerId) {
         clearTimeout(timerId);
       }
-      if(!player) {
-        return;
-      }
-      player.src = film.videoLink;
-      player.play();
+      setPlaying(true);
     };
-    const timerId = isHovered ? setTimeout(playFunc, 1000) : null;
+    const timerId = hovered ? setTimeout(playFunc, 1000) : null;
     return () => {
       if(timerId) {
         clearTimeout(timerId);
       }
-      if(!player) {
-        return;
-      }
+      setPlaying(false);
+    };
+  }, [hovered, film.videoLink]);
+  if(player) {
+    if(playing) {
+      player.src = film.videoLink;
+      player.play();
+    } else {
       player.pause();
       player.src = '';
-    };
-  }, [isHovered, film.videoLink]);
+    }
+  }
 
   const onClickHandler = () => navigate(`${AppRoute.Films}/${film.id}`);
   return (

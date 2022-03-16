@@ -1,5 +1,5 @@
 import MainPage from '../main-page/main-page';
-import PlayerPageWrapper from '../player-page/player-page-wrapper';
+import PlayerPage from '../player-page/player-page';
 import UserListPage from '../user-list-page/user-list-page';
 import SignInPage from '../sign-in-page/sign-in-page';
 import Error404 from '../error-404/error-404';
@@ -31,7 +31,7 @@ function App(): JSX.Element {
         element={<FilmsWrapper />}
       />
       <Route path={AppRoute.Player}
-        element={<PlayerPageWrapper films={films} />}
+        element={<PlayerPage />}
       />
       <Route path="*" element={<Error404 />} />
     </Routes>
