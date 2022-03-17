@@ -8,41 +8,39 @@ import Spinner from '../../components/spinner/spinner';
 import AddReviewPage from '../add-review-page/add-review-page';
 import Error404 from '../error-404/error-404';
 import MoviePage from '../movie-page/movie-page';
-import { setComments, setFilmsLikeSelected, setSelectedFilm } from '../../store/selected-film-process/selected-film-process';
+import { resetSelectedFilm } from '../../store/selected-film-process/selected-film-process';
 
 function FilmsWrapper(): JSX.Element {
   const params = useParams();
-  const {selectedFilm, filmsLikeSelected, comments} = useSelector((state: State) => state.selectedFilm);
+  const {filmData, filmsLikeSelected, comments} = useSelector((state: State) => state.selectedFilm);
   const selectedFilmId = +(params.id || 0);
-  if(selectedFilm && selectedFilm.id !== selectedFilmId) {
-    store.dispatch(setSelectedFilm(undefined));
-    store.dispatch(setFilmsLikeSelected(null));
-    store.dispatch(setComments(null));
+  if(filmData && filmData.id !== selectedFilmId) {
+    store.dispatch(resetSelectedFilm());
     return <Spinner />;
   }
-  if(selectedFilm === undefined) {
+  if(!filmData) {
     api.fetchSelectedFilm(selectedFilmId);
-    return <Spinner />;
   }
-  if(selectedFilm === null) {
+  if(!filmsLikeSelected) {
+    api.fetchSimilarFilms(selectedFilmId);
+  }
+  if(!comments) {
+    api.fetchComments(selectedFilmId);
+  }
+  if(filmData === null) {
     return (
       <Navigate to={AppRoute.Err404}></Navigate>
     );
   }
-  if(!filmsLikeSelected) {
-    api.fetchSimilarFilms(selectedFilmId);
-    return <Spinner />;
-  }
-  if(!comments) {
-    api.fetchComments(selectedFilmId);
+  if(!filmData || !comments || !filmsLikeSelected) {
     return <Spinner />;
   }
   return (
     <Routes>
       <Route index
-        element={<MoviePage film={selectedFilm} comments={comments} similarFilms={filmsLikeSelected.slice(0, 4)} />}
+        element={<MoviePage film={filmData} comments={comments} similarFilms={filmsLikeSelected.slice(0, 4)} />}
       />
-      <Route path='review' element={<AddReviewPage {...selectedFilm} />} />
+      <Route path='review' element={<AddReviewPage {...filmData} />} />
       <Route path="*" element={<Error404 />} />
     </Routes>
   );

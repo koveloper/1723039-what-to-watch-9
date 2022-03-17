@@ -21,8 +21,9 @@ function FilmCardContent(props: FilmDataType): JSX.Element {
           title={props.name}
           genre={props.genre}
           releaseYear={props.released}
-          showAddReviewButton={false}
-          showAddToFavorsButton={authStatus === AuthStatus.Authorized}
+          isFavorite={props.isFavorite}
+          isShowAddReviewButton={false}
+          isShowAddToFavorsButton={authStatus === AuthStatus.Authorized}
         />
       </div>
     </div>

@@ -8,9 +8,9 @@ import { APIRoute } from './constants';
 import { LoginData } from '../types/login-data';
 import { token } from '../services/token';
 import { CommentForPost, Comments } from '../types/commentary';
-import { setFilms, setPromoFilm } from '../store/films-process/films-process';
-import { setAuthStatus, setFavoriteFilms, setUserData } from '../store/user-process/user-process';
-import { setComments, setFilmsLikeSelected, setSelectedFilm, setUserComment } from '../store/selected-film-process/selected-film-process';
+import { changeFilmData, setFilms, setPromoFilm } from '../store/films-process/films-process';
+import { changeFavoriteFilmState, setAuthStatus, setFavoriteFilms, setUserData } from '../store/user-process/user-process';
+import { setComments, setFilmsLikeSelected, setSelectedFilm, setUserComment, updateSelectedFilm } from '../store/selected-film-process/selected-film-process';
 
 export const fetchFilmsAction = createAsyncThunk(
   'data/fetchFilms',
@@ -68,6 +68,10 @@ export const getSelectedFilmAction = createAsyncThunk(
   async (id: number) => {
     try {
       const {data} = await api.network.get<FilmDataType>(APIRoute.Film(id));
+      const {filmData: selectedFilm} = store.getState().selectedFilm;
+      if(selectedFilm && selectedFilm.id === data.id) {
+        return;
+      }
       store.dispatch(setSelectedFilm(data));
     } catch (error) {
       store.dispatch(setSelectedFilm(null));
@@ -118,6 +122,21 @@ export const getFavoriteFilms = createAsyncThunk(
     try {
       const {data} = await api.network.get<Films>(APIRoute.FavoriteFilms);
       store.dispatch(setFavoriteFilms(data));
+    } catch (error) {
+      //
+    }
+  },
+);
+
+export const setFavoriteFilm = createAsyncThunk(
+  'data/setFavoriteFilm',
+  async ({id, isFavorite}: {id: number, isFavorite: boolean}) => {
+    try {
+      const {data} = await api.network.post<FilmDataType>(APIRoute.SetFavoriteFilm(id, isFavorite));
+      console.log(data);
+      store.dispatch(changeFavoriteFilmState(data));
+      store.dispatch(changeFilmData(data));
+      store.dispatch(updateSelectedFilm(data));
     } catch (error) {
       //
     }

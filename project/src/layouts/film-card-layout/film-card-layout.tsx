@@ -37,8 +37,9 @@ function FilmCardLayout(props: PropsWithChildren<FilmCardLayoutProps>): JSX.Elem
               title={props.film.name}
               genre={props.film.genre}
               releaseYear={props.film.released}
-              showAddReviewButton={props.type === 'full' && authStatus === AuthStatus.Authorized}
-              showAddToFavorsButton={authStatus === AuthStatus.Authorized}
+              isFavorite={props.film.isFavorite}
+              isShowAddReviewButton={props.type === 'full' && authStatus === AuthStatus.Authorized}
+              isShowAddToFavorsButton={authStatus === AuthStatus.Authorized}
             />
           </div>
         </div>
