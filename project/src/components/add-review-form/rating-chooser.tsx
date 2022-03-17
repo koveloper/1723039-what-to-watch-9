@@ -5,7 +5,7 @@ type RatingChooserProps = {
   onRatingChange: (rating: number) => void;
 }
 
-function RatingChooser(props: RatingChooserProps): JSX.Element {
+export default function RatingChooser(props: RatingChooserProps): JSX.Element {
   return (
     <div className="rating">
       <div className="rating__stars">
@@ -14,5 +14,3 @@ function RatingChooser(props: RatingChooserProps): JSX.Element {
     </div>
   );
 }
-
-export default RatingChooser;

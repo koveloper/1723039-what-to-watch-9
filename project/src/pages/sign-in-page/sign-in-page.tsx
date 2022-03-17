@@ -8,23 +8,24 @@ import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
 import SignInForm from '../../components/sign-in-form/sign-in-form';
 import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
+import { useAuth } from '../../hooks';
 
 type SignInPageProps = {
   message?: string;
   isError?: boolean;
 }
 
-function SignInPage({message, isError}: SignInPageProps): JSX.Element {
+export default function SignInPage({message, isError}: SignInPageProps): JSX.Element {
+  const isAuthorized = useAuth();
+  const navigate = useNavigate();
   const onSubmitHandler = (props: LoginData) => {
     api.login(props);
   };
-  const {authStatus} = useSelector((state: State) => state.user);
-  const navigate = useNavigate();
   useEffect(() => {
-    if(authStatus === AuthStatus.Authorized) {
+    if(isAuthorized) {
       navigate(AppRoute.Root);
     }
-  }, [authStatus]);
+  }, [isAuthorized]);
   return (
     <UserPageLayout title='Sign in' hideUserBlock>
       <div className="sign-in user-page__content">
@@ -33,5 +34,3 @@ function SignInPage({message, isError}: SignInPageProps): JSX.Element {
     </UserPageLayout>
   );
 }
-
-export default SignInPage;

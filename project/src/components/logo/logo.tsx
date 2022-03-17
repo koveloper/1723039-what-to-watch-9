@@ -1,5 +1,6 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute, APP_TITLE } from '../../utils/constants';
 import LogoLetter from './logo-letter';
 
 type LogoProps = {
@@ -10,12 +11,10 @@ function Logo({isLight}: LogoProps): JSX.Element {
   return (
     <div className="logo">
       <Link className={isLight ? 'logo__link logo__link--light' : 'logo__link'} to={AppRoute.Root}>
-        <LogoLetter num={1} letter='W'></LogoLetter>
-        <LogoLetter num={2} letter='T'></LogoLetter>
-        <LogoLetter num={3} letter='W'></LogoLetter>
+        {[...APP_TITLE].map((letter, i) => <LogoLetter key={`letter-${i.toString()}`} num={i + 1} letter={letter}></LogoLetter>)}
       </Link>
     </div>
   );
 }
 
-export default Logo;
+export default memo(Logo);

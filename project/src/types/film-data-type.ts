@@ -1,4 +1,6 @@
-export type FilmDataType = {
+import { Comments } from './commentary';
+
+export type FilmData = {
   name: string;
   posterImage: string;
   previewImage: string;
@@ -18,4 +20,20 @@ export type FilmDataType = {
   isFavorite: boolean;
 };
 
-export type Films = FilmDataType[];
+export type Films = FilmData[];
+
+export type FilmFullData =  {
+  id: number;
+  data: FilmData;
+  comments: Comments;
+  similar: Films;
+}
+
+export type FilmComments =  {
+  id: number;
+  comments: Comments;
+}
+
+export type FilmsFull = {
+  [index: number]: FilmFullData;
+};

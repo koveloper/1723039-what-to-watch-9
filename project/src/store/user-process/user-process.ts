@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { FilmDataType } from '../../types/film-data-type';
+import { FilmData } from '../../types/film-data-type';
 import { NameSpace } from '../../utils/constants';
 import { AuthStatus } from '../constants';
 import { UserState } from '../types';
@@ -7,7 +7,7 @@ import { UserState } from '../types';
 const initialState: UserState = {
   authStatus: AuthStatus.Unknown,
   userData: null,
-  favoriteFilms: null,
+  favoriteFilmsIdList: null,
 };
 
 export const userProcess = createSlice({
@@ -21,18 +21,18 @@ export const userProcess = createSlice({
       state.userData = action.payload;
     },
     setFavoriteFilms(state, action) {
-      state.favoriteFilms = action.payload;
+      state.favoriteFilmsIdList = action.payload;
     },
     changeFavoriteFilmState(state, action) {
-      const filmData:FilmDataType = action.payload;
-      if(!state.favoriteFilms) {
+      const filmData:FilmData = action.payload;
+      if(!state.favoriteFilmsIdList) {
         return;
       }
-      const index = state.favoriteFilms.findIndex((f) => f.id === filmData.id);
+      const index = state.favoriteFilmsIdList.findIndex((f) => f === filmData.id);
       if(!filmData.isFavorite && index !== -1) {
-        state.favoriteFilms.splice(index, 1);
+        state.favoriteFilmsIdList.splice(index, 1);
       } else if(filmData.isFavorite) {
-        state.favoriteFilms.push(filmData);
+        state.favoriteFilmsIdList.push(filmData.id);
       }
     },
   },

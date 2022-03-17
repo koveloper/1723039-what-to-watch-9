@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { PosterSize } from '../../utils/constants';
 
 const classes = {
@@ -20,4 +21,4 @@ function FilmCardPoster({size, posterUrl, title}: FilmCardPosterProps): JSX.Elem
   );
 }
 
-export default FilmCardPoster;
+export default memo(FilmCardPoster);

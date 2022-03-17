@@ -8,7 +8,7 @@ type SignInFormProps = {
   onSubmit: (props: LoginData) => void;
 }
 
-function SignInForm({message, isError, onSubmit}: SignInFormProps): JSX.Element {
+export default function SignInForm({message, isError, onSubmit}: SignInFormProps): JSX.Element {
   const emailElement = useRef<HTMLInputElement | null>(null);
   const pwdElement = useRef<HTMLInputElement | null>(null);
   const onSubminHandler = (evt: FormEvent<HTMLFormElement>) => {
@@ -57,4 +57,3 @@ function SignInForm({message, isError, onSubmit}: SignInFormProps): JSX.Element 
   );
 }
 
-export default SignInForm;

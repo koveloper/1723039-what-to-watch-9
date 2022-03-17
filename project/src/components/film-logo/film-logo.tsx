@@ -1,25 +1,18 @@
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { FilmDataType } from '../../types/film-data-type';
+import { FilmData } from '../../types/film-data-type';
 import { AppRoute } from '../../utils/constants';
 
 type FilmLogoProps = {
-  film: FilmDataType;
+  film: FilmData;
 }
 
 function FilmLogo({film} : FilmLogoProps): JSX.Element {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isHovered, setHovered] = useState(false);
-  const onMouseEnterHandler = (evt: SyntheticEvent) => {
-    evt.stopPropagation();
-    setHovered(true);
-  };
-  const onMouseExitHandler = (evt: SyntheticEvent) => {
-    evt.stopPropagation();
-    setHovered(false);
-  };
+  const onClickHandler = useCallback(() => navigate(`${AppRoute.Films}/${film.id}`), [film.id]);
   useEffect(() => {
     const player = videoRef.current;
     const playFunc = () => {
@@ -45,7 +38,15 @@ function FilmLogo({film} : FilmLogoProps): JSX.Element {
     };
   }, [isHovered, film.videoLink]);
 
-  const onClickHandler = () => navigate(`${AppRoute.Films}/${film.id}`);
+  const onMouseEnterHandler = (evt: SyntheticEvent) => {
+    evt.stopPropagation();
+    setHovered(true);
+  };
+  const onMouseExitHandler = (evt: SyntheticEvent) => {
+    evt.stopPropagation();
+    setHovered(false);
+  };
+
   return (
     <article onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">

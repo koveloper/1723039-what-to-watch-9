@@ -1,17 +1,13 @@
-import { useSelector } from 'react-redux';
-import { Navigate, Route, Routes, useParams } from 'react-router-dom';
-import { State } from '../../store/types';
-import { AppRoute } from '../../utils/constants';
 import Player from '../../components/player/player';
+import Error404 from '../error-404/error-404';
+import { Route, Routes } from 'react-router-dom';
+import { useFilmData, useFilmIdFromUrl } from '../../hooks';
 
-function PlayerPage(): JSX.Element {
-  const films = useSelector((state: State) => state.films.films) || [];
-  const params = useParams();
-  const film = films.find((m) => `${m.id}` === params.id);
+export default function PlayerPage(): JSX.Element {
+  const filmId = useFilmIdFromUrl();
+  const film = useFilmData(filmId);
   if(!film) {
-    return (
-      <Navigate to={AppRoute.Err404}></Navigate>
-    );
+    return <Error404 />;
   }
   return (
     <Routes>
@@ -21,5 +17,3 @@ function PlayerPage(): JSX.Element {
     </Routes>
   );
 }
-
-export default PlayerPage;

@@ -3,9 +3,11 @@ import { memo, useEffect, useRef } from 'react';
 type VideoComponentProps = {
     isPlaying: boolean;
     videoLink: string;
+    onLoad: () => void;
     durationChanged: (value: number) => void;
     tickTock: (secondsPassed: number) => void;
 }
+
 function VideoComponent(props: VideoComponentProps):JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const player = videoRef.current;
@@ -29,7 +31,7 @@ function VideoComponent(props: VideoComponentProps):JSX.Element {
     props.durationChanged(player.duration);
   }, [player]);
   return (
-    <video onTimeUpdate={timeUpdatedHandler} ref={videoRef} className="player__video" poster="img/player-poster.jpg">
+    <video onCanPlay={props.onLoad} onTimeUpdate={timeUpdatedHandler} ref={videoRef} className="player__video" poster="img/player-poster.jpg">
       <source src={props.videoLink}/>
     </video>
   );

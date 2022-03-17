@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { DefaultLayoutProps } from '../../types/common-types';
 
-function Breadcumbs(props: DefaultLayoutProps): JSX.Element {
+export default function Breadcumbs(props: DefaultLayoutProps): JSX.Element {
   return (
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">
@@ -15,5 +15,3 @@ function Breadcumbs(props: DefaultLayoutProps): JSX.Element {
     </nav>
   );
 }
-
-export default Breadcumbs;

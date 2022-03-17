@@ -28,14 +28,13 @@ export enum FilmMark {
     VeryGood = 'Very good',
     Awesome = 'Awesome'
 }
-
+export const APP_TITLE = 'WTW';
 export const ALL_GENRES = 'All genres';
-
 export const FILMS_ON_PAGE_INITIAL = 8;
 export const FILMS_ON_PAGE_STEP = 8;
 
 export enum NameSpace {
     Films = 'films',
-    SelectedFilm = 'selectedFilm',
     User = 'user',
+    Service = 'service',
 }

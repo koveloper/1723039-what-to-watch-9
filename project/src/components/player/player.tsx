@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Spinner from '../spinner/spinner';
 import PlayButton from './play-button';
 import VideoComponent from './video-component';
 
@@ -20,6 +21,7 @@ const getTimeFromSeconds = (seconds: number) => {
 function Player(props: PlayerProps): JSX.Element {
   const playerRef = useRef<HTMLDivElement>(null);
   const player = playerRef.current;
+  const [initialized, setInitialized] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
@@ -40,18 +42,24 @@ function Player(props: PlayerProps): JSX.Element {
     }
     if(fullscreen) {
       player.requestFullscreen();
-    } else {
+    } else if(document.fullscreenElement) {
       document.exitFullscreen();
     }
   }, [player, fullscreen]);
   return (
     <div ref={playerRef} className="player">
       <VideoComponent
+        onLoad={() => setInitialized(true)}
         durationChanged={setVideoDuration}
         tickTock={setSecondsWatched}
         isPlaying={playing}
         videoLink={props.videoLink}
       />
+      {
+        initialized
+          ? null
+          : <Spinner />
+      }
 
       <button onClick={() => window.history.back()} type="button" className="player__exit">Exit</button>
 

@@ -5,7 +5,7 @@ type AddReviewFormProps = {
   onReviewSubmit: (rating: number, commentary: string) => void;
 }
 
-function AddReviewForm(props: AddReviewFormProps): JSX.Element {
+export default function AddReviewForm(props: AddReviewFormProps): JSX.Element {
   const [rating, setRating] = useState(5);
   const reviewRef = useRef<HTMLTextAreaElement>(null);
   const onSubmitHandler = (evt: SyntheticEvent) => {
@@ -35,5 +35,3 @@ function AddReviewForm(props: AddReviewFormProps): JSX.Element {
     </div>
   );
 }
-
-export default AddReviewForm;

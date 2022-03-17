@@ -16,8 +16,7 @@ const linkStyle:React.CSSProperties = {
   fontWeight: '200',
 };
 
-
-function Error404(): JSX.Element {
+export default function Error404(): JSX.Element {
   return (
     <div className="user-page">
       <Link to={AppRoute.Root} className='logo__link logo__link--light' style={linkStyle}>Return to main page</Link>
@@ -30,5 +29,3 @@ function Error404(): JSX.Element {
     </div>
   );
 }
-
-export default Error404;

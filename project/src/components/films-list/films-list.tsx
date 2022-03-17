@@ -1,8 +1,9 @@
 import FilmLogo from '../film-logo/film-logo';
-import { FilmDataType } from '../../types/film-data-type';
+import { FilmData } from '../../types/film-data-type';
+import { memo } from 'react';
 
 type FilmsListProps = {
-  films: FilmDataType[];
+  films: FilmData[];
 }
 
 function FilmsList({ films }: FilmsListProps): JSX.Element {
@@ -13,4 +14,4 @@ function FilmsList({ films }: FilmsListProps): JSX.Element {
   );
 }
 
-export default FilmsList;
+export default memo(FilmsList);
