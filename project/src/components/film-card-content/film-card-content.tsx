@@ -7,7 +7,7 @@ import { State } from '../../store/types';
 import { AuthStatus } from '../../store/constants';
 
 function FilmCardContent(props: FilmDataType): JSX.Element {
-  const authStatus = useSelector((state: State) => state.authStatus);
+  const {authStatus} = useSelector((state: State) => state.user);
   return (
     <div className="film-card__wrap">
       <div className="film-card__info">

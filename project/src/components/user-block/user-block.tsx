@@ -6,7 +6,7 @@ import { AppRoute } from '../../utils/constants';
 import UserInfo from './user-info';
 
 function UserBlock(): JSX.Element {
-  const authStatus = useSelector((state: State) => state.authStatus);
+  const {authStatus} = useSelector((state: State) => state.user);
   return (
     <ul className="user-block">
       {authStatus === AuthStatus.Authorized

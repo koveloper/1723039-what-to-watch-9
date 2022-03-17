@@ -1,18 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { setGenre } from '../../store/action';
-import { AppDispatch, State } from '../../store/types';
 import GenresListItem from './genres-list-item';
 
 type GenresListProps = {
   genres: string[];
+  currentGenre: string;
+  onGenreChange: (genre: string) => void;
 }
 
-function GenresList({genres}: GenresListProps): JSX.Element {
-  const currentGenre = useSelector((state: State) => state.genre);
-  const dispatch = useDispatch<AppDispatch>();
+function GenresList(props: GenresListProps): JSX.Element {
   return (
     <ul className="catalog__genres-list">
-      {genres.map((genre) => <GenresListItem onSelect={(title) => dispatch(setGenre(title))} key={`genre-item-${genre}`} title={genre} selected={currentGenre===genre}></GenresListItem>)}
+      {props.genres.map((genre) => <GenresListItem onSelect={(title) => props.onGenreChange(title)} key={`genre-item-${genre}`} title={genre} selected={props.currentGenre===genre}></GenresListItem>)}
     </ul>
   );
 }
