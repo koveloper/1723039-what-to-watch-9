@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Comments } from '../../types/commentary';
-import { FilmComments, FilmData, FilmFullData } from '../../types/film-data-type';
+import { FilmComments, FilmFullData } from '../../types/film-data-type';
 import { NameSpace } from '../../utils/constants';
 import { FilmsState } from '../types';
 
