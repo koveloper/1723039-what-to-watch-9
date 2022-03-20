@@ -1,42 +1,35 @@
-import { FilmDataType } from '../../types/film-data-type';
 import FilmCardBackground from '../../components/film-card-background/film-card-background';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import HeaderLayout from '../../layouts/header-layout/header-layout';
+import Breadcumbs from '../../layouts/header-layout/breadcumbs';
+import { FilmData } from '../../types/film-data-type';
 import { AppRoute, PosterSize } from '../../utils/constants';
 import { HeaderType } from '../../layouts/header-layout/header-type';
-import Breadcumbs from '../../layouts/header-layout/breadcumbs';
-import { useSelector } from 'react-redux';
-import { State } from '../../store/types';
 import { useEffect } from 'react';
-import { AuthStatus } from '../../store/constants';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
-import { store } from '../../store';
-import { setUserComment } from '../../store/selected-film-process/selected-film-process';
+import { useAuth, useFilmIdFromUrl } from '../../hooks';
 
-function AddReviewPage(props: FilmDataType): JSX.Element {
-  const params = useParams();
-  const selectedFilmId = +(params.id || 0);
-  const {authStatus} = useSelector((state: State) => state.user);
-  const {userComment} = useSelector((state: State) => state.selectedFilm);
+export default function AddReviewPage(props: FilmData): JSX.Element {
+  const filmId = useFilmIdFromUrl();
   const navigate = useNavigate();
+  const isAuthorized = useAuth();
   useEffect(() => {
-    if(authStatus !== AuthStatus.Authorized || userComment) {
-      navigate(`${AppRoute.Films}/${selectedFilmId}`);
+    if(!isAuthorized) {
+      navigate(`${AppRoute.Films}/${filmId}`);
     }
-  }, [authStatus, userComment]);
+  }, [isAuthorized]);
   const addReviewSubmitHandler = (rating: number, commentary: string) => {
     if(!commentary.length) {
       return;
     }
     const comment = {
-      id: selectedFilmId,
+      id: filmId,
       comment: commentary,
       rating,
     };
-    store.dispatch(setUserComment(undefined));
     api.postReview(comment);
   };
   return (
@@ -58,5 +51,3 @@ function AddReviewPage(props: FilmDataType): JSX.Element {
     </section>
   );
 }
-
-export default AddReviewPage;

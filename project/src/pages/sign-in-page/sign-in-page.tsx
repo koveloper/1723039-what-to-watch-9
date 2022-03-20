@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
-import { AuthStatus } from '../../store/constants';
-import { State } from '../../store/types';
 import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
+import { useAuth } from '../../hooks';
 import SignInForm from '../../components/sign-in-form/sign-in-form';
 import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
 
@@ -14,17 +12,17 @@ type SignInPageProps = {
   isError?: boolean;
 }
 
-function SignInPage({message, isError}: SignInPageProps): JSX.Element {
+export default function SignInPage({message, isError}: SignInPageProps): JSX.Element {
+  const isAuthorized = useAuth();
+  const navigate = useNavigate();
   const onSubmitHandler = (props: LoginData) => {
     api.login(props);
   };
-  const {authStatus} = useSelector((state: State) => state.user);
-  const navigate = useNavigate();
   useEffect(() => {
-    if(authStatus === AuthStatus.Authorized) {
+    if(isAuthorized) {
       navigate(AppRoute.Root);
     }
-  }, [authStatus]);
+  }, [isAuthorized]);
   return (
     <UserPageLayout title='Sign in' hideUserBlock>
       <div className="sign-in user-page__content">
@@ -33,5 +31,3 @@ function SignInPage({message, isError}: SignInPageProps): JSX.Element {
     </UserPageLayout>
   );
 }
-
-export default SignInPage;

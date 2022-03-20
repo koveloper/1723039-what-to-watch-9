@@ -1,6 +1,6 @@
 import Logo from '../../components/logo/logo';
 import { HeaderType } from './header-type';
-import { PropsWithChildren } from 'react';
+import { memo, PropsWithChildren } from 'react';
 
 type HeaderLayoutProps = {
   type: HeaderType;
@@ -15,4 +15,4 @@ function HeaderLayout(props: PropsWithChildren<HeaderLayoutProps>): JSX.Element 
   );
 }
 
-export default HeaderLayout;
+export default memo(HeaderLayout);

@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 export type FilmCardBackgroundProps = {
   imageUrl: string;
   title: string;
@@ -11,4 +13,4 @@ function FilmCardBackground(props: FilmCardBackgroundProps): JSX.Element {
   );
 }
 
-export default FilmCardBackground;
+export default memo(FilmCardBackground);

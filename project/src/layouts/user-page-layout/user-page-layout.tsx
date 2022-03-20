@@ -10,7 +10,7 @@ type UserPageLayoutProps = {
   title: string;
 }
 
-function UserPageLayout(props: PropsWithChildren<UserPageLayoutProps>): JSX.Element {
+export default function UserPageLayout(props: PropsWithChildren<UserPageLayoutProps>): JSX.Element {
   return (
     <div className="user-page">
       <HeaderLayout type={HeaderType.UserOrSignIn}>
@@ -23,4 +23,3 @@ function UserPageLayout(props: PropsWithChildren<UserPageLayoutProps>): JSX.Elem
   );
 }
 
-export default UserPageLayout;

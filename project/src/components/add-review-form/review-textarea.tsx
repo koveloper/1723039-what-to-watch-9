@@ -3,7 +3,7 @@ type ReviewTextAreaProps = {
     onReivewChange: (review: string) => void;
 }
 
-function ReviewTextArea(props: ReviewTextAreaProps): JSX.Element {
+export default function ReviewTextArea(props: ReviewTextAreaProps): JSX.Element {
   return (
     <div className="add-review__text">
       <textarea
@@ -23,4 +23,3 @@ function ReviewTextArea(props: ReviewTextAreaProps): JSX.Element {
   );
 }
 
-export default ReviewTextArea;
