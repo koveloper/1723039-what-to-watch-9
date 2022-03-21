@@ -11,7 +11,7 @@ const initialState: UserState = {
 };
 
 export const userProcess = createSlice({
-  name: NameSpace.Films,
+  name: NameSpace.User,
   initialState,
   reducers: {
     setAuthStatus(state, action) {
