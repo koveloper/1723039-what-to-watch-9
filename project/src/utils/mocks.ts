@@ -1,19 +1,21 @@
 import fakerStatic from 'faker';
-import { Comment } from '../types/commentary';
+import { Comment, Comments } from '../types/commentary';
 import { FilmData, FilmFullData, Films } from '../types/film-data-type';
-import { UserWithoutTokenType } from '../types/user-type';
+import { UserType, UserWithoutTokenType } from '../types/user-type';
 
-const createRandomName = () => `${fakerStatic.name.firstName()} $${fakerStatic.name.lastName()}`;
+const generator = fakerStatic;
+
+const createRandomName = () => `${generator.name.firstName()} $${generator.name.lastName()}`;
 
 export const createFakeUser = (): UserWithoutTokenType => ({
-  avatarUrl: fakerStatic.internet.url(),
-  id: fakerStatic.datatype.number(),
-  email: fakerStatic.internet.email(),
+  avatarUrl: generator.internet.url(),
+  id: generator.datatype.number(),
+  email: generator.internet.email(),
   name: createRandomName(),
 });
 
-export const createFakeFavoriteFilmsIdList = (): number[] => fakerStatic.datatype.array(fakerStatic.datatype.number(8)).map(
-  (el) => fakerStatic.datatype.number(20),
+export const createFakeFavoriteFilmsIdList = (): number[] => generator.datatype.array(generator.datatype.number(8)).map(
+  (el) => generator.datatype.number(20),
 ).sort((a, b) => a - b).reduce((acc, el) => {
   if(acc.length === 0 || acc[acc.length - 1] !== el) {
     acc.push(el);
@@ -22,44 +24,54 @@ export const createFakeFavoriteFilmsIdList = (): number[] => fakerStatic.datatyp
 }, [] as number[]);
 
 export const createFakeFilmData = (idValue?: number): FilmData => ({
-  name: fakerStatic.name.title(),
-  posterImage: fakerStatic.image.imageUrl(),
-  previewImage: fakerStatic.image.imageUrl(),
-  backgroundImage: fakerStatic.internet.url(),
-  backgroundColor: fakerStatic.commerce.color(),
-  description: fakerStatic.lorem.paragraphs(1 + fakerStatic.datatype.number(2)),
-  rating: 1 + fakerStatic.datatype.number(10),
-  scoresCount: fakerStatic.datatype.number(30000),
+  name: generator.name.title(),
+  posterImage: generator.image.imageUrl(),
+  previewImage: generator.image.imageUrl(),
+  backgroundImage: generator.internet.url(),
+  backgroundColor: generator.commerce.color(),
+  description: generator.lorem.paragraphs(1 + generator.datatype.number(2)),
+  rating: 1 + generator.datatype.number(10),
+  scoresCount: generator.datatype.number(30000),
   director: createRandomName(),
-  starring: fakerStatic.datatype.array(1 + fakerStatic.datatype.number(5)).map((el) => createRandomName()),
-  runTime: 50 + fakerStatic.datatype.number(90),
-  genre: fakerStatic.name.title(),
-  released: 2000 + fakerStatic.datatype.number(21),
-  id: idValue ? idValue : fakerStatic.datatype.number(20),
-  videoLink: fakerStatic.internet.url(),
-  previewVideoLink: fakerStatic.internet.url(),
-  isFavorite: fakerStatic.datatype.boolean(),
+  starring: generator.datatype.array(1 + generator.datatype.number(5)).map((el) => createRandomName()),
+  runTime: 50 + generator.datatype.number(90),
+  genre: generator.name.title(),
+  released: 2000 + generator.datatype.number(21),
+  id: idValue ? idValue : generator.datatype.number(20),
+  videoLink: generator.internet.url(),
+  previewVideoLink: generator.internet.url(),
+  isFavorite: generator.datatype.boolean(),
 });
 
 export const createFakeComment = (): Comment => ({
-  id: fakerStatic.datatype.number(1000),
-  rating: fakerStatic.datatype.number(10),
-  comment: fakerStatic.lorem.paragraph(),
-  date: fakerStatic.date.past().toISOString(),
+  id: generator.datatype.number(1000),
+  rating: generator.datatype.number(10),
+  comment: generator.lorem.paragraph(),
+  date: generator.date.past().toISOString(),
   user: {
-    id: fakerStatic.datatype.number(1000),
+    id: generator.datatype.number(1000),
     name: createRandomName(),
   },
 });
 
 export const createFakeFilmFullData = (): FilmFullData => (() => {
-  const id = fakerStatic.datatype.number(20);
+  const id = generator.datatype.number(20);
   return {
     id,
     data: createFakeFilmData(id),
-    similar: createFakeFilms(fakerStatic.datatype.number(8)),
-    comments: Array(fakerStatic.datatype.number(8)).fill(null).map(() => createFakeComment()),
+    similar: createFakeFilms(generator.datatype.number(8)),
+    comments: Array(generator.datatype.number(8)).fill(null).map(() => createFakeComment()),
   };
 })();
 
 export const createFakeFilms = (count?: number): Films => Array(count ? count : 30).fill(null).map((el) => createFakeFilmData());
+
+export const createFakeComments = (count?: number): Comments => Array(count ? count : 8).fill(null).map((el) => createFakeComment());
+
+export const createFakeEmail = () => generator.internet.email();
+
+export const createFakePassword = () => generator.random.word();
+
+export const createFakeToken = () => generator.datatype.uuid();
+
+export const createFakeUserResponse = (): UserType => (Object.assign(createFakeUser() , {token: createFakeToken()}));
