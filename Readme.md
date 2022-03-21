@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Глеб Коба](https://up.htmlacademy.ru/react/9/user/1723039).
-* Наставник: [Богдан Волик](https://htmlacademy.ru/profile/id997699).
+* Наставник: [Иван Кривонос](https://htmlacademy.ru/profile/id1311037).
 
 ---
 
