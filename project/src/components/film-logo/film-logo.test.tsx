@@ -6,7 +6,7 @@ import FilmLogo from './film-logo';
 import { createFakeFilmData } from '../../utils/mocks';
 import { AppRoute } from '../../utils/constants';
 
-describe('Component: Logo', () => {
+describe('Component: FilmLogo', () => {
   const fakeFilm = createFakeFilmData();
 
   it('should render correctly', () => {

@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import GenresList from './genres-list';
 import { createFakeGenres } from '../../utils/mocks';
 
-describe('Component: Logo', () => {
+describe('Component: GenreList', () => {
   const genres = createFakeGenres();
 
   it('should render correctly', () => {

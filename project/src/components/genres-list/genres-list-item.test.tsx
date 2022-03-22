@@ -4,7 +4,7 @@ import { createMemoryHistory, History } from 'history';
 import userEvent from '@testing-library/user-event';
 import GenresListItem from './genres-list-item';
 
-describe('Component: Logo', () => {
+describe('Component: GenreListItem', () => {
   it('should render correctly', () => {
     render(
       <BrowserRouter>
