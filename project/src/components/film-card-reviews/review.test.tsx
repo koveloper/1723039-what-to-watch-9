@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import { createFakeComment } from '../../utils/mocks';
 import Review from './review';
 
-describe('Component: Logo', () => {
+describe('Component: Review', () => {
   const fakeComment = createFakeComment();
 
   it('should render correctly', () => {

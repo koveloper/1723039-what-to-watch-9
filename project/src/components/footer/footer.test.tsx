@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Footer from './footer';
 
-describe('Component: Logo', () => {
+describe('Component: Footer', () => {
   it('should render correctly', () => {
     render(
       <BrowserRouter>
