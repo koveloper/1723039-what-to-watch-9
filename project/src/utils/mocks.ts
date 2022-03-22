@@ -79,3 +79,9 @@ export const createFakeUserResponse = (): UserType => (Object.assign(createFakeU
 export const createFakeGenres = (): string[] => Array(8).fill(null).map((el) => generator.name.firstName());
 
 export const createFakeUrl = (): string => generator.internet.url();
+
+export const createFakeName = (): string => createRandomName();
+
+export const createFakeNames = (count?: number): string[] => Array(count ? count : 8).fill(null).map(() => createRandomName());
+
+export const createFakeParagraphs = (): string => generator.lorem.paragraph();

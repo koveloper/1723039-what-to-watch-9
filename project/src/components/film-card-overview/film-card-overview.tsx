@@ -1,8 +1,15 @@
 import { useMemo } from 'react';
-import { FilmData } from '../../types/film-data-type';
 import { FilmMark } from '../../utils/constants';
 
-function FilmCardOverview(props: FilmData): JSX.Element {
+type FilmCardOverviewProps = {
+  rating: number;
+  scoresCount: number;
+  description: string;
+  director: string;
+  starring: string[];
+}
+
+function FilmCardOverview(props: FilmCardOverviewProps): JSX.Element {
   const mark = useMemo((): string => {
     if(props.rating >= 9) {
       return FilmMark.Awesome;
