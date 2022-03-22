@@ -1,5 +1,4 @@
 import CatalogLayout from '../../layouts/catalog-layout/catalog-layout';
-import FilmsGallery from './films-gallery';
 import Spinner from '../../components/spinner/spinner';
 import FilmCardBackground from '../../components/film-card-background/film-card-background';
 import HeaderLayout from '../../layouts/header-layout/header-layout';
@@ -7,12 +6,22 @@ import UserBlock from '../../components/user-block/user-block';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
-import { useAuth, useButtonsDefaultHandler, useFavorite, usePromoFilm } from '../../hooks';
+import { useAuth, useButtonsDefaultHandler, useFavorite, useFilms, usePromoFilm } from '../../hooks';
 import { HeaderType } from '../../layouts/header-layout/header-type';
-import { PosterSize } from '../../utils/constants';
+import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
+import { useState } from 'react';
+import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
+import GenresList from '../../components/genres-list/genres-list';
+import FilmsList from '../../components/films-list/films-list';
+import ShowMoreButton from '../../components/catalog/show-more-button';
 
 export default function MainPage(): JSX.Element | null {
   const promoFilm = usePromoFilm();
+  const films = useFilms();
+  const [genre, setGenre] = useState(ALL_GENRES);
+  const [maxFilmsOnPage, setMaxFilmsOnPage] = useState(FILMS_ON_PAGE_INITIAL);
+  const genres: string[] = [ALL_GENRES, ...getGenresFromFilms(films || [])];
+  const filmsByGenre = filterFilmsByGenre(films || [], genre);
   const isPromoFilmFavorite = useFavorite(promoFilm ? promoFilm.id : -1);
   const actionButtonClickHandler = useButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
   const isAuthorized = useAuth();
@@ -46,7 +55,13 @@ export default function MainPage(): JSX.Element | null {
         </div>
       </section>
       <CatalogLayout title='Catalog' titleHidden type='full'>
-        <FilmsGallery />
+        <GenresList currentGenre={genre} onGenreChange={(newGenre) => setGenre(newGenre)} genres={genres}/>
+        <FilmsList films={filmsByGenre.slice(0, maxFilmsOnPage)}/>
+        {
+          filmsByGenre.length > maxFilmsOnPage
+            ? <ShowMoreButton onClick={() => setMaxFilmsOnPage(maxFilmsOnPage + FILMS_ON_PAGE_STEP)} />
+            : null
+        }
       </CatalogLayout>
     </>
   );
