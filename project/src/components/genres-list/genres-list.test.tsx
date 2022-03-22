@@ -26,7 +26,7 @@ describe('Component: Logo', () => {
     const history:History = createMemoryHistory();
     history.push('/fake-page');
     const genreIndex = 3;
-    const fakeGenreUri = `/${  genres[genreIndex]}`;
+    const fakeGenreUri = `/${genres[genreIndex]}`;
     render(
       <HistoryRouter history={history}>
         <Routes>
