@@ -3,7 +3,6 @@ import { HeaderType } from '../../layouts/header-layout/header-type';
 import { Comments } from '../../types/commentary';
 import { FilmData } from '../../types/film-data-type';
 import { PosterSize } from '../../utils/constants';
-import FilmCardBackground from '../../components/film-card-background/film-card-background';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
@@ -28,7 +27,9 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
     <>
       <section className='film-card film-card--full'>
         <div className='film-card__hero'>
-          <FilmCardBackground title={props.film.name} imageUrl={props.film.backgroundImage} />
+          <div className="film-card__bg">
+            <img src={props.film.backgroundImage} alt={props.film.name} />
+          </div>
           <h1 className="visually-hidden">WTW</h1>
           <HeaderLayout type={HeaderType.FilmCard}>
             <UserBlock />

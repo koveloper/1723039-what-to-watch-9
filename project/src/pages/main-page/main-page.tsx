@@ -1,6 +1,5 @@
 import CatalogLayout from '../../layouts/catalog-layout/catalog-layout';
 import Spinner from '../../components/spinner/spinner';
-import FilmCardBackground from '../../components/film-card-background/film-card-background';
 import HeaderLayout from '../../layouts/header-layout/header-layout';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
@@ -31,7 +30,9 @@ export default function MainPage(): JSX.Element | null {
   return (
     <>
       <section className='film-card'>
-        <FilmCardBackground title={promoFilm.name} imageUrl={promoFilm.backgroundImage}/>
+        <div className="film-card__bg">
+          <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
+        </div>
         <h1 className="visually-hidden">WTW</h1>
         <HeaderLayout type={HeaderType.FilmCard}>
           <UserBlock/>
