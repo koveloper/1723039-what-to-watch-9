@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
-import ShowMoreButton from '../../components/catalog/show-more-button';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 export default function MainPage(): JSX.Element | null {
   const promoFilm = usePromoFilm();
