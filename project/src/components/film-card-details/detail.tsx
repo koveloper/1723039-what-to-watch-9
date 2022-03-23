@@ -4,7 +4,7 @@ type DetailsProps = {
     title: string;
 }
 
-function Details(props: PropsWithChildren<DetailsProps>): JSX.Element {
+function Detail(props: PropsWithChildren<DetailsProps>): JSX.Element {
   return (
     <p className="film-card__details-item">
       <strong className="film-card__details-name">{props.title}</strong>
@@ -13,4 +13,4 @@ function Details(props: PropsWithChildren<DetailsProps>): JSX.Element {
   );
 }
 
-export default Details;
+export default Detail;

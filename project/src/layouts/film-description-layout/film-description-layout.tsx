@@ -18,8 +18,26 @@ export default function FilmInfoLayout({film, comments}: FilmInfoLayoutProps): J
     <div className="film-card__desc">
       <FilmCardMenu onTabSelect={(tab: FilmInfoType) => setActiveTab(tab)}/>
       {
-        (activeTab === FilmInfoType.Overview && <FilmCardOverview {...film} />)
-        || (activeTab === FilmInfoType.Details && <FilmCardDetails {...film} />)
+        (
+          activeTab === FilmInfoType.Overview &&
+          <FilmCardOverview
+            description={film.description}
+            director={film.director}
+            rating={film.rating}
+            scoresCount={film.scoresCount}
+            starring={film.starring}
+          />
+        )
+        || (
+          activeTab === FilmInfoType.Details &&
+          <FilmCardDetails
+            director={film.director}
+            genre={film.genre}
+            released={film.released}
+            runTime={film.runTime}
+            starring={film.starring}
+          />
+        )
         || (activeTab === FilmInfoType.Reviews && <FilmCardReviews comments={comments} />)
       }
     </div>
