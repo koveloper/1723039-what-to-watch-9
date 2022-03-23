@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import { createFakeName, createFakeNames, createFakeParagraphs, createFakeUrl } from '../../utils/mocks';
+import { createFakeName, createFakeNames, createFakeParagraphs } from '../../utils/mocks';
 import FilmCardOverview from './film-card-overview';
 
 describe('Component: FilmCardOverview', () => {
