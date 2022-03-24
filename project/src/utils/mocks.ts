@@ -84,4 +84,4 @@ export const createFakeName = (): string => createRandomName();
 
 export const createFakeNames = (count?: number): string[] => Array(count ? count : 8).fill(null).map(() => createRandomName());
 
-export const createFakeParagraphs = (): string => generator.lorem.paragraph();
+export const createFakeParagraph = (): string => generator.lorem.paragraph();

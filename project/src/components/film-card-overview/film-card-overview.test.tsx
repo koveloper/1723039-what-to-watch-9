@@ -1,9 +1,9 @@
 import {render, screen} from '@testing-library/react';
-import { createFakeName, createFakeNames, createFakeParagraphs } from '../../utils/mocks';
+import { createFakeName, createFakeNames, createFakeParagraph } from '../../utils/mocks';
 import FilmCardOverview from './film-card-overview';
 
 describe('Component: FilmCardOverview', () => {
-  const description = createFakeParagraphs();
+  const description = createFakeParagraph();
   const director = createFakeName();
   const starring = createFakeNames();
   it('should render correctly', () => {
