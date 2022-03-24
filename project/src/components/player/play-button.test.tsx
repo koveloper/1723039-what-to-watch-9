@@ -1,6 +1,5 @@
 import userEvent from '@testing-library/user-event';
 import {render, screen} from '@testing-library/react';
-import { createFakeParagraph } from '../../utils/mocks';
 import PlayButton from './play-button';
 
 describe('Component: PlayButton', () => {
