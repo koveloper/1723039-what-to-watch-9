@@ -10,7 +10,19 @@ function UserBlock(): JSX.Element {
   return (
     <ul className="user-block">
       {isAuthorized
-        ? <UserInfo avatar={avatar}/>
+        ?
+        (
+          <>
+            <li onClick={() => navigate(AppRoute.User)} className="user-block__item">
+              <div className="user-block__avatar">
+                <img src={props.avatar} alt="User avatar" width="63" height="63" />
+              </div>
+            </li>
+            <li className="user-block__item">
+              <Link className="user-block__link" to={getBlankLink()}>Sign out</Link>
+            </li>
+          </>
+        )
         : <Link className='user-block__link' to={AppRoute.SignIn}>Sign in</Link>}
     </ul>
   );

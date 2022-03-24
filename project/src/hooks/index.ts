@@ -114,7 +114,7 @@ export const useButtonsDefaultHandler = (id: number) : (type: ButtonType) => voi
 };
 
 /////////////////////////////////////////
-export const useRedirect = () => {
+export const useRedirectCheck = () => {
   const navigate = useNavigate();
   const { redirect } = useSelector((state: State) => state.service);
   useEffect(() => {

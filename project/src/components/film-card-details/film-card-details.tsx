@@ -1,4 +1,4 @@
-import SimpleText from '../simple-text/simple-text';
+import SimpleText from './simple-text';
 import Detail from './detail';
 import { useMemo } from 'react';
 
