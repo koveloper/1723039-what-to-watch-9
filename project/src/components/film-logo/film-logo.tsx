@@ -6,14 +6,19 @@ import { AppRoute } from '../../utils/constants';
 
 type FilmLogoProps = {
   film: FilmData;
+  muted?: boolean;
 }
 
-function FilmLogo({film} : FilmLogoProps): JSX.Element {
+function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isHovered, setHovered] = useState(false);
-  const onClickHandler = useCallback(() => navigate(`${AppRoute.Films}/${film.id}`), [film.id]);
+  const [redirectTo, setRedirectTo] = useState<number | null>(null);
+  const onClickHandler = useCallback(() => setRedirectTo(film.id), [film.id]);
   useEffect(() => {
+    if(redirectTo !== null) {
+      navigate(`${AppRoute.Films}/${redirectTo}`);
+    }
     const player = videoRef.current;
     const playFunc = () => {
       if(timerId) {
@@ -50,7 +55,11 @@ function FilmLogo({film} : FilmLogoProps): JSX.Element {
   return (
     <article onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
-        <video ref={videoRef} poster={film.previewImage} width="280" height="175" muted/>
+        {
+          (muted === undefined || muted)
+            ? <video ref={videoRef} poster={film.previewImage} width="280" height="175" muted/>
+            : <video ref={videoRef} poster={film.previewImage} width="280" height="175"/>
+        }
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`${AppRoute.Films}/${film.id}`}>{film.name}</Link>

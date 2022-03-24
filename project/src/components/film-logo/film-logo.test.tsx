@@ -8,11 +8,11 @@ import { AppRoute } from '../../utils/constants';
 
 describe('Component: FilmLogo', () => {
   const fakeFilm = createFakeFilmData();
-
   it('should render correctly', () => {
+    HTMLMediaElement.prototype.pause = jest.fn;
     render(
       <BrowserRouter>
-        <FilmLogo film={fakeFilm}/>
+        <FilmLogo film={fakeFilm} muted={false}/>
       </BrowserRouter>,
     );
     //check that links count is equal to genres count
@@ -22,6 +22,7 @@ describe('Component: FilmLogo', () => {
   });
 
   it('should redirect to film page', () => {
+    HTMLMediaElement.prototype.pause = jest.fn;
     const history:History = createMemoryHistory();
     history.push('/fake-page');
     const fakeFilmUri = `/${AppRoute.Films}/${fakeFilm.id}`;
@@ -34,7 +35,7 @@ describe('Component: FilmLogo', () => {
           />
           <Route
             path="*"
-            element={<FilmLogo film={fakeFilm}/>}
+            element={<FilmLogo film={fakeFilm} muted={false}/>}
           />
         </Routes>
       </HistoryRouter>,

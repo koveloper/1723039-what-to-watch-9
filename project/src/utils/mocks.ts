@@ -64,7 +64,7 @@ export const createFakeFilmFullData = (): FilmFullData => (() => {
   };
 })();
 
-export const createFakeFilms = (count?: number): Films => Array(count ? count : 30).fill(null).map((el) => createFakeFilmData());
+export const createFakeFilms = (count?: number): Films => Array(count ? count : 30).fill(null).map((el, i) => createFakeFilmData(100 + i));
 
 export const createFakeComments = (count?: number): Comments => Array(count ? count : 8).fill(null).map((el) => createFakeComment());
 
