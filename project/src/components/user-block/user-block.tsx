@@ -1,20 +1,21 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth, useAvatar, useRedirectSet } from '../../hooks';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth, useAvatar } from '../../hooks';
 import { AppRoute } from '../../utils/constants';
 import { getBlankLink } from '../../utils/logic-utils';
 
 function UserBlock(): JSX.Element {
   const isAuthorized = useAuth();
   const avatar = useAvatar();
-  const redirectTo = useRedirectSet();
+  const navigate = useNavigate();
+
   return (
     <ul className="user-block">
       {isAuthorized
         ?
         (
           <>
-            <li onClick={() => redirectTo(AppRoute.User)} className="user-block__item">
+            <li onClick={() => navigate(AppRoute.User)} className="user-block__item">
               <div className="user-block__avatar">
                 <img src={avatar} alt="User avatar" width="63" height="63" />
               </div>
