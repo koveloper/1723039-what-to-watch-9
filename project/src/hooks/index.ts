@@ -125,3 +125,4 @@ export const useRedirectCheck = () => {
     navigate(redirect);
   }, [redirect]);
 };
+
