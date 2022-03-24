@@ -13,12 +13,8 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isHovered, setHovered] = useState(false);
-  const [redirectTo, setRedirectTo] = useState<number | null>(null);
-  const onClickHandler = useCallback(() => setRedirectTo(film.id), [film.id]);
+  const onClickHandler = useCallback(() => navigate(`${AppRoute.Films}/${film.id}`), [film.id]);
   useEffect(() => {
-    if(redirectTo !== null) {
-      navigate(`${AppRoute.Films}/${redirectTo}`);
-    }
     const player = videoRef.current;
     const playFunc = () => {
       if(timerId) {
