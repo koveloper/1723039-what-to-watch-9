@@ -1,5 +1,4 @@
 import Spinner from '../../components/spinner/spinner';
-import HeaderLayout from '../../layouts/header-layout/header-layout';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
@@ -10,10 +9,11 @@ import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
 import { useAuth, useButtonsDefaultHandler, useFavorite, useFilms, usePromoFilm } from '../../hooks';
-import { HeaderType } from '../../layouts/header-layout/header-type';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
 import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
+import Header from '../../components/header/header';
+import { HeaderType } from '../../components/header/header-type';
 
 export default function MainPage(): JSX.Element | null {
   const promoFilm = usePromoFilm();
@@ -35,9 +35,9 @@ export default function MainPage(): JSX.Element | null {
           <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <HeaderLayout type={HeaderType.FilmCard}>
+        <Header type={HeaderType.FilmCard}>
           <UserBlock/>
-        </HeaderLayout>
+        </Header>
         <div className="film-card__wrap">
           <div className="film-card__info">
             <FilmCardPoster title={promoFilm.name} posterUrl={promoFilm.posterImage} size={PosterSize.Medium}/>

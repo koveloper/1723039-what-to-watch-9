@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HeaderType } from './header-type';
-import HeaderLayout from './header-layout';
+import Header from './header';
 
 describe('Component: HeaderLayout', () => {
   it('should render correctly', () => {
     render(
       <BrowserRouter>
-        <HeaderLayout type={HeaderType.FilmCard}>
+        <Header type={HeaderType.FilmCard}>
           <button>test-button</button>
-        </HeaderLayout>
+        </Header>
       </BrowserRouter>,
     );
     //check elements on screen

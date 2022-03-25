@@ -1,14 +1,14 @@
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
-import HeaderLayout from '../../layouts/header-layout/header-layout';
 import { FilmData } from '../../types/film-data-type';
 import { AppRoute, PosterSize } from '../../utils/constants';
-import { HeaderType } from '../../layouts/header-layout/header-type';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
 import { useAuth, useFilmIdFromUrl } from '../../hooks';
+import Header from '../../components/header/header';
+import { HeaderType } from '../../components/header/header-type';
 
 export default function AddReviewPage(props: FilmData): JSX.Element {
   const filmId = useFilmIdFromUrl();
@@ -37,7 +37,7 @@ export default function AddReviewPage(props: FilmData): JSX.Element {
           <img src={props.backgroundImage} alt={props.name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <HeaderLayout type={HeaderType.AddReview}>
+        <Header type={HeaderType.AddReview}>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
@@ -49,7 +49,7 @@ export default function AddReviewPage(props: FilmData): JSX.Element {
             </ul>
           </nav>
           <UserBlock/>
-        </HeaderLayout>
+        </Header>
         <FilmCardPoster
           title={props.name}
           posterUrl={props.posterImage}

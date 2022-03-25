@@ -1,19 +1,19 @@
-import { useAuth, useButtonsDefaultHandler, useFavorite } from '../../hooks';
-import { HeaderType } from '../../layouts/header-layout/header-type';
-import { Comments } from '../../types/commentary';
-import { FilmData } from '../../types/film-data-type';
-import { FilmInfoType, PosterSize } from '../../utils/constants';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmsList from '../../components/films-list/films-list';
 import UserBlock from '../../components/user-block/user-block';
-import HeaderLayout from '../../layouts/header-layout/header-layout';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
 import FilmTab from '../../components/film-tab/film-tab';
 import FilmCardMenu from '../../components/film-card-menu/film-card-menu';
+import { useAuth, useButtonsDefaultHandler, useFavorite } from '../../hooks';
+import { Comments } from '../../types/commentary';
+import { FilmData } from '../../types/film-data-type';
+import { FilmInfoType, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
+import Header from '../../components/header/header';
+import { HeaderType } from '../../components/header/header-type';
 
 type MoviePageProps = {
   film: FilmData;
@@ -34,9 +34,9 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
             <img src={props.film.backgroundImage} alt={props.film.name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
-          <HeaderLayout type={HeaderType.FilmCard}>
+          <Header type={HeaderType.FilmCard}>
             <UserBlock />
-          </HeaderLayout>
+          </Header>
           <div className="film-card__wrap">
             <div className="film-card__info">
               <FilmCardMain

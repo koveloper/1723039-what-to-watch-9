@@ -1,13 +1,13 @@
+import SignInForm from '../../components/sign-in-form/sign-in-form';
+import Footer from '../../components/footer/footer';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
 import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
 import { useAuth } from '../../hooks';
-import { HeaderType } from '../../layouts/header-layout/header-type';
-import SignInForm from '../../components/sign-in-form/sign-in-form';
-import HeaderLayout from '../../layouts/header-layout/header-layout';
-import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import { HeaderType } from '../../components/header/header-type';
 
 type SignInPageProps = {
   message?: string;
@@ -27,9 +27,9 @@ export default function SignInPage({message, isError}: SignInPageProps): JSX.Ele
   }, [isAuthorized]);
   return (
     <div className="user-page">
-      <HeaderLayout type={HeaderType.UserOrSignIn}>
+      <Header type={HeaderType.UserOrSignIn}>
         <h1 className="page-title user-page__title">Sign in</h1>
-      </HeaderLayout>
+      </Header>
       <div className="sign-in user-page__content">
         <SignInForm onSubmit={onSubmitHandler} message={message} isError={isError} />
       </div>
