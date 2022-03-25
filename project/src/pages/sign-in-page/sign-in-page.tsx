@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
 import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
-import { useAuth } from '../../hooks';
 import Header from '../../components/header/header';
 import { HeaderType } from '../../components/header/header-type';
+import { useAuth } from '../../hooks/use-auth';
 
 type SignInPageProps = {
   message?: string;

@@ -30,7 +30,7 @@ describe('API functions', () => {
       favoriteFilmsIdList: null,
     },
     films: {
-      films: null,
+      all: null,
       promoFilm: null,
       fullDataFilms: {},
     },

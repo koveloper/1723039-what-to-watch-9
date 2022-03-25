@@ -6,9 +6,10 @@ import { AppRoute, PosterSize } from '../../utils/constants';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
-import { useAuth, useFilmIdFromUrl } from '../../hooks';
 import Header from '../../components/header/header';
 import { HeaderType } from '../../components/header/header-type';
+import { useFilmIdFromUrl } from '../../hooks/use-film-id-from-url';
+import { useAuth } from '../../hooks/use-auth';
 
 export default function AddReviewPage(props: FilmData): JSX.Element {
   const filmId = useFilmIdFromUrl();

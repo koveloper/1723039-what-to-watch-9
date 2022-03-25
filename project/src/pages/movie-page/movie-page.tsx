@@ -7,13 +7,15 @@ import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
 import FilmTab from '../../components/film-tab/film-tab';
 import FilmCardMenu from '../../components/film-card-menu/film-card-menu';
-import { useAuth, useButtonsDefaultHandler, useFavorite } from '../../hooks';
+import Header from '../../components/header/header';
+import { useButtonsDefaultHandler } from '../../hooks';
 import { Comments } from '../../types/commentary';
 import { FilmData } from '../../types/film-data-type';
 import { FilmInfoType, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
-import Header from '../../components/header/header';
 import { HeaderType } from '../../components/header/header-type';
+import { useAuth } from '../../hooks/use-auth';
+import { useFavorite } from '../../hooks/use-favorite';
 
 type MoviePageProps = {
   film: FilmData;
@@ -48,7 +50,7 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
                   onButtonClick={actionButtonClickHandler}
                   isShowAddReviewButton={isAuthorized}
                   isShowAddToFavorsButton={isAuthorized}
-                  isFavorite={isFavorite}
+                  isFavorite={!!isFavorite}
                 />
               </FilmCardMain>
             </div>

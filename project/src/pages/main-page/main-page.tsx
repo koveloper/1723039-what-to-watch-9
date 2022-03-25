@@ -8,12 +8,16 @@ import FilmsList from '../../components/films-list/films-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
-import { useAuth, useButtonsDefaultHandler, useFavorite, useFilms, usePromoFilm } from '../../hooks';
+import Header from '../../components/header/header';
+import { useButtonsDefaultHandler } from '../../hooks';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
 import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
-import Header from '../../components/header/header';
 import { HeaderType } from '../../components/header/header-type';
+import { useAuth } from '../../hooks/use-auth';
+import { useFilms } from '../../hooks/use-films';
+import { usePromoFilm } from '../../hooks/use-promo-film';
+import { useFavorite } from '../../hooks/use-favorite';
 
 export default function MainPage(): JSX.Element | null {
   const promoFilm = usePromoFilm();
@@ -50,7 +54,7 @@ export default function MainPage(): JSX.Element | null {
                 onButtonClick={actionButtonClickHandler}
                 isShowAddReviewButton={false}
                 isShowAddToFavorsButton={isAuthorized}
-                isFavorite={isPromoFilmFavorite}
+                isFavorite={!!isPromoFilmFavorite}
               />
             </FilmCardMain>
           </div>

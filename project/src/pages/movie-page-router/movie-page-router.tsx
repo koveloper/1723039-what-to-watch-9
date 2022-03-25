@@ -3,8 +3,9 @@ import AddReviewPage from '../add-review-page/add-review-page';
 import Error404 from '../error-404/error-404';
 import MoviePage from '../movie-page/movie-page';
 import { api } from '../../api/api';
-import { useFilmIdFromUrl, useFullFilmData } from '../../hooks';
 import { Route, Routes } from 'react-router-dom';
+import { useFilmIdFromUrl } from '../../hooks/use-film-id-from-url';
+import { useFullFilmData } from '../../hooks/use-full-film-data';
 
 export default function MoviePageRouter(): JSX.Element {
   const id = useFilmIdFromUrl();

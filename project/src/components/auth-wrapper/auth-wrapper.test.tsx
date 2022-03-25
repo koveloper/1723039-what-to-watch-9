@@ -19,7 +19,7 @@ describe('Component: AuthWrapper', () => {
       favoriteFilmsIdList: null,
     },
     films: {
-      films: null,
+      all: null,
       promoFilm: null,
       fullDataFilms: {},
     },

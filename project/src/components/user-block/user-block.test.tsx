@@ -18,7 +18,7 @@ describe('Component: UserBlock', () => {
       favoriteFilmsIdList: null,
     },
     films: {
-      films: null,
+      all: null,
       promoFilm: null,
       fullDataFilms: {},
     },

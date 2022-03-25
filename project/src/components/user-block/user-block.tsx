@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, useAvatar } from '../../hooks';
+import { useAuth } from '../../hooks/use-auth';
+import { useAvatar } from '../../hooks/use-avatar';
 import { AppRoute } from '../../utils/constants';
 import { getBlankLink } from '../../utils/logic-utils';
 

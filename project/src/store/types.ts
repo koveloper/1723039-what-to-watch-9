@@ -12,7 +12,7 @@ export type SelectedFilmState = {
 };
 
 export type FilmsState = {
-    films: Films | null;
+    all: Films | null;
     promoFilm: FilmData | null;
     fullDataFilms: FilmsFull;
 }
