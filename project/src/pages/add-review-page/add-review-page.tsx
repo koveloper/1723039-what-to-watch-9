@@ -2,12 +2,11 @@ import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import HeaderLayout from '../../layouts/header-layout/header-layout';
-import Breadcumbs from '../../layouts/header-layout/breadcumbs';
 import { FilmData } from '../../types/film-data-type';
 import { AppRoute, PosterSize } from '../../utils/constants';
 import { HeaderType } from '../../layouts/header-layout/header-type';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
 import { useAuth, useFilmIdFromUrl } from '../../hooks';
 
@@ -39,7 +38,16 @@ export default function AddReviewPage(props: FilmData): JSX.Element {
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <HeaderLayout type={HeaderType.AddReview}>
-          <Breadcumbs>{props.name}</Breadcumbs>
+          <nav className="breadcrumbs">
+            <ul className="breadcrumbs__list">
+              <li className="breadcrumbs__item">
+                <Link to=".." className="breadcrumbs__link">{props.name}</Link>
+              </li>
+              <li className="breadcrumbs__item">
+                <Link to="." className="breadcrumbs__link">Add review</Link>
+              </li>
+            </ul>
+          </nav>
           <UserBlock/>
         </HeaderLayout>
         <FilmCardPoster

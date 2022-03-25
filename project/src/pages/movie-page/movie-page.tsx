@@ -2,15 +2,18 @@ import { useAuth, useButtonsDefaultHandler, useFavorite } from '../../hooks';
 import { HeaderType } from '../../layouts/header-layout/header-type';
 import { Comments } from '../../types/commentary';
 import { FilmData } from '../../types/film-data-type';
-import { PosterSize } from '../../utils/constants';
+import { FilmInfoType, PosterSize } from '../../utils/constants';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmsList from '../../components/films-list/films-list';
 import UserBlock from '../../components/user-block/user-block';
-import CatalogLayout from '../../layouts/catalog-layout/catalog-layout';
-import FilmDescriptionLayout from '../../layouts/film-description-layout/film-description-layout';
 import HeaderLayout from '../../layouts/header-layout/header-layout';
+import Catalog from '../../components/catalog/catalog';
+import Footer from '../../components/footer/footer';
+import FilmTab from '../../components/film-tab/film-tab';
+import FilmCardMenu from '../../components/film-card-menu/film-card-menu';
+import { useState } from 'react';
 
 type MoviePageProps = {
   film: FilmData;
@@ -22,7 +25,7 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
   const isAuthorized = useAuth();
   const actionButtonClickHandler = useButtonsDefaultHandler(props.film.id);
   const isFavorite = useFavorite(props.film.id);
-
+  const [activeTab, setActiveTab] = useState(FilmInfoType.Overview);
   return (
     <>
       <section className='film-card film-card--full'>
@@ -58,13 +61,19 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
               title={props.film.name}
               size={PosterSize.Big}
             />
-            <FilmDescriptionLayout film={props.film} comments={props.comments} />
+            <div className="film-card__desc">
+              <FilmCardMenu onTabSelect={(tab: FilmInfoType) => setActiveTab(tab)}/>
+              <FilmTab film={props.film} comments={props.comments} tab={activeTab}/>
+            </div>
           </div>
         </div>
       </section>
-      <CatalogLayout title='More like this' type='filtered'>
-        <FilmsList films={props.similarFilms} />
-      </CatalogLayout>
+      <div className="page-content">
+        <Catalog title='More like this' type='filtered'>
+          <FilmsList films={props.similarFilms} />
+        </Catalog>
+        <Footer />
+      </div>
     </>
   );
 }

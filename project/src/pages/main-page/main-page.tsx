@@ -1,18 +1,19 @@
-import CatalogLayout from '../../layouts/catalog-layout/catalog-layout';
 import Spinner from '../../components/spinner/spinner';
 import HeaderLayout from '../../layouts/header-layout/header-layout';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
+import GenresList from '../../components/genres-list/genres-list';
+import FilmsList from '../../components/films-list/films-list';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import Catalog from '../../components/catalog/catalog';
+import Footer from '../../components/footer/footer';
 import { useAuth, useButtonsDefaultHandler, useFavorite, useFilms, usePromoFilm } from '../../hooks';
 import { HeaderType } from '../../layouts/header-layout/header-type';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
 import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
-import GenresList from '../../components/genres-list/genres-list';
-import FilmsList from '../../components/films-list/films-list';
-import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 export default function MainPage(): JSX.Element | null {
   const promoFilm = usePromoFilm();
@@ -55,15 +56,18 @@ export default function MainPage(): JSX.Element | null {
           </div>
         </div>
       </section>
-      <CatalogLayout title='Catalog' titleHidden type='full'>
-        <GenresList currentGenre={genre} onGenreChange={(newGenre) => setGenre(newGenre)} genres={genres}/>
-        <FilmsList films={filmsByGenre.slice(0, maxFilmsOnPage)}/>
-        {
-          filmsByGenre.length > maxFilmsOnPage
-            ? <ShowMoreButton onClick={() => setMaxFilmsOnPage(maxFilmsOnPage + FILMS_ON_PAGE_STEP)} />
-            : null
-        }
-      </CatalogLayout>
+      <div className="page-content">
+        <Catalog title='Catalog' titleHidden type='full'>
+          <GenresList currentGenre={genre} onGenreChange={(newGenre) => setGenre(newGenre)} genres={genres}/>
+          <FilmsList films={filmsByGenre.slice(0, maxFilmsOnPage)}/>
+          {
+            filmsByGenre.length > maxFilmsOnPage
+              ? <ShowMoreButton onClick={() => setMaxFilmsOnPage(maxFilmsOnPage + FILMS_ON_PAGE_STEP)} />
+              : null
+          }
+        </Catalog>
+        <Footer />
+      </div>
     </>
   );
 }
