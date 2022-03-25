@@ -4,8 +4,10 @@ import { api } from '../../api/api';
 import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
 import { useAuth } from '../../hooks';
+import { HeaderType } from '../../layouts/header-layout/header-type';
 import SignInForm from '../../components/sign-in-form/sign-in-form';
-import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
+import HeaderLayout from '../../layouts/header-layout/header-layout';
+import Footer from '../../components/footer/footer';
 
 type SignInPageProps = {
   message?: string;
@@ -24,10 +26,14 @@ export default function SignInPage({message, isError}: SignInPageProps): JSX.Ele
     }
   }, [isAuthorized]);
   return (
-    <UserPageLayout title='Sign in' hideUserBlock>
+    <div className="user-page">
+      <HeaderLayout type={HeaderType.UserOrSignIn}>
+        <h1 className="page-title user-page__title">Sign in</h1>
+      </HeaderLayout>
       <div className="sign-in user-page__content">
         <SignInForm onSubmit={onSubmitHandler} message={message} isError={isError} />
       </div>
-    </UserPageLayout>
+      <Footer />
+    </div>
   );
 }
