@@ -17,9 +17,23 @@ export default function MoviePageRouter(): JSX.Element {
   return (
     <Routes>
       <Route index
-        element={<MoviePage film={film.data} comments={film.comments} similarFilms={film.similar} />}
+        element={
+          <MoviePage
+            film={film.data}
+            comments={film.comments}
+            similarFilms={film.similar}
+          />
+        }
       />
-      <Route path='review' element={<AddReviewPage {...film.data} />} />
+      <Route path='review' element={
+        <AddReviewPage
+          id={film.data.id}
+          backgroundImage={film.data.backgroundImage}
+          posterImage={film.data.posterImage}
+          name={film.data.name}
+        />
+      }
+      />
       <Route path="*" element={<Error404 />} />
     </Routes>
   );

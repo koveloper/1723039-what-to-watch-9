@@ -2,28 +2,33 @@ import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Header from '../../components/header/header';
-import { FilmData } from '../../types/film-data-type';
 import { AppRoute, PosterSize } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 import { api } from '../../api/api';
 import { HeaderType } from '../../components/header/header-type';
-import { useFilmIdFromUrl } from '../../hooks/use-film-id-from-url';
 import { useAuth } from '../../hooks/use-auth';
 import { useRedirect } from '../../hooks/use-redirect';
 
-export default function AddReviewPage(props: FilmData): JSX.Element {
-  const filmId = useFilmIdFromUrl();
+type AddReviewPageProps = {
+  id: number;
+  name: string;
+  backgroundImage: string;
+  posterImage: string;
+};
+
+export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | null {
   const isAuthorized = useAuth();
   const redirect = useRedirect();
   if(!isAuthorized) {
-    redirect(`${AppRoute.Films}/${filmId}`);
+    redirect(`${AppRoute.Films}/${props.id}`);
+    return null;
   }
   const addReviewSubmitHandler = (rating: number, commentary: string) => {
     if(!commentary.length) {
       return;
     }
     const comment = {
-      id: filmId,
+      id: props.id,
       comment: commentary,
       rating,
     };
@@ -40,7 +45,7 @@ export default function AddReviewPage(props: FilmData): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to=".." className="breadcrumbs__link">{props.name}</Link>
+                <Link to={`${AppRoute.Films}/${props.id}`} className="breadcrumbs__link">{props.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link to="." className="breadcrumbs__link">Add review</Link>
