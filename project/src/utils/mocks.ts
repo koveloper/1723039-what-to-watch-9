@@ -27,7 +27,7 @@ export const createFakeFilmData = (idValue?: number): FilmData => ({
   name: generator.name.title(),
   posterImage: generator.image.imageUrl(),
   previewImage: generator.image.imageUrl(),
-  backgroundImage: generator.internet.url(),
+  backgroundImage: generator.image.imageUrl(),
   backgroundColor: generator.commerce.color(),
   description: generator.lorem.paragraphs(1 + generator.datatype.number(2)),
   rating: 1 + generator.datatype.number(10),
