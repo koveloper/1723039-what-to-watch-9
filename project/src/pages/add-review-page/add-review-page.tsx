@@ -1,25 +1,23 @@
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
+import Header from '../../components/header/header';
 import { FilmData } from '../../types/film-data-type';
 import { AppRoute, PosterSize } from '../../utils/constants';
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { api } from '../../api/api';
-import Header from '../../components/header/header';
 import { HeaderType } from '../../components/header/header-type';
 import { useFilmIdFromUrl } from '../../hooks/use-film-id-from-url';
 import { useAuth } from '../../hooks/use-auth';
+import { useRedirect } from '../../hooks/use-redirect';
 
 export default function AddReviewPage(props: FilmData): JSX.Element {
   const filmId = useFilmIdFromUrl();
-  const navigate = useNavigate();
   const isAuthorized = useAuth();
-  useEffect(() => {
-    if(!isAuthorized) {
-      navigate(`${AppRoute.Films}/${filmId}`);
-    }
-  }, [isAuthorized]);
+  const redirect = useRedirect();
+  if(!isAuthorized) {
+    redirect(`${AppRoute.Films}/${filmId}`);
+  }
   const addReviewSubmitHandler = (rating: number, commentary: string) => {
     if(!commentary.length) {
       return;
