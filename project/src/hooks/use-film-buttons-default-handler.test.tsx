@@ -10,12 +10,13 @@ import { createFakeFilms } from '../utils/mocks';
 import { ButtonType } from '../components/film-card-buttons/constants';
 import { AppRoute } from '../utils/constants';
 import { api } from '../api/api';
+import { setRedirect } from '../store/service-process/service-process';
 
-const mockedNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockedNavigate,
-}));
+// const mockedNavigate = jest.fn();
+// jest.mock('react-router-dom', () => ({
+//   ...jest.requireActual('react-router-dom'),
+//   useNavigate: () => mockedNavigate,
+// }));
 
 const mockedSetFavorite = jest.fn();
 api.setFavoriteStatus = mockedSetFavorite;
@@ -65,7 +66,7 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
     const callbackFunc = result.current;
     expect(callbackFunc).toBeInstanceOf(Function);
   });
-  it('should redirect to play on use for play button', async () => {
+  it('should redirect to Player page for play button', async () => {
     const store = mockStore(Object.assign(
       initialState,
       {
@@ -89,7 +90,43 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
     );
     const callbackFunc = result.current;
     callbackFunc(ButtonType.Play);
-    expect(mockedNavigate).toHaveBeenCalledWith(`${AppRoute.PlayerRoot}/${fakeFilms[fakeFilmNumber].id}`);
+    //check actions in queue after hook invoke
+    expect(store.getActions().length).toBe(1);
+    const redirectAction = store.getActions().find(({type}) => type === setRedirect.toString());
+    expect(redirectAction).not.toBe(undefined);
+    //check action payload
+    expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(`${AppRoute.PlayerRoot}/${fakeFilms[fakeFilmNumber].id}`);
+  });
+  it('should redirect to AddReview page for review button', async () => {
+    const store = mockStore(Object.assign(
+      initialState,
+      {
+        films: {
+          all: fakeFilms,
+        },
+      },
+    ));
+
+    const {result} = renderHook(
+      () => useFilmButtonsDefaultHandler(fakeFilms[fakeFilmNumber].id),
+      {
+        wrapper: ({ children }) => (
+          <Provider store={store} >
+            <BrowserRouter>
+              {children}
+            </BrowserRouter>
+          </Provider>
+        ),
+      },
+    );
+    const callbackFunc = result.current;
+    callbackFunc(ButtonType.AddReview);
+    //check actions in queue after hook invoke
+    expect(store.getActions().length).toBe(1);
+    const redirectAction = store.getActions().find(({type}) => type === setRedirect.toString());
+    expect(redirectAction).not.toBe(undefined);
+    //check action payload
+    expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(`${AppRoute.Films}/${fakeFilms[fakeFilmNumber].id}/review`);
   });
 
   it('should call setFavorite with favorite flag true for non favorite film', async () => {
