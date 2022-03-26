@@ -8,7 +8,6 @@ import Footer from '../../components/footer/footer';
 import FilmTab from '../../components/film-tab/film-tab';
 import FilmCardMenu from '../../components/film-card-menu/film-card-menu';
 import Header from '../../components/header/header';
-import { useButtonsDefaultHandler } from '../../hooks';
 import { Comments } from '../../types/commentary';
 import { FilmData } from '../../types/film-data-type';
 import { FilmInfoType, PosterSize } from '../../utils/constants';
@@ -16,6 +15,7 @@ import { useState } from 'react';
 import { HeaderType } from '../../components/header/header-type';
 import { useAuth } from '../../hooks/use-auth';
 import { useFavorite } from '../../hooks/use-favorite';
+import { useFilmButtonsDefaultHandler } from '../../hooks/use-film-buttons-default-handler';
 
 type MoviePageProps = {
   film: FilmData;
@@ -25,7 +25,7 @@ type MoviePageProps = {
 
 export default function MoviePage(props: MoviePageProps): JSX.Element {
   const isAuthorized = useAuth();
-  const actionButtonClickHandler = useButtonsDefaultHandler(props.film.id);
+  const filmButtonsClickHandler = useFilmButtonsDefaultHandler(props.film.id);
   const isFavorite = useFavorite(props.film.id);
   const [activeTab, setActiveTab] = useState(FilmInfoType.Overview);
   return (
@@ -47,7 +47,7 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
                 releaseYear={props.film.released}
               >
                 <FilmCardButtons
-                  onButtonClick={actionButtonClickHandler}
+                  onButtonClick={filmButtonsClickHandler}
                   isShowAddReviewButton={isAuthorized}
                   isShowAddToFavorsButton={isAuthorized}
                   isFavorite={!!isFavorite}

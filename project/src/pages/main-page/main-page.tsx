@@ -9,7 +9,6 @@ import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import { useButtonsDefaultHandler } from '../../hooks';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
 import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
@@ -18,6 +17,7 @@ import { useAuth } from '../../hooks/use-auth';
 import { useFilms } from '../../hooks/use-films';
 import { usePromoFilm } from '../../hooks/use-promo-film';
 import { useFavorite } from '../../hooks/use-favorite';
+import { useFilmButtonsDefaultHandler } from '../../hooks/use-film-buttons-default-handler';
 
 export default function MainPage(): JSX.Element | null {
   const promoFilm = usePromoFilm();
@@ -27,7 +27,7 @@ export default function MainPage(): JSX.Element | null {
   const genres: string[] = [ALL_GENRES, ...getGenresFromFilms(films || [])];
   const filmsByGenre = filterFilmsByGenre(films || [], genre);
   const isPromoFilmFavorite = useFavorite(promoFilm ? promoFilm.id : -1);
-  const actionButtonClickHandler = useButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
+  const filmButtonsClickHandler = useFilmButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
   const isAuthorized = useAuth();
   if(!promoFilm) {
     return <Spinner />;
@@ -51,7 +51,7 @@ export default function MainPage(): JSX.Element | null {
               releaseYear={promoFilm.released}
             >
               <FilmCardButtons
-                onButtonClick={actionButtonClickHandler}
+                onButtonClick={filmButtonsClickHandler}
                 isShowAddReviewButton={false}
                 isShowAddToFavorsButton={isAuthorized}
                 isFavorite={!!isPromoFilmFavorite}
