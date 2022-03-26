@@ -7,7 +7,11 @@ import { Route, Routes } from 'react-router-dom';
 import { useFilmIdFromUrl } from '../../hooks/use-film-id-from-url';
 import { useFullFilmData } from '../../hooks/use-full-film-data';
 
-export default function MoviePageRouter(): JSX.Element {
+type MoviePageRouterProps = {
+  muted?: boolean;
+}
+
+export default function MoviePageRouter(props: MoviePageRouterProps): JSX.Element {
   const id = useFilmIdFromUrl();
   const film = useFullFilmData(id);
   if(film === undefined) {
@@ -22,6 +26,7 @@ export default function MoviePageRouter(): JSX.Element {
             film={film.data}
             comments={film.comments}
             similarFilms={film.similar}
+            muted={props.muted}
           />
         }
       />

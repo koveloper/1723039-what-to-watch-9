@@ -28,8 +28,8 @@ describe('Component: MoviePage', () => {
   //check markup only
   it('should render correctly with maximum 4 similar films without AddToList and Review button in auth status Unknown or unauthorized', () => {
     const states = [AuthStatus.UnAuthorized, AuthStatus.Unknown];
+    HTMLMediaElement.prototype.pause = jest.fn;
     for(const auth of states) {
-      HTMLMediaElement.prototype.pause = jest.fn;
       const store = mockStore(Object.assign(
         initialState,
         {
