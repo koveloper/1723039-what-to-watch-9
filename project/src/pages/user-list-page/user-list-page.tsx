@@ -7,7 +7,11 @@ import Header from '../../components/header/header';
 import { HeaderType } from '../../components/header/header-type';
 import { useFavoriteFilms } from '../../hooks/use-favorite-films';
 
-export default function UserListPage(): JSX.Element {
+type UserListPageProps = {
+  muted?: boolean;
+}
+
+export default function UserListPage(props: UserListPageProps): JSX.Element {
   const favoriteFilms = useFavoriteFilms();
   if(!favoriteFilms) {
     return <Spinner />;
@@ -20,7 +24,7 @@ export default function UserListPage(): JSX.Element {
         <UserBlock />
       </Header>
       <Catalog title='Catalog' titleHidden type='filtered'>
-        <FilmsList films={favoriteFilms}/>
+        <FilmsList films={favoriteFilms} muted={props.muted}/>
       </Catalog>
       <Footer />
     </div>

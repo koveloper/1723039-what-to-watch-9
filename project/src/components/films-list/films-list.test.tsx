@@ -15,5 +15,8 @@ describe('Component: FilmsList', () => {
     );
     //check that links count is equal to films count
     expect(screen.getAllByRole('link').length).toEqual(filmsCount);
+    for(const film of films) {
+      expect(screen.getByText(film.name)).toBeInTheDocument();
+    }
   });
 });
