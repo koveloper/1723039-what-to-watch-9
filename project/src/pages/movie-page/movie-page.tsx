@@ -21,6 +21,7 @@ type MoviePageProps = {
   film: FilmData;
   comments: Comments;
   similarFilms: FilmData[];
+  muted?: boolean;
 }
 
 export default function MoviePage(props: MoviePageProps): JSX.Element {
@@ -72,7 +73,7 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
       </section>
       <div className="page-content">
         <Catalog title='More like this' type='filtered'>
-          <FilmsList films={props.similarFilms} />
+          <FilmsList films={props.similarFilms.length > 4 ? props.similarFilms.slice(0, 4) : props.similarFilms} muted={props.muted} />
         </Catalog>
         <Footer />
       </div>
