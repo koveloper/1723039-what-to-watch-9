@@ -19,7 +19,7 @@ function Star(props: StarProps): JSX.Element {
         name="rating"
         value={`${props.value}`}
       />
-      <label className="rating__label" htmlFor={`star-${props.value}`}>Rating {`${props.value}`}</label>
+      <label className="rating__label" htmlFor={`star-${props.value}`}>Rating {props.value.toString()}</label>
     </>
   );
 }

@@ -4,12 +4,13 @@ import { memo } from 'react';
 
 type FilmsListProps = {
   films: FilmData[];
+  muted?: boolean;
 }
 
-function FilmsList({ films }: FilmsListProps): JSX.Element {
+function FilmsList({ films, muted }: FilmsListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
-      {films.map((film) => <FilmLogo key={film.id.toString()} film={film}/>)}
+      {films.map((film) => <FilmLogo key={film.id.toString()} film={film} muted={muted}/>)}
     </div>
   );
 }

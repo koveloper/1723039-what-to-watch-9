@@ -1,4 +1,3 @@
-import FilmCardBackground from '../../components/film-card-background/film-card-background';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
@@ -35,7 +34,9 @@ export default function AddReviewPage(props: FilmData): JSX.Element {
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
-        <FilmCardBackground title={props.name} imageUrl={props.backgroundImage}/>
+        <div className="film-card__bg">
+          <img src={props.backgroundImage} alt={props.name} />
+        </div>
         <h1 className="visually-hidden">WTW</h1>
         <HeaderLayout type={HeaderType.AddReview}>
           <Breadcumbs>{props.name}</Breadcumbs>

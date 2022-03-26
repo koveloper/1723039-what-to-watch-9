@@ -1,5 +1,5 @@
 import { SyntheticEvent, useRef, useState } from 'react';
-import RatingChooser from './rating-chooser';
+import RatingChooser from '../rating-chooser/rating-chooser';
 
 type AddReviewFormProps = {
   onReviewSubmit: (rating: number, commentary: string) => void;

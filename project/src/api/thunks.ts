@@ -1,9 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { store } from '../store';
 import { AuthStatus } from '../store/constants';
 import { FilmComments, FilmData, FilmFullData, Films } from '../types/film-data-type';
 import { UserType } from '../types/user-type';
-import { api } from './api';
 import { APIRoute } from './constants';
 import { LoginData } from '../types/login-data';
 import { token } from '../services/token';
@@ -12,114 +10,124 @@ import { setFilms, setFullDataFilm, setPromoFilm, updateComments } from '../stor
 import { changeFavoriteFilmState, setAuthStatus, setFavoriteFilms, setUserData } from '../store/user-process/user-process';
 import { setRedirect } from '../store/service-process/service-process';
 import { AppRoute } from '../utils/constants';
+import { AppDispatch } from '../store/types';
+import { AxiosInstance } from 'axios';
 
-export const fetchFilmsAction = createAsyncThunk(
-  'data/fetchFilms',
-  async () => {
-    try {
-      const {data} = await api.network.get<Films>(APIRoute.Films);
-      store.dispatch(setFilms(data));
-    } catch (error) {
-      // errorHandle(error);
-    }
-  },
-);
+/**
+ * Function generates directly independent from store and axios thunks
+ * @param dispatch - function for dispatching action to store
+ * @param network - axios instance
+ * @returns object with create actions methods
+ */
+export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance) => ({
+  fetchFilmsAction: createAsyncThunk(
+    'data/fetchFilms',
+    async () => {
+      try {
+        const {data} = await network.get<Films>(APIRoute.Films);
+        dispatch(setFilms(data));
+      } catch (error) {
+        // errorHandle(error);
+      }
+    },
+  ),
 
-export const fetchPromoFilmAction = createAsyncThunk(
-  'data/fetchPromoFilm',
-  async () => {
-    try {
-      const {data} = await api.network.get<FilmData>(APIRoute.PromoFilm);
-      store.dispatch(setPromoFilm(data));
-    } catch (error) {
-      // errorHandle(error);
-    }
-  },
-);
+  fetchPromoFilmAction: createAsyncThunk(
+    'data/fetchPromoFilm',
+    async () => {
+      try {
+        const {data} = await network.get<FilmData>(APIRoute.PromoFilm);
+        dispatch(setPromoFilm(data));
+      } catch (error) {
+        // errorHandle(error);
+      }
+    },
+  ),
 
-export const checkAuthAction = createAsyncThunk(
-  'data/getAuth',
-  async () => {
-    try {
-      const {data} = await api.network.get<UserType>(APIRoute.Login);
-      store.dispatch(setAuthStatus(AuthStatus.Authorized));
-      store.dispatch(setUserData(data));
-    } catch (error) {
-      // errorHandle(error);
-    }
-  },
-);
+  checkAuthAction: createAsyncThunk(
+    'data/getAuth',
+    async () => {
+      try {
+        const {data} = await network.get<UserType>(APIRoute.Login);
+        dispatch(setAuthStatus(AuthStatus.Authorized));
+        dispatch(setUserData(data));
+      } catch (error) {
+        // errorHandle(error);
+      }
+    },
+  ),
 
-export const loginAction = createAsyncThunk(
-  'data/postAuth',
-  async ({login: email, password}: LoginData) => {
-    try {
-      const {data} = await api.network.post<UserType>(APIRoute.Login, {email, password});
-      token.save(data.token);
-      store.dispatch(setAuthStatus(AuthStatus.Authorized));
-      store.dispatch(setUserData(data));
-    } catch (error) {
-      // errorHandle(error);
-    }
-  },
-);
+  loginAction: createAsyncThunk(
+    'data/postAuth',
+    async ({login: email, password}: LoginData) => {
+      try {
+        const {data} = await network.post<UserType>(APIRoute.Login, {email, password});
+        token.save(data.token);
+        dispatch(setAuthStatus(AuthStatus.Authorized));
+        dispatch(setUserData(data));
+      } catch (error) {
+        // errorHandle(error);
+      }
+    },
+  ),
 
-export const getFullDataFilmAction = createAsyncThunk(
-  'data/getSelectedFilm',
-  async (id: number) => {
-    try {
-      const {data: film} = await api.network.get<FilmData>(APIRoute.Film(id));
-      const {data: similar} = await api.network.get<Films>(APIRoute.SimilarFilms(id));
-      const {data: comments} = await api.network.get<Comments>(APIRoute.Comments(id));
-      store.dispatch(setFullDataFilm({
-        id,
-        data: film,
-        comments,
-        similar,
-      } as FilmFullData));
-    } catch (error) {
-      //
-    }
-  },
-);
+  getFullDataFilmAction: createAsyncThunk(
+    'data/getSelectedFilm',
+    async (id: number) => {
+      try {
+        const {data: film} = await network.get<FilmData>(APIRoute.Film(id));
+        const {data: similar} = await network.get<Films>(APIRoute.SimilarFilms(id));
+        const {data: comments} = await network.get<Comments>(APIRoute.Comments(id));
+        dispatch(setFullDataFilm({
+          id,
+          data: film,
+          comments,
+          similar,
+        } as FilmFullData));
+      } catch (error) {
+        dispatch(setRedirect(AppRoute.Err404));
+      }
+    },
+  ),
 
-export const postCommentAction = createAsyncThunk(
-  'data/postFilmComment',
-  async ({id, rating, comment}: CommentForPost) => {
-    try {
-      const {data} = await api.network.post<Comments>(APIRoute.Comments(id), {comment, rating});
-      store.dispatch(updateComments({
-        id: id,
-        comments: data,
-      } as FilmComments));
+  postCommentAction: createAsyncThunk(
+    'data/postFilmComment',
+    async ({id, rating, comment}: CommentForPost) => {
+      try {
+        const {data} = await network.post<Comments>(APIRoute.Comments(id), {comment, rating});
+        dispatch(updateComments({
+          id: id,
+          comments: data,
+        } as FilmComments));
 
-      store.dispatch(setRedirect(`${AppRoute.Films}/${id}`));
-    } catch (error) {
-      //
-    }
-  },
-);
+        dispatch(setRedirect(`${AppRoute.Films}/${id}`));
+      } catch (error) {
+        dispatch(setRedirect(AppRoute.Err404));
+      }
+    },
+  ),
 
-export const getFavoriteFilms = createAsyncThunk(
-  'data/getFavoriteFilms',
-  async () => {
-    try {
-      const {data} = await api.network.get<Films>(APIRoute.FavoriteFilms);
-      store.dispatch(setFavoriteFilms(data.map((film) => film.id)));
-    } catch (error) {
-      //
-    }
-  },
-);
+  getFavoriteFilms: createAsyncThunk(
+    'data/getFavoriteFilms',
+    async () => {
+      try {
+        const {data} = await network.get<Films>(APIRoute.FavoriteFilms);
+        dispatch(setFavoriteFilms(data.map((film) => film.id)));
+      } catch (error) {
+        //
+      }
+    },
+  ),
 
-export const setFavoriteFilm = createAsyncThunk(
-  'data/setFavoriteFilm',
-  async ({id, isFavorite}: {id: number, isFavorite: boolean}) => {
-    try {
-      const {data} = await api.network.post<FilmData>(APIRoute.SetFavoriteFilm(id, isFavorite));
-      store.dispatch(changeFavoriteFilmState(data));
-    } catch (error) {
-      //
-    }
-  },
-);
+  setFavoriteFilm: createAsyncThunk(
+    'data/setFavoriteFilm',
+    async ({id, isFavorite}: {id: number, isFavorite: boolean}) => {
+      try {
+        const {data} = await network.post<FilmData>(APIRoute.SetFavoriteFilm(id, isFavorite));
+        dispatch(changeFavoriteFilmState(data));
+      } catch (error) {
+        //
+      }
+    },
+  ),
+});

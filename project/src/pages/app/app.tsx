@@ -8,12 +8,12 @@ import MoviePageRouter from '../movie-page-router/movie-page-router';
 import Spinner from '../../components/spinner/spinner';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../utils/constants';
-import { useFilms, usePromoFilm, useRedirect } from '../../hooks';
+import { useFilms, usePromoFilm, useRedirectCheck } from '../../hooks';
 
 export default function App(): JSX.Element {
   const films = useFilms();
   const promoFilm = usePromoFilm();
-  useRedirect();
+  useRedirectCheck();
   if(films === null || promoFilm === null) {
     return <Spinner/>;
   }

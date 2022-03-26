@@ -1,6 +1,5 @@
 import { FormEvent, useRef} from 'react';
 import { LoginData } from '../../types/login-data';
-import ErrorMessage from './error-message';
 
 type SignInFormProps = {
   message?: string;
@@ -25,7 +24,7 @@ export default function SignInForm({message, isError, onSubmit}: SignInFormProps
   const classes = isErrorShown ? 'sign-in__field sign-in__field--error' : 'sign-in__field';
   return (
     <form onSubmit={onSubminHandler} className="sign-in__form">
-      {message ? <ErrorMessage>{message}</ErrorMessage> : null}
+      {message ? <div className="sign-in__message">{message}</div>  : null}
       <div className="sign-in__fields">
         <div className={classes}>
           <input
