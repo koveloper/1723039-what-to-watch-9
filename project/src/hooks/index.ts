@@ -34,15 +34,5 @@ export const useButtonsDefaultHandler = (id: number) : (type: ButtonType) => voi
 };
 
 /////////////////////////////////////////
-export const useRedirectCheck = () => {
-  const navigate = useNavigate();
-  const { redirect } = useSelector((state: State) => state.service);
-  useEffect(() => {
-    if(!redirect) {
-      return;
-    }
-    store.dispatch(setRedirect(null));
-    navigate(redirect);
-  }, [redirect]);
-};
+
 
