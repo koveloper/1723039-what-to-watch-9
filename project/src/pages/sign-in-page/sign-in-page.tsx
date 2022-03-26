@@ -13,7 +13,7 @@ type SignInPageProps = {
   isError?: boolean;
 }
 
-export default function SignInPage({message, isError}: SignInPageProps): JSX.Element {
+export default function SignInPage({message, isError}: SignInPageProps): JSX.Element | null {
   const isAuthorized = useAuth();
   const redirect = useRedirect();
   const onSubmitHandler = (props: LoginData) => {
@@ -21,6 +21,7 @@ export default function SignInPage({message, isError}: SignInPageProps): JSX.Ele
   };
   if(isAuthorized) {
     redirect(AppRoute.Root);
+    return null;
   }
   return (
     <div className="user-page">
