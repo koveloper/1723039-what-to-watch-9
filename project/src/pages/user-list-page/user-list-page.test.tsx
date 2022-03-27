@@ -2,30 +2,14 @@ import {render, screen} from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../../store/types';
 import { Action } from '@reduxjs/toolkit';
-import { AuthStatus } from '../../store/constants';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createFakeFilms } from '../../utils/mocks';
+import { createFakeFilms, createInitialState } from '../../utils/mocks';
 import UserListPage from './user-list-page';
 
 describe('Component: UserListPage', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-      error: null,
-    },
-  };
+  const initialState:State = createInitialState();
   //check markup only
   it('should render spinner if favorite films not fetched', () => {
     HTMLMediaElement.prototype.pause = jest.fn;

@@ -2,7 +2,6 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
-import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
 import { BrowserRouter } from 'react-router-dom';
 import { useFilmButtonsDefaultHandler } from './use-film-buttons-default-handler';
@@ -11,12 +10,6 @@ import { ButtonType } from '../components/film-card-buttons/constants';
 import { AppRoute } from '../utils/constants';
 import { api } from '../api/api';
 import { setRedirect } from '../store/service-process/service-process';
-
-// const mockedNavigate = jest.fn();
-// jest.mock('react-router-dom', () => ({
-//   ...jest.requireActual('react-router-dom'),
-//   useNavigate: () => mockedNavigate,
-// }));
 
 const mockedSetFavorite = jest.fn();
 api.setFavoriteStatus = mockedSetFavorite;

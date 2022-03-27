@@ -2,14 +2,15 @@ import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Header from '../../components/header/header';
-import { AppRoute, PosterSize } from '../../utils/constants';
+import { AppError, AppRoute, PosterSize } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 import { api } from '../../api/api';
 import { HeaderType } from '../../components/header/header-type';
 import { useAuth } from '../../hooks/use-auth';
 import { useRedirect } from '../../hooks/use-redirect';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '../../components/spinner/spinner';
+import { useAppError } from '../../hooks/use-app-error';
 
 type AddReviewPageProps = {
   id: number;
@@ -22,6 +23,13 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
   const isAuthorized = useAuth();
   const redirect = useRedirect();
   const [isPosting, setPosting] = useState(false);
+  const [appError, setAppError] = useAppError();
+  useEffect(() => {
+    if(isPosting && appError && appError.type === AppError.PostReview) {
+      setPosting(false);
+      setAppError(null);
+    }
+  }, [appError]);
   if(!isAuthorized) {
     redirect(AppRoute.SignIn);
     return null;

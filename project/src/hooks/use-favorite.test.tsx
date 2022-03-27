@@ -2,7 +2,6 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
-import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
 import { createInitialState } from '../utils/mocks';
 import { useFavorite } from './use-favorite';
