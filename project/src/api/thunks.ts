@@ -71,6 +71,22 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
     },
   ),
 
+  logoutAction: createAsyncThunk(
+    'data/deleteAuth',
+    async () => {
+      try {
+        const {status} = await network.delete(APIRoute.Logout);
+        if(status !== 204) {
+          throw new Error(`Unexpected server response code ${status} on /logout`);
+        }
+        dispatch(setAuthStatus(AuthStatus.UnAuthorized));
+        dispatch(setUserData(null));
+      } catch (error) {
+        // errorHandle(error);
+      }
+    },
+  ),
+
   getFullDataFilmAction: createAsyncThunk(
     'data/getSelectedFilm',
     async (id: number) => {

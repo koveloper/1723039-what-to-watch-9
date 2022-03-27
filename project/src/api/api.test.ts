@@ -58,7 +58,7 @@ describe('API functions', () => {
     expect(actions).toContain(setAuthStatus.toString());
   });
 
-  it('should dispatch loginAction and expect and auth status userData when POST /login', async () => {
+  it('should dispatch loginAction and expect auth status and userData when POST /login', async () => {
     const fakeUser:LoginData = {login: createFakeEmail(), password: createFakePassword()};
     //create mock store instance
     const store = mockStore(initialState);
@@ -87,6 +87,29 @@ describe('API functions', () => {
     //check conditions on storage
     expect(Storage.prototype.setItem).toBeCalledTimes(1);
     expect(Storage.prototype.setItem).toBeCalledWith('what-to-watch', fakeUserResponse.token);
+  });
+
+  it('should dispatch loginAction with UnAuthorized status when DELETE /logout', async () => {
+    //create mock store instance
+    const store = mockStore(initialState);
+    //create mock API instance with mocked store and mocked network
+    const mockApi = createAPI(store as Store, network);
+    //immitate answer on POST to login URL
+    networkMockWrapper
+      .onDelete(APIRoute.Logout)
+      .reply(204);
+    //call API method
+    await mockApi.logout();
+    //analize store actions queue
+    const authAction = store.getActions().find((action) => action.type === setAuthStatus.toString());
+    const userDataAction = store.getActions().find((action) => action.type === setUserData.toString());
+    //check for actions in queue
+    expect(authAction).not.toBe(undefined);
+    expect(userDataAction).not.toBe(undefined);
+    //check for action contains auth state
+    expect(authAction).toMatchObject({payload: 'UnAuthorized'});
+    //check for action contains user data
+    expect(userDataAction).toMatchObject({payload: null});
   });
 
   it('should dispatch setFilms action with films data', async () => {

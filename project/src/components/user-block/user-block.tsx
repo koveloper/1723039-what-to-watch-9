@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use-auth';
 import { useAvatar } from '../../hooks/use-avatar';
 import { AppRoute } from '../../utils/constants';
-import { getBlankLink } from '../../utils/logic-utils';
 
 function UserBlock(): JSX.Element {
   const isAuthorized = useAuth();
@@ -22,7 +21,7 @@ function UserBlock(): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <Link className="user-block__link" to={getBlankLink()}>Sign out</Link>
+              <Link className="user-block__link" to={AppRoute.SignOut}>Sign out</Link>
             </li>
           </>
         )
