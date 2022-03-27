@@ -20,6 +20,8 @@ describe('Component: Player', () => {
     expect(screen.getByText(film.name)).toBeInTheDocument();
     expect(screen.getByText('Exit')).toBeInTheDocument();
     expect(screen.getAllByRole('button').length).toBe(3);
+    expect(screen.getByTestId('video')).toBeInTheDocument();
+    expect(screen.getByTestId('player-root')).toBeInTheDocument();
     //check spinner on screen
     expect(screen.getByText('Loading...')).toBeInTheDocument();
     expect(screen.getByText('Please wait...')).toBeInTheDocument();
