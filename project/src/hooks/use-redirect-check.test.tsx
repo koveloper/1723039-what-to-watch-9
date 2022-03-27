@@ -77,6 +77,8 @@ describe('Hook: useRedirectCheck', () => {
 
     const value = result.current;
     expect(value).toBe(true);
+    expect(mockedNavigate).toHaveBeenCalled();
+    expect(mockedNavigate).toHaveBeenCalledTimes(1);
     expect(mockedNavigate).toHaveBeenCalledWith(redirectTo);
     expect(store.getActions().length).toBe(1);
     const actions = store.getActions().map(({type}) => type);

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { getTimeFromSeconds } from './utils';
-import Spinner from '../spinner/spinner';
+import { useNavigate } from 'react-router-dom';
 import PlayButton from './play-button';
+import Spinner from '../spinner/spinner';
 
 export type PlayerProps = {
     title: string;
@@ -16,11 +17,13 @@ export default function Player(props: PlayerProps): JSX.Element {
   const video = videoRef.current;
   //
   const [initialized, setInitialized] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [fullscreen, setFullscreen] = useState(false);
+  const [playing, setPlaying] = useState<boolean | undefined>(undefined);
+  const [fullscreen, setFullscreen] = useState<boolean | undefined>(undefined);
   const [videoDuration, setVideoDuration] = useState(0);
   const [secondsWatched, setSecondsWatched] = useState(0);
+  const navigate = useNavigate();
   //effect for handle full screen mode
+
   useEffect(() => {
     if(!player) {
       return;
@@ -31,21 +34,21 @@ export default function Player(props: PlayerProps): JSX.Element {
       document.exitFullscreen();
     }
   }, [player, fullscreen]);
-  //effect for initial video setup
+  //effect for initial video setup and playback
   useEffect(() => {
     if(!video) {
       return;
     }
     setVideoDuration(video.duration);
-  }, [video]);
-  //handle play state
-  if(video) {
+    if(playing === undefined) {
+      return;
+    }
     if(playing) {
       video.play();
     } else {
       video.pause();
     }
-  }
+  }, [video, playing]);
   //setup handlers and vars
   const playButtonClickHandler = () => {
     setPlaying(!playing);
@@ -58,8 +61,9 @@ export default function Player(props: PlayerProps): JSX.Element {
   const timeLeft = getTimeFromSeconds(secondsLeft);
 
   return (
-    <div ref={playerRef} className="player">
+    <div data-testid="player-root" ref={playerRef} className="player">
       <video
+        data-testid="video"
         ref={videoRef}
         onCanPlay={() => setInitialized(true)}
         onTimeUpdate={() => setSecondsWatched(video ? video.currentTime : 0)}
@@ -73,7 +77,7 @@ export default function Player(props: PlayerProps): JSX.Element {
           ? null
           : <Spinner />
       }
-      <button onClick={() => window.history.back()} type="button" className="player__exit">Exit</button>
+      <button onClick={() => navigate(-1)} type="button" className="player__exit">Exit</button>
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
@@ -84,7 +88,7 @@ export default function Player(props: PlayerProps): JSX.Element {
         </div>
 
         <div className="player__controls-row">
-          <PlayButton playing={playing} onClick={playButtonClickHandler} />
+          <PlayButton playing={!!playing} onClick={playButtonClickHandler} />
           <div className="player__name">{props.title}</div>
 
           <button onClick={fullScreenButtonClickHandler} type="button" className="player__full-screen">
