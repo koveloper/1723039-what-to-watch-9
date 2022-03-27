@@ -8,7 +8,7 @@ type GenresListProps = {
 
 function GenresList(props: GenresListProps): JSX.Element {
   return (
-    <ul className="catalog__genres-list">
+    <ul data-testid="genre-list" className="catalog__genres-list">
       {props.genres.map((genre) => <GenresListItem onSelect={(title) => props.onGenreChange(title)} key={`genre-item-${genre}`} title={genre} selected={props.currentGenre===genre}></GenresListItem>)}
     </ul>
   );

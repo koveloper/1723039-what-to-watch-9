@@ -11,7 +11,7 @@ function UserBlock(): JSX.Element {
   const navigate = useNavigate();
 
   return (
-    <ul className="user-block">
+    <ul data-testid="user-block" className="user-block">
       {isAuthorized
         ?
         (

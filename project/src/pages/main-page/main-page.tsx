@@ -11,25 +11,30 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
-import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
 import { HeaderType } from '../../components/header/header-type';
 import { useAuth } from '../../hooks/use-auth';
 import { useFilms } from '../../hooks/use-films';
 import { usePromoFilm } from '../../hooks/use-promo-film';
 import { useFavorite } from '../../hooks/use-favorite';
 import { useFilmButtonsDefaultHandler } from '../../hooks/use-film-buttons-default-handler';
+import { useFilmsByGenre } from '../../hooks/use-films-by-genre';
+import { useGenres } from '../../hooks/use-genres';
 
-export default function MainPage(): JSX.Element | null {
+type MainPageProps = {
+  muted?: boolean;
+}
+
+export default function MainPage(props : MainPageProps): JSX.Element | null {
   const promoFilm = usePromoFilm();
   const films = useFilms();
   const [genre, setGenre] = useState(ALL_GENRES);
   const [maxFilmsOnPage, setMaxFilmsOnPage] = useState(FILMS_ON_PAGE_INITIAL);
-  const genres: string[] = [ALL_GENRES, ...getGenresFromFilms(films || [])];
-  const filmsByGenre = filterFilmsByGenre(films || [], genre);
+  const genres: string[] = useGenres();
+  const filmsByGenre = useFilmsByGenre(genre);
   const isPromoFilmFavorite = useFavorite(promoFilm ? promoFilm.id : -1);
   const filmButtonsClickHandler = useFilmButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
   const isAuthorized = useAuth();
-  if(!promoFilm) {
+  if(!promoFilm || !films) {
     return <Spinner />;
   }
   return (
@@ -42,7 +47,7 @@ export default function MainPage(): JSX.Element | null {
         <Header type={HeaderType.FilmCard}>
           <UserBlock/>
         </Header>
-        <div className="film-card__wrap">
+        <div data-testid="film-card-main" className="film-card__wrap">
           <div className="film-card__info">
             <FilmCardPoster title={promoFilm.name} posterUrl={promoFilm.posterImage} size={PosterSize.Medium}/>
             <FilmCardMain
@@ -63,7 +68,7 @@ export default function MainPage(): JSX.Element | null {
       <div className="page-content">
         <Catalog title='Catalog' titleHidden type='full'>
           <GenresList currentGenre={genre} onGenreChange={(newGenre) => setGenre(newGenre)} genres={genres}/>
-          <FilmsList films={filmsByGenre.slice(0, maxFilmsOnPage)}/>
+          <FilmsList films={filmsByGenre.slice(0, maxFilmsOnPage)} muted={props.muted}/>
           {
             filmsByGenre.length > maxFilmsOnPage
               ? <ShowMoreButton onClick={() => setMaxFilmsOnPage(maxFilmsOnPage + FILMS_ON_PAGE_STEP)} />
