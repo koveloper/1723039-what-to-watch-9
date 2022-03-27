@@ -11,16 +11,16 @@ type FilmCardOverviewProps = {
 
 function FilmCardOverview(props: FilmCardOverviewProps): JSX.Element {
   const mark = useMemo((): string => {
-    if(props.rating >= 9) {
+    if(props.rating === 10) {
       return FilmMark.Awesome;
     }
     if(props.rating >= 8) {
       return FilmMark.VeryGood;
     }
-    if(props.rating >= 7) {
+    if(props.rating >= 5) {
       return FilmMark.Good;
     }
-    if(props.rating >= 5) {
+    if(props.rating >= 3) {
       return FilmMark.Normal;
     }
     return FilmMark.Bad;
