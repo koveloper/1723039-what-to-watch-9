@@ -4,25 +4,30 @@ import { createMemoryHistory, History } from 'history';
 import userEvent from '@testing-library/user-event';
 import GenresList from './genres-list';
 import { createFakeGenres } from '../../utils/mocks';
+import { MAX_GENRES_ON_SCREEN } from '../../utils/constants';
 
 describe('Component: GenreList', () => {
-  const genres = createFakeGenres();
 
-  it('should render correctly', () => {
-    render(
-      <BrowserRouter>
-        <GenresList currentGenre={genres[0]} genres={genres} onGenreChange={() => void 0}/>
-      </BrowserRouter>,
-    );
-    //check that links count is equal to genres count
-    expect(screen.getAllByRole('link').length).toEqual(genres.length);
-    //check all genres names on screen
-    for(const g of genres) {
-      expect(screen.getByText(g)).toBeInTheDocument();
+  it('should render correctly with maximum 10 genres', () => {
+    for(const count of [8, 15]) {
+      const genres = createFakeGenres(count);
+      const {unmount} = render(
+        <BrowserRouter>
+          <GenresList currentGenre={genres[0]} genres={genres} onGenreChange={() => void 0}/>
+        </BrowserRouter>,
+      );
+      //check that links count is equal to genres count
+      expect(screen.getAllByRole('link').length).toEqual(genres.slice(0, MAX_GENRES_ON_SCREEN).length);
+      //check all genres names on screen
+      for(const g of genres.slice(0, MAX_GENRES_ON_SCREEN)) {
+        expect(screen.getByText(g)).toBeInTheDocument();
+      }
+      unmount();
     }
   });
 
   it('should return genre title on any genre click', () => {
+    const genres = createFakeGenres();
     const history:History = createMemoryHistory();
     history.push('/fake-page');
     const genreIndex = 3;
