@@ -29,7 +29,7 @@ describe('Component: AddReviewPage', () => {
       redirect: null,
     },
   };
-  it('should redirect to film page on unknown or unauthorized auth status', () => {
+  it('should redirect to sign in page on unknown or unauthorized auth status', () => {
     const states = [AuthStatus.UnAuthorized, AuthStatus.Unknown];
     for(const auth of states) {
       const store = mockStore(Object.assign(
@@ -57,7 +57,7 @@ describe('Component: AddReviewPage', () => {
       const redirectAction = store.getActions().find(({type}) => type === setRedirect.toString());
       expect(redirectAction).not.toBe(undefined);
       //check action payload
-      expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(`${AppRoute.Films}/${film.id}`);
+      expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(AppRoute.SignIn);
       unmount();
     }
   });

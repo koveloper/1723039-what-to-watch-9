@@ -20,7 +20,7 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
   const isAuthorized = useAuth();
   const redirect = useRedirect();
   if(!isAuthorized) {
-    redirect(`${AppRoute.Films}/${props.id}`);
+    redirect(AppRoute.SignIn);
     return null;
   }
   const addReviewSubmitHandler = (rating: number, commentary: string) => {
