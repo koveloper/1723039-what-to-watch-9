@@ -23,6 +23,7 @@ describe('Component: UserListPage', () => {
     },
     service: {
       redirect: null,
+      error: null,
     },
   };
   //check markup only

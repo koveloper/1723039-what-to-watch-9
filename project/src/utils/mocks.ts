@@ -1,4 +1,6 @@
 import fakerStatic from 'faker';
+import { AuthStatus } from '../store/constants';
+import { State } from '../store/types';
 import { Comment, Comments } from '../types/commentary';
 import { FilmData, FilmFullData, Films } from '../types/film-data-type';
 import { UserType, UserWithoutTokenType } from '../types/user-type';
@@ -85,3 +87,20 @@ export const createFakeName = (): string => createRandomName();
 export const createFakeNames = (count?: number): string[] => Array(count ? count : 8).fill(null).map(() => createRandomName());
 
 export const createFakeParagraph = (): string => generator.lorem.paragraph();
+
+export const createInitialState = ():State => ({
+  user: {
+    authStatus: AuthStatus.Unknown,
+    userData: null,
+    favoriteFilmsIdList: null,
+  },
+  films: {
+    all: null,
+    promoFilm: null,
+    fullDataFilms: {},
+  },
+  service: {
+    redirect: null,
+    error: null,
+  },
+});

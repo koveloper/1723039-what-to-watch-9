@@ -6,27 +6,14 @@ import { Action } from '@reduxjs/toolkit';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
 import AuthWrapper from './auth-wrapper';
+import { createInitialState } from '../../utils/mocks';
 
 describe('Component: AuthWrapper', () => {
   const fakeChildren = 'fake-children';
   const fakeLogin = 'fake-login';
   const mockStore = configureMockStore<State, Action>();
   //create state initial state
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should return fake children on authorization status is «auth»', async () => {
     //create mock store instance

@@ -5,25 +5,11 @@ import { Provider } from 'react-redux';
 import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
 import { useFilmData } from './use-film-data';
-import { createFakeFilms } from '../utils/mocks';
+import { createFakeFilms, createInitialState } from '../utils/mocks';
 
 describe('Hook: useFilmData', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should return undefined on startup', async () => {
     const store = mockStore(initialState);

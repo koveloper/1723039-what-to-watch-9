@@ -9,25 +9,12 @@ import { createMemoryHistory, History } from 'history';
 import { AppRoute } from '../../utils/constants';
 import { setRedirect } from '../../store/service-process/service-process';
 import SignInPage from './sign-in-page';
+import { createInitialState } from '../../utils/mocks';
 
 
 describe('Component: SignInPage', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should render correctly on AuthStatus Unknown', () => {
     const store = mockStore(Object.assign(initialState, {user: {authStatus: AuthStatus.Unknown}}));

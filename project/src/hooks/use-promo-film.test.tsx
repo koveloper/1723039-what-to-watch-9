@@ -2,28 +2,13 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
-import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
-import { createFakeFilmData } from '../utils/mocks';
+import { createFakeFilmData, createInitialState } from '../utils/mocks';
 import { usePromoFilm } from './use-promo-film';
 
 describe('Hook: usePromoFilm', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should return null on startup', async () => {
     const store = mockStore(initialState);

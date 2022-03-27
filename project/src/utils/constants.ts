@@ -30,10 +30,15 @@ export enum FilmMark {
     VeryGood = 'Very good',
     Awesome = 'Awesome'
 }
+
 export enum NameSpace {
     Films = 'films',
     User = 'user',
     Service = 'service',
+}
+
+export enum AppError {
+    PostReview = 'post-review',
 }
 
 export const APP_TITLE = 'WTW';

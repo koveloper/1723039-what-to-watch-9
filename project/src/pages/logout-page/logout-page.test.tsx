@@ -9,24 +9,11 @@ import { AppRoute } from '../../utils/constants';
 import { api } from '../../api/api';
 import { setRedirect } from '../../store/service-process/service-process';
 import LogoutPage from './logout-page';
+import { createInitialState } from '../../utils/mocks';
 
 describe('Component: LogoutPage', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
   it('should spinner and call api.logout on authorized status', () => {
     api.logout = jest.fn();
     const store = mockStore(Object.assign(initialState, {user: {authStatus: AuthStatus.Authorized}}));

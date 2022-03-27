@@ -7,24 +7,11 @@ import { State } from '../store/types';
 import { BrowserRouter } from 'react-router-dom';
 import { setRedirect } from '../store/service-process/service-process';
 import { useRedirect } from './use-redirect';
+import { createInitialState } from '../utils/mocks';
 
 describe('Hook: useRedirect', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should return function and add setRedirect action to store', async () => {
     const store = mockStore(Object.assign(initialState, {user: {authStatus: AuthStatus.Unknown}}));

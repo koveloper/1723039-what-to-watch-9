@@ -8,9 +8,9 @@ import { token } from '../services/token';
 import { CommentForPost, Comments } from '../types/commentary';
 import { setFilms, setFullDataFilm, setPromoFilm, updateComments } from '../store/films-process/films-process';
 import { changeFavoriteFilmState, setAuthStatus, setFavoriteFilms, setUserData } from '../store/user-process/user-process';
-import { setRedirect } from '../store/service-process/service-process';
-import { AppRoute } from '../utils/constants';
-import { AppDispatch } from '../store/types';
+import { setAppError, setRedirect } from '../store/service-process/service-process';
+import { AppError, AppRoute } from '../utils/constants';
+import { AppDispatch, AppErrorType } from '../store/types';
 import { AxiosInstance } from 'axios';
 
 /**
@@ -115,10 +115,12 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
           id: id,
           comments: data,
         } as FilmComments));
-
         dispatch(setRedirect(`${AppRoute.Films}/${id}`));
-      } catch (error) {
-        dispatch(setRedirect(AppRoute.Err404));
+      } catch (err) {
+        dispatch(setAppError({
+          type: AppError.PostReview,
+          message: (err as Error).message,
+        } as AppErrorType));
       }
     },
   ),

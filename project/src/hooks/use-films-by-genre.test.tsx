@@ -2,29 +2,14 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
-import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
 import { ALL_GENRES } from '../utils/constants';
-import { createFakeFilms, createFakeGenres } from '../utils/mocks';
+import { createFakeFilms, createFakeGenres, createInitialState } from '../utils/mocks';
 import { useFilmsByGenre } from './use-films-by-genre';
 
 describe('Hook: useFilmsByGenre', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should return empty array on no data fetched', async () => {
     const store = mockStore(initialState);

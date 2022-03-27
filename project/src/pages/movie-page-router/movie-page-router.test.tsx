@@ -4,7 +4,7 @@ import { State } from '../../store/types';
 import { Action } from '@reduxjs/toolkit';
 import { AuthStatus } from '../../store/constants';
 import { Provider } from 'react-redux';
-import { createFakeFilmData, createFakeFilmFullData } from '../../utils/mocks';
+import { createFakeFilmData, createFakeFilmFullData, createInitialState } from '../../utils/mocks';
 import { Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
 import { AppRoute } from '../../utils/constants';
@@ -12,21 +12,7 @@ import MoviePageRouter from './movie-page-router';
 
 describe('Component: MoviePageRouter', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
   it('should render spinner on NO film data', () => {
     HTMLMediaElement.prototype.pause = jest.fn;
     const store = mockStore(initialState);

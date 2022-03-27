@@ -23,8 +23,13 @@ export type UserState = {
     favoriteFilmsIdList: number[] | null;
 }
 
+export type AppErrorType = {
+    type: string;
+    message: string;
+}
 export type ServiceState = {
     redirect: string | null;
+    error: AppErrorType | null;
 }
 
 export type State = ReturnType<typeof store.getState>;

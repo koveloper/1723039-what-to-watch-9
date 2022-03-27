@@ -4,7 +4,7 @@ import { State } from '../../store/types';
 import { Action } from '@reduxjs/toolkit';
 import { AuthStatus } from '../../store/constants';
 import { Provider } from 'react-redux';
-import { createFakeFilmData } from '../../utils/mocks';
+import { createFakeFilmData, createInitialState } from '../../utils/mocks';
 import { Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
 import { setRedirect } from '../../store/service-process/service-process';
@@ -14,21 +14,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('Component: AddReviewPage', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
   it('should redirect to sign in page on unknown or unauthorized auth status', () => {
     const states = [AuthStatus.UnAuthorized, AuthStatus.Unknown];
     for(const auth of states) {

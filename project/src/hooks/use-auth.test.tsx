@@ -4,25 +4,12 @@ import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
+import { createInitialState } from '../utils/mocks';
 import { useAuth } from './use-auth';
 
 describe('Hook: useAuth', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should return boolean false on AuthStatus.Unknown', async () => {
     const store = mockStore(Object.assign(initialState, {user: {authStatus: AuthStatus.Unknown}}));

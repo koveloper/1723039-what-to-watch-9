@@ -6,7 +6,7 @@ import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
 import { BrowserRouter } from 'react-router-dom';
 import { useFilmButtonsDefaultHandler } from './use-film-buttons-default-handler';
-import { createFakeFilms } from '../utils/mocks';
+import { createFakeFilms, createInitialState } from '../utils/mocks';
 import { ButtonType } from '../components/film-card-buttons/constants';
 import { AppRoute } from '../utils/constants';
 import { api } from '../api/api';
@@ -23,21 +23,7 @@ api.setFavoriteStatus = mockedSetFavorite;
 
 describe('Hook: useFilmButtonsDefaultHandler', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
   const fakeFilms = createFakeFilms(33);
   const fakeFilmNumber = 7;
 

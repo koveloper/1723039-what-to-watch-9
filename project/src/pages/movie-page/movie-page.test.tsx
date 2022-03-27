@@ -5,26 +5,12 @@ import { Action } from '@reduxjs/toolkit';
 import { AuthStatus } from '../../store/constants';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createFakeComments, createFakeFilmData, createFakeFilms } from '../../utils/mocks';
+import { createFakeComments, createFakeFilmData, createFakeFilms, createInitialState } from '../../utils/mocks';
 import MoviePage from './movie-page';
 
 describe('Component: MoviePage', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
   //check markup only
   it('should render correctly with maximum 4 similar films without AddToList and Review button in auth status Unknown or unauthorized', () => {
     const states = [AuthStatus.UnAuthorized, AuthStatus.Unknown];

@@ -2,31 +2,16 @@ import {render, screen} from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../../store/types';
 import { Action } from '@reduxjs/toolkit';
-import { AuthStatus } from '../../store/constants';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createFakeFilmData, createFakeFilms } from '../../utils/mocks';
+import { createFakeFilmData, createFakeFilms, createInitialState } from '../../utils/mocks';
 import { FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP } from '../../utils/constants';
 import MainPage from './main-page';
 import userEvent from '@testing-library/user-event';
 
 describe('Component: MainPage', () => {
   const mockStore = configureMockStore<State, Action>();
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      all: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
   //   const fakeFilmId = 119;
   it('should render spinner on NO data in store', () => {
     const store = mockStore(initialState);

@@ -36,10 +36,7 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
       rating,
     };
     setPosting(true);
-    api.postReview(comment)
-      .catch(() => {
-        setPosting(false);
-      });
+    api.postReview(comment);
   };
   return (
     <section className="film-card film-card--full">
