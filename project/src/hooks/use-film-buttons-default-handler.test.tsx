@@ -9,10 +9,16 @@ import { createFakeFilms, createInitialState } from '../utils/mocks';
 import { ButtonType } from '../components/film-card-buttons/constants';
 import { AppRoute } from '../utils/constants';
 import { api } from '../api/api';
-import { setRedirect } from '../store/service-process/service-process';
 
 const mockedSetFavorite = jest.fn();
 api.setFavoriteStatus = mockedSetFavorite;
+
+const mockedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigate,
+}));
 
 describe('Hook: useFilmButtonsDefaultHandler', () => {
   const mockStore = configureMockStore<State, Action>();
@@ -69,12 +75,10 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
     );
     const callbackFunc = result.current;
     callbackFunc(ButtonType.Play);
-    //check actions in queue after hook invoke
-    expect(store.getActions().length).toBe(1);
-    const redirectAction = store.getActions().find(({type}) => type === setRedirect.toString());
-    expect(redirectAction).not.toBe(undefined);
-    //check action payload
-    expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(`${AppRoute.PlayerRoot}/${fakeFilms[fakeFilmNumber].id}`);
+    //check correct navigate to player
+    expect(mockedNavigate).toHaveBeenCalled();
+    expect(mockedNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedNavigate).toHaveBeenCalledWith(`${AppRoute.PlayerRoot}/${fakeFilms[fakeFilmNumber].id}`);
   });
   it('should redirect to AddReview page for review button', async () => {
     const store = mockStore(Object.assign(
@@ -100,12 +104,10 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
     );
     const callbackFunc = result.current;
     callbackFunc(ButtonType.AddReview);
-    //check actions in queue after hook invoke
-    expect(store.getActions().length).toBe(1);
-    const redirectAction = store.getActions().find(({type}) => type === setRedirect.toString());
-    expect(redirectAction).not.toBe(undefined);
-    //check action payload
-    expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(`${AppRoute.Films}/${fakeFilms[fakeFilmNumber].id}/review`);
+    //check correct navigate to player
+    expect(mockedNavigate).toHaveBeenCalled();
+    expect(mockedNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedNavigate).toHaveBeenCalledWith(`${AppRoute.Films}/${fakeFilms[fakeFilmNumber].id}/review`);
   });
 
   it('should call setFavorite with favorite flag true for non favorite film', async () => {

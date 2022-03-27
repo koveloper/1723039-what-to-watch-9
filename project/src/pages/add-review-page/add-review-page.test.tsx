@@ -5,9 +5,8 @@ import { Action } from '@reduxjs/toolkit';
 import { AuthStatus } from '../../store/constants';
 import { Provider } from 'react-redux';
 import { createFakeFilmData, createInitialState } from '../../utils/mocks';
-import { Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
-import { setRedirect } from '../../store/service-process/service-process';
 import { AppRoute } from '../../utils/constants';
 import AddReviewPage from './add-review-page';
 import userEvent from '@testing-library/user-event';
@@ -29,21 +28,26 @@ describe('Component: AddReviewPage', () => {
       const film = createFakeFilmData();
       const {unmount} = render(
         <Provider store={store} >
-          <AddReviewPage
-            id={film.id}
-            name={film.name}
-            backgroundImage={film.backgroundImage}
-            posterImage={film.posterImage}
-          />
+          <BrowserRouter>
+            <Routes>
+              <Route index element={
+                <AddReviewPage
+                  id={film.id}
+                  name={film.name}
+                  backgroundImage={film.backgroundImage}
+                  posterImage={film.posterImage}
+                />
+              }
+              />
+              <Route path={AppRoute.SignIn} element={<div>sign-in-page</div>}/>
+              <Route path='*' element={<div>404-err</div>}/>
+            </Routes>
+          </BrowserRouter>
         </Provider>
         ,
       );
-      //check actions in queue after hook invoke
-      expect(store.getActions().length).toBe(1);
-      const redirectAction = store.getActions().find(({type}) => type === setRedirect.toString());
-      expect(redirectAction).not.toBe(undefined);
       //check action payload
-      expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(AppRoute.SignIn);
+      expect(screen.getByText('sign-in-page')).toBeInTheDocument();
       unmount();
     }
   });

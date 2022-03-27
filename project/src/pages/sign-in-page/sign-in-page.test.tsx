@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
 import { AppRoute } from '../../utils/constants';
-import { setRedirect } from '../../store/service-process/service-process';
 import SignInPage from './sign-in-page';
 import { createInitialState } from '../../utils/mocks';
 
@@ -68,17 +67,13 @@ describe('Component: SignInPage', () => {
       <Provider store={store} >
         <HistoryRouter history={history}>
           <Routes>
+            <Route index element={<div>main-page</div>} />
             <Route path={AppRoute.SignIn} element={<SignInPage />} />
             <Route path='*' element={<div>404-err-page</div>} />
           </Routes>
         </HistoryRouter>
       </Provider>,
     );
-    //check actions in queue after hook invoke
-    expect(store.getActions().length).toBe(1);
-    const redirectAction = store.getActions().find(({type}) => type === setRedirect.toString());
-    expect(redirectAction).not.toBe(undefined);
-    //check action payload
-    expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(AppRoute.Root);
+    expect(screen.getByText('main-page')).toBeInTheDocument();
   });
 });

@@ -6,7 +6,8 @@ import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
 import { HeaderType } from '../../components/header/header-type';
 import { useAuth } from '../../hooks/use-auth';
-import { useRedirect } from '../../hooks/use-redirect';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 type SignInPageProps = {
   message?: string;
@@ -15,14 +16,15 @@ type SignInPageProps = {
 
 export default function SignInPage({message, isError}: SignInPageProps): JSX.Element | null {
   const isAuthorized = useAuth();
-  const redirect = useRedirect();
+  const navigate = useNavigate();
   const onSubmitHandler = (props: LoginData) => {
     api.login(props);
   };
-  if(isAuthorized) {
-    redirect(AppRoute.Root);
-    return null;
-  }
+  useEffect(() => {
+    if(isAuthorized) {
+      navigate(AppRoute.Root);
+    }
+  }, [isAuthorized]);
   return (
     <div className="user-page">
       <Header type={HeaderType.UserOrSignIn}>

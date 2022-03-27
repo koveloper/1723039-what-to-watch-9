@@ -7,9 +7,15 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../../utils/constants';
 import { api } from '../../api/api';
-import { setRedirect } from '../../store/service-process/service-process';
-import LogoutPage from './logout-page';
 import { createInitialState } from '../../utils/mocks';
+import LogoutPage from './logout-page';
+
+const mockedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigate,
+}));
 
 describe('Component: LogoutPage', () => {
   const mockStore = configureMockStore<State, Action>();
@@ -39,10 +45,8 @@ describe('Component: LogoutPage', () => {
           </BrowserRouter>
         </Provider>,
       );
-      const redirectAction = store.getActions().find((a) => a.type === setRedirect.toString());
-      expect(redirectAction).not.toBe(undefined);
-      //check action payload
-      expect(redirectAction && ('payload' in redirectAction) && redirectAction['payload']).toBe(AppRoute.Root);
+      expect(mockedNavigate).toHaveBeenCalled();
+      expect(mockedNavigate).toHaveBeenCalledWith(AppRoute.Root);
       expect(api.logout).not.toBeCalled();
     }
   });

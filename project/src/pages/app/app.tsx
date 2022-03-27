@@ -6,12 +6,12 @@ import Error404 from '../error-404/error-404';
 import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
 import MoviePageRouter from '../movie-page-router/movie-page-router';
 import Spinner from '../../components/spinner/spinner';
+import LogoutPage from '../logout-page/logout-page';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../utils/constants';
 import { useFilms } from '../../hooks/use-films';
 import { usePromoFilm } from '../../hooks/use-promo-film';
 import { useRedirectCheck } from '../../hooks/use-redirect-check';
-import LogoutPage from '../logout-page/logout-page';
 
 export default function App(): JSX.Element {
   const films = useFilms();
