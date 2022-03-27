@@ -1,41 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
+import { getTimeFromSeconds } from './utils';
 import Spinner from '../spinner/spinner';
 import PlayButton from './play-button';
-import VideoComponent from './video-component';
 
 export type PlayerProps = {
     title: string;
     videoLink: string;
 }
 
-const getTimeFromSeconds = (seconds: number) => {
-  const timeLeft = [];
-  if(seconds > 3600) {
-    timeLeft.push(Math.floor(seconds / 3600));
-  }
-  timeLeft.push(Math.floor((seconds % 3600) / 60));
-  timeLeft.push(seconds % 60);
-  return timeLeft.map((t) => [t < 10 ? '0' : '', t].join('')).join(':');
-};
-
-function Player(props: PlayerProps): JSX.Element {
+export default function Player(props: PlayerProps): JSX.Element {
+  //
   const playerRef = useRef<HTMLDivElement>(null);
   const player = playerRef.current;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const video = videoRef.current;
+  //
   const [initialized, setInitialized] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
   const [secondsWatched, setSecondsWatched] = useState(0);
-  const progress = Math.round((secondsWatched / videoDuration) * 100) || 0;
-  const secondsLeft = Math.floor(videoDuration - secondsWatched);
-  const timeLeft = getTimeFromSeconds(secondsLeft);
-
-  const playButtonClickHandler = () => {
-    setPlaying(!playing);
-  };
-  const fullScreenButtonClickHandler = () => {
-    setFullscreen(!fullscreen);
-  };
+  //effect for handle full screen mode
   useEffect(() => {
     if(!player) {
       return;
@@ -46,23 +31,49 @@ function Player(props: PlayerProps): JSX.Element {
       document.exitFullscreen();
     }
   }, [player, fullscreen]);
+  //effect for initial video setup
+  useEffect(() => {
+    if(!video) {
+      return;
+    }
+    setVideoDuration(video.duration);
+  }, [video]);
+  //handle play state
+  if(video) {
+    if(playing) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+  //setup handlers and vars
+  const playButtonClickHandler = () => {
+    setPlaying(!playing);
+  };
+  const fullScreenButtonClickHandler = () => {
+    setFullscreen(!fullscreen);
+  };
+  const progress = Math.round((secondsWatched / videoDuration) * 100) || 0;
+  const secondsLeft = Math.floor(videoDuration - secondsWatched);
+  const timeLeft = getTimeFromSeconds(secondsLeft);
+
   return (
     <div ref={playerRef} className="player">
-      <VideoComponent
-        onLoad={() => setInitialized(true)}
-        durationChanged={setVideoDuration}
-        tickTock={setSecondsWatched}
-        isPlaying={playing}
-        videoLink={props.videoLink}
-      />
+      <video
+        ref={videoRef}
+        onCanPlay={() => setInitialized(true)}
+        onTimeUpdate={() => setSecondsWatched(video ? video.currentTime : 0)}
+        className="player__video"
+        poster="img/player-poster.jpg"
+      >
+        <source src={props.videoLink}/>
+      </video>
       {
         initialized
           ? null
           : <Spinner />
       }
-
       <button onClick={() => window.history.back()} type="button" className="player__exit">Exit</button>
-
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
@@ -87,5 +98,3 @@ function Player(props: PlayerProps): JSX.Element {
     </div>
   );
 }
-
-export default Player;
