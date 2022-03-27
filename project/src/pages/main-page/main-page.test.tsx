@@ -42,7 +42,7 @@ describe('Component: MainPage', () => {
   });
   it('should render main page on data fetch', () => {
     HTMLMediaElement.prototype.pause = jest.fn;
-    const films = createFakeFilms(100);
+    const films = createFakeFilms(FILMS_ON_PAGE_INITIAL + (FILMS_ON_PAGE_STEP * 10) + Math.round(FILMS_ON_PAGE_STEP / 2));
     const promoFilm = createFakeFilmData();
     const store = mockStore(Object.assign(
       initialState,
@@ -70,9 +70,15 @@ describe('Component: MainPage', () => {
     expect(screen.getByTestId('show-more')).toBeInTheDocument();
     expect(screen.getByTestId('show-more').tagName.toLowerCase()).toBe('button');
     //check for film cards on page with show more button click
-    for(let i = 0; i < 5; i++) {
+    const clicksForShowAllFilms = Math.floor((films.length - FILMS_ON_PAGE_INITIAL) / FILMS_ON_PAGE_STEP);
+    for(let i = 0; i < clicksForShowAllFilms; i++) {
       expect(screen.getAllByTestId('film-logo').length).toBe(FILMS_ON_PAGE_INITIAL + (FILMS_ON_PAGE_STEP * i));
       userEvent.click(screen.getByTestId('show-more'));
     }
+    //make last click for display all films
+    userEvent.click(screen.getByTestId('show-more'));
+    expect(screen.getAllByTestId('film-logo').length).toBe(films.length);
+    //check show button hided
+    expect(screen.queryByTestId('show-more')).not.toBeInTheDocument();
   });
 });
