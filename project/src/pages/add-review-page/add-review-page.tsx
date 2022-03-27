@@ -8,6 +8,8 @@ import { api } from '../../api/api';
 import { HeaderType } from '../../components/header/header-type';
 import { useAuth } from '../../hooks/use-auth';
 import { useRedirect } from '../../hooks/use-redirect';
+import { useState } from 'react';
+import Spinner from '../../components/spinner/spinner';
 
 type AddReviewPageProps = {
   id: number;
@@ -19,6 +21,7 @@ type AddReviewPageProps = {
 export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | null {
   const isAuthorized = useAuth();
   const redirect = useRedirect();
+  const [isPosting, setPosting] = useState(false);
   if(!isAuthorized) {
     redirect(AppRoute.SignIn);
     return null;
@@ -32,10 +35,19 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
       comment: commentary,
       rating,
     };
-    api.postReview(comment);
+    setPosting(true);
+    api.postReview(comment)
+      .catch(() => {
+        setPosting(false);
+      });
   };
   return (
     <section className="film-card film-card--full">
+      {
+        isPosting
+          ? <Spinner />
+          : null
+      }
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={props.backgroundImage} alt={props.name} />
