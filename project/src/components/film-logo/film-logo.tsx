@@ -10,13 +10,18 @@ type FilmLogoProps = {
 }
 
 function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
+  console.log('render');
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isHovered, setHovered] = useState(false);
+  console.log(`isHovered: ${isHovered}`);
+  console.log(`videoRef: ${videoRef}`);
+  console.log(`muted: ${muted}`);
   const onClickHandler = useCallback(() => navigate(`${AppRoute.Films}/${film.id}`), [film.id]);
   useEffect(() => {
     const player = videoRef.current;
     const playFunc = () => {
+      console.log('play-func');
       if(timerId) {
         clearTimeout(timerId);
       }
@@ -24,26 +29,35 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
         return;
       }
       player.src = film.videoLink;
+      console.log('play');
       player.play();
     };
+    if(isHovered) {
+      console.log('effect');
+    }
     const timerId = isHovered ? setTimeout(playFunc, 1000) : null;
-    return () => {
-      if(timerId) {
-        clearTimeout(timerId);
+    return isHovered
+      ? () => {
+        if(!player) {
+          return;
+        }
+        if(timerId) {
+          console.log('clear timeout');
+          clearTimeout(timerId);
+        }
+        player.pause();
+        player.src = '';
       }
-      if(!player) {
-        return;
-      }
-      player.pause();
-      player.src = '';
-    };
+      : () => void 0;
   }, [isHovered, film.videoLink]);
 
   const onMouseEnterHandler = (evt: SyntheticEvent) => {
+    console.log('hovered!!!');
     evt.stopPropagation();
     setHovered(true);
   };
   const onMouseExitHandler = (evt: SyntheticEvent) => {
+    console.log('mouse out');
     evt.stopPropagation();
     setHovered(false);
   };
