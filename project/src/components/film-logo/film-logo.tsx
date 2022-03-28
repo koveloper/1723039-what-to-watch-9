@@ -45,12 +45,7 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
   return (
     <article data-testid="film-logo" onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
-        {
-          <video src={film.videoLink} ref={videoRef} poster={film.previewImage} width="280" height="175" muted={!!muted}/>
-          // (muted === undefined || muted)
-          //   ?
-          //   : <video src={film.videoLink} ref={videoRef} poster={film.previewImage} width="280" height="175"/>
-        }
+        <video src={film.videoLink} ref={videoRef} poster={film.previewImage} width="280" height="175" muted={!!muted}/>
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`${AppRoute.Films}/${film.id}`}>{film.name}</Link>
