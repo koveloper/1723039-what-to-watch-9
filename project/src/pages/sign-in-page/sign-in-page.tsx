@@ -1,22 +1,27 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import SignInForm from '../../components/sign-in-form/sign-in-form';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
 import { api } from '../../api/api';
 import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
-import { useAuth } from '../../hooks';
-import SignInForm from '../../components/sign-in-form/sign-in-form';
-import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
+import { HeaderType } from '../../components/header/header-type';
+import { useAuth } from '../../hooks/use-auth';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-type SignInPageProps = {
-  message?: string;
-  isError?: boolean;
-}
-
-export default function SignInPage({message, isError}: SignInPageProps): JSX.Element {
+export default function SignInPage(): JSX.Element | null {
   const isAuthorized = useAuth();
   const navigate = useNavigate();
-  const onSubmitHandler = (props: LoginData) => {
-    api.login(props);
+  const [dataError, setDataError] = useState<string | undefined>(undefined);
+  const onSubmitHandler = (args: LoginData) => {
+    const regExpLetters = RegExp(/[A-Za-z]+/g);
+    const regExpDigits = RegExp(/[0-9]+/g);
+
+    if(!regExpLetters.test(args.password) || !regExpDigits.test(args.password)) {
+      setDataError('Password must contains at least one letter and at least one digit');
+      return;
+    }
+    api.login(args);
   };
   useEffect(() => {
     if(isAuthorized) {
@@ -24,10 +29,14 @@ export default function SignInPage({message, isError}: SignInPageProps): JSX.Ele
     }
   }, [isAuthorized]);
   return (
-    <UserPageLayout title='Sign in' hideUserBlock>
+    <div className="user-page">
+      <Header type={HeaderType.UserOrSignIn}>
+        <h1 className="page-title user-page__title">Sign in</h1>
+      </Header>
       <div className="sign-in user-page__content">
-        <SignInForm onSubmit={onSubmitHandler} message={message} isError={isError} />
+        <SignInForm onSubmit={onSubmitHandler} message={dataError} isError={!!dataError} />
       </div>
-    </UserPageLayout>
+      <Footer />
+    </div>
   );
 }

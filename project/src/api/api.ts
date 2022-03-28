@@ -20,6 +20,8 @@ export const createAPI = (storeInstance: Store, network?: AxiosInstance) => {
     checkAuth: () => storeInstance.dispatch(asyncActions.checkAuthAction()),
     //tested
     login: (props: LoginData) => storeInstance.dispatch(asyncActions.loginAction(props)),
+    //tested
+    logout: () => storeInstance.dispatch(asyncActions.logoutAction()),
     //tested: 200, error
     fetchFilmFullData: (id: number) => storeInstance.dispatch(asyncActions.getFullDataFilmAction(id)),
     //tested: 200, error

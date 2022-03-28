@@ -6,15 +6,18 @@ import Error404 from '../error-404/error-404';
 import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
 import MoviePageRouter from '../movie-page-router/movie-page-router';
 import Spinner from '../../components/spinner/spinner';
+import LogoutPage from '../logout-page/logout-page';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../utils/constants';
-import { useFilms, usePromoFilm, useRedirectCheck } from '../../hooks';
+import { useFilms } from '../../hooks/use-films';
+import { usePromoFilm } from '../../hooks/use-promo-film';
+import { useRedirectCheck } from '../../hooks/use-redirect-check';
 
 export default function App(): JSX.Element {
   const films = useFilms();
   const promoFilm = usePromoFilm();
-  useRedirectCheck();
-  if(films === null || promoFilm === null) {
+  const isRedirected = useRedirectCheck();
+  if(films === null || promoFilm === null || isRedirected) {
     return <Spinner/>;
   }
   return (
@@ -33,6 +36,9 @@ export default function App(): JSX.Element {
       />
       <Route path={AppRoute.Player}
         element={<PlayerPage />}
+      />
+      <Route path={AppRoute.SignOut}
+        element={<LogoutPage />}
       />
       <Route path="*" element={<Error404 />} />
     </Routes>

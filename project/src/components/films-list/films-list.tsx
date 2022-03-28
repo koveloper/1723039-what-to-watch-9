@@ -9,7 +9,7 @@ type FilmsListProps = {
 
 function FilmsList({ films, muted }: FilmsListProps): JSX.Element {
   return (
-    <div className="catalog__films-list">
+    <div data-testid="films-list" className="catalog__films-list">
       {films.map((film) => <FilmLogo key={film.id.toString()} film={film} muted={muted}/>)}
     </div>
   );

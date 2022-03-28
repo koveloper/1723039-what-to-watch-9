@@ -1,21 +1,32 @@
-import { api } from '../../api/api';
 import Catalog from '../../components/catalog/catalog';
 import FilmsList from '../../components/films-list/films-list';
+import Footer from '../../components/footer/footer';
 import Spinner from '../../components/spinner/spinner';
-import { useFavoriteFilms } from '../../hooks';
-import UserPageLayout from '../../layouts/user-page-layout/user-page-layout';
+import UserBlock from '../../components/user-block/user-block';
+import Header from '../../components/header/header';
+import { HeaderType } from '../../components/header/header-type';
+import { useFavoriteFilms } from '../../hooks/use-favorite-films';
 
-export default function UserListPage(): JSX.Element {
+type UserListPageProps = {
+  muted?: boolean;
+}
+
+export default function UserListPage(props: UserListPageProps): JSX.Element {
   const favoriteFilms = useFavoriteFilms();
   if(!favoriteFilms) {
-    api.fetchFavoriteFilms();
     return <Spinner />;
   }
+
   return (
-    <UserPageLayout title='My list'>
+    <div className="user-page">
+      <Header type={HeaderType.UserOrSignIn}>
+        <h1 className="page-title user-page__title">My list</h1>
+        <UserBlock />
+      </Header>
       <Catalog title='Catalog' titleHidden type='filtered'>
-        <FilmsList films={favoriteFilms}/>
+        <FilmsList films={favoriteFilms} muted={props.muted}/>
       </Catalog>
-    </UserPageLayout>
+      <Footer />
+    </div>
   );
 }

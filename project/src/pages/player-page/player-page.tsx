@@ -1,12 +1,17 @@
 import Player from '../../components/player/player';
 import Error404 from '../error-404/error-404';
 import { Route, Routes } from 'react-router-dom';
-import { useFilmData, useFilmIdFromUrl } from '../../hooks';
+import { useFilmIdFromUrl } from '../../hooks/use-film-id-from-url';
+import { useFilmData } from '../../hooks/use-film-data';
+import Spinner from '../../components/spinner/spinner';
 
 export default function PlayerPage(): JSX.Element {
   const filmId = useFilmIdFromUrl();
   const film = useFilmData(filmId);
-  if(!film) {
+  if(film === undefined) {
+    return <Spinner />;
+  }
+  if(film === null) {
     return <Error404 />;
   }
   return (

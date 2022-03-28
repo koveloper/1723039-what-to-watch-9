@@ -7,25 +7,12 @@ import { State } from '../../store/types';
 import { AuthStatus } from '../../store/constants';
 import { Provider } from 'react-redux';
 import { AppRoute } from '../../utils/constants';
+import { createInitialState } from '../../utils/mocks';
 
 describe('Component: UserBlock', () => {
   const mockStore = configureMockStore();
   //create state initial state
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      films: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   describe('In case of "authStatus: AuthStatus.Authorized"', () => {
     const store = mockStore(Object.assign(initialState, {

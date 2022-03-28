@@ -1,4 +1,6 @@
 import fakerStatic from 'faker';
+import { AuthStatus } from '../store/constants';
+import { State } from '../store/types';
 import { Comment, Comments } from '../types/commentary';
 import { FilmData, FilmFullData, Films } from '../types/film-data-type';
 import { UserType, UserWithoutTokenType } from '../types/user-type';
@@ -27,7 +29,7 @@ export const createFakeFilmData = (idValue?: number): FilmData => ({
   name: generator.name.title(),
   posterImage: generator.image.imageUrl(),
   previewImage: generator.image.imageUrl(),
-  backgroundImage: generator.internet.url(),
+  backgroundImage: generator.image.imageUrl(),
   backgroundColor: generator.commerce.color(),
   description: generator.lorem.paragraphs(1 + generator.datatype.number(2)),
   rating: 1 + generator.datatype.number(10),
@@ -76,7 +78,7 @@ export const createFakeToken = () => generator.datatype.uuid();
 
 export const createFakeUserResponse = (): UserType => (Object.assign(createFakeUser() , {token: createFakeToken()}));
 
-export const createFakeGenres = (): string[] => Array(8).fill(null).map((el) => generator.name.firstName());
+export const createFakeGenres = (count?: number): string[] => Array(count ? count : 8).fill(null).map((el) => generator.name.firstName());
 
 export const createFakeUrl = (): string => generator.internet.url();
 
@@ -85,3 +87,20 @@ export const createFakeName = (): string => createRandomName();
 export const createFakeNames = (count?: number): string[] => Array(count ? count : 8).fill(null).map(() => createRandomName());
 
 export const createFakeParagraph = (): string => generator.lorem.paragraph();
+
+export const createInitialState = ():State => ({
+  user: {
+    authStatus: AuthStatus.Unknown,
+    userData: null,
+    favoriteFilmsIdList: null,
+  },
+  films: {
+    all: null,
+    promoFilm: null,
+    fullDataFilms: {},
+  },
+  service: {
+    redirect: null,
+    error: null,
+  },
+});

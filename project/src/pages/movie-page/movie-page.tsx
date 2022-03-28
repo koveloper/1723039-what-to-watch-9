@@ -1,28 +1,34 @@
-import { useAuth, useButtonsDefaultHandler, useFavorite } from '../../hooks';
-import { HeaderType } from '../../layouts/header-layout/header-type';
-import { Comments } from '../../types/commentary';
-import { FilmData } from '../../types/film-data-type';
-import { PosterSize } from '../../utils/constants';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmsList from '../../components/films-list/films-list';
 import UserBlock from '../../components/user-block/user-block';
-import CatalogLayout from '../../layouts/catalog-layout/catalog-layout';
-import FilmDescriptionLayout from '../../layouts/film-description-layout/film-description-layout';
-import HeaderLayout from '../../layouts/header-layout/header-layout';
+import Catalog from '../../components/catalog/catalog';
+import Footer from '../../components/footer/footer';
+import FilmTab from '../../components/film-tab/film-tab';
+import FilmCardMenu from '../../components/film-card-menu/film-card-menu';
+import Header from '../../components/header/header';
+import { Comments } from '../../types/commentary';
+import { FilmData } from '../../types/film-data-type';
+import { FilmInfoType, PosterSize } from '../../utils/constants';
+import { useState } from 'react';
+import { HeaderType } from '../../components/header/header-type';
+import { useAuth } from '../../hooks/use-auth';
+import { useFavorite } from '../../hooks/use-favorite';
+import { useFilmButtonsDefaultHandler } from '../../hooks/use-film-buttons-default-handler';
 
 type MoviePageProps = {
   film: FilmData;
   comments: Comments;
   similarFilms: FilmData[];
+  muted?: boolean;
 }
 
 export default function MoviePage(props: MoviePageProps): JSX.Element {
   const isAuthorized = useAuth();
-  const actionButtonClickHandler = useButtonsDefaultHandler(props.film.id);
+  const filmButtonsClickHandler = useFilmButtonsDefaultHandler(props.film.id);
   const isFavorite = useFavorite(props.film.id);
-
+  const [activeTab, setActiveTab] = useState(FilmInfoType.Overview);
   return (
     <>
       <section className='film-card film-card--full'>
@@ -31,9 +37,9 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
             <img src={props.film.backgroundImage} alt={props.film.name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
-          <HeaderLayout type={HeaderType.FilmCard}>
+          <Header type={HeaderType.FilmCard}>
             <UserBlock />
-          </HeaderLayout>
+          </Header>
           <div className="film-card__wrap">
             <div className="film-card__info">
               <FilmCardMain
@@ -42,10 +48,10 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
                 releaseYear={props.film.released}
               >
                 <FilmCardButtons
-                  onButtonClick={actionButtonClickHandler}
+                  onButtonClick={filmButtonsClickHandler}
                   isShowAddReviewButton={isAuthorized}
                   isShowAddToFavorsButton={isAuthorized}
-                  isFavorite={isFavorite}
+                  isFavorite={!!isFavorite}
                 />
               </FilmCardMain>
             </div>
@@ -58,13 +64,19 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
               title={props.film.name}
               size={PosterSize.Big}
             />
-            <FilmDescriptionLayout film={props.film} comments={props.comments} />
+            <div className="film-card__desc">
+              <FilmCardMenu onTabSelect={(tab: FilmInfoType) => setActiveTab(tab)}/>
+              <FilmTab film={props.film} comments={props.comments} tab={activeTab}/>
+            </div>
           </div>
         </div>
       </section>
-      <CatalogLayout title='More like this' type='filtered'>
-        <FilmsList films={props.similarFilms} />
-      </CatalogLayout>
+      <div className="page-content">
+        <Catalog title='More like this' type='filtered'>
+          <FilmsList films={props.similarFilms.length > 4 ? props.similarFilms.slice(0, 4) : props.similarFilms} muted={props.muted} />
+        </Catalog>
+        <Footer />
+      </div>
     </>
   );
 }

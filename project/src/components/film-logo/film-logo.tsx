@@ -49,7 +49,7 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
   };
 
   return (
-    <article onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
+    <article data-testid="film-logo" onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
         {
           (muted === undefined || muted)

@@ -5,6 +5,7 @@ export const APIRoute = {
   Films: '/films',
   PromoFilm: '/promo',
   Login: '/login',
+  Logout: '/logout',
   Film: (id: number) => `/films/${id}`,
   SimilarFilms: (id: number) => `/films/${id}/similar`,
   Comments: (id: number) => `/comments/${id}`,
