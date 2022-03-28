@@ -12,7 +12,7 @@ export const useFavoriteFilms = (): undefined | null | Films  => {
   const isAuthorized = useAuth();
   const favors = useMemo<Films | undefined | null>(() => {
     if(!isAuthorized) {
-      return [];
+      return null;
     }
     const arr:Films = [];
     if(!favoriteFilmsId) {
@@ -29,6 +29,6 @@ export const useFavoriteFilms = (): undefined | null | Films  => {
       }
     });
     return arr;
-  }, [films, favoriteFilmsId]);
+  }, [films, favoriteFilmsId, isAuthorized]);
   return favors;
 };

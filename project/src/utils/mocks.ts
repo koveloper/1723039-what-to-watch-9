@@ -78,7 +78,7 @@ export const createFakeToken = () => generator.datatype.uuid();
 
 export const createFakeUserResponse = (): UserType => (Object.assign(createFakeUser() , {token: createFakeToken()}));
 
-export const createFakeGenres = (count?: number): string[] => Array(count ? count : 8).fill(null).map((el) => generator.name.firstName());
+export const createFakeGenres = (count?: number): string[] => Array(count ? count : 8).fill(null).map((el) => (generator.name.firstName() + generator.datatype.uuid()));
 
 export const createFakeUrl = (): string => generator.internet.url();
 
