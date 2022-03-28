@@ -460,9 +460,9 @@ main {
   border: 0;
   background: none;
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.26);
+  background: rgba(0, 0, 0, 0.26)!important;
   border-radius: 8px;
-  color: #EEE5B5;
+  color: #EEE5B5!important;
   font-size: 17px;
   line-height: 20px;
   padding: 13px 30px;
@@ -1430,3 +1430,9 @@ main {
   font-size: 24px;
   color: black;}
           
+.alert-wrapper {
+  position: fixed;
+  z-index: 600;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);}

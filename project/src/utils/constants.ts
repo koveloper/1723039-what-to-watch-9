@@ -39,6 +39,10 @@ export enum NameSpace {
 
 export enum AppError {
     PostReview = 'post-review',
+    GetFavorite = 'get-favorite',
+    SetFavorite = 'set-favorite',
+    LogOut = 'log-out',
+    LogIn = 'log-in',
 }
 
 export const APP_TITLE = 'WTW';
