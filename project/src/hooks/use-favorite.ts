@@ -1,9 +1,12 @@
-import { useFavoriteFilms } from './use-favorite-films';
+import { useSelector } from 'react-redux';
+import { State } from '../store/types';
+import { useAuth } from './use-auth';
 
 export const useFavorite = (id: number): boolean => {
-  const favorFilms = useFavoriteFilms();
-  if(!favorFilms) {
+  const isAuthorized = useAuth();
+  const favorIds = useSelector((state: State) => state.user.favoriteFilmsIdList);
+  if(!isAuthorized || ! favorIds) {
     return false;
   }
-  return !!favorFilms.find((f) => f.id === id);
+  return !!favorIds.find((i) => i === id);
 };
