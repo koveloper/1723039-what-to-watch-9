@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FilmData } from '../../types/film-data-type';
@@ -13,62 +13,43 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
   console.log('render');
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isHovered, setHovered] = useState(false);
-  console.log(`isHovered: ${isHovered}`);
-  console.log(`videoRef: ${videoRef}`);
-  console.log(`muted: ${muted}`);
+  console.log(`videoRef.current-1:${videoRef.current}`);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>();
   const onClickHandler = useCallback(() => navigate(`${AppRoute.Films}/${film.id}`), [film.id]);
-  useEffect(() => {
-    const player = videoRef.current;
-    const playFunc = () => {
-      console.log('play-func');
-      if(timerId) {
-        clearTimeout(timerId);
-      }
-      if(!player) {
+  const onMouseEnterHandler = (evt: SyntheticEvent) => {
+    console.log('hover IN');
+    evt.stopPropagation();
+    setTimer(setTimeout(() => {
+      console.log('play');
+      console.log(`videoRef.current-2:${videoRef.current}`);
+      if(!videoRef.current) {
+        console.log('play---');
         return;
       }
-      player.src = film.videoLink;
-      console.log('play');
-      player.play();
-    };
-    if(isHovered) {
-      console.log('effect');
-    }
-    const timerId = isHovered ? setTimeout(playFunc, 1000) : null;
-    return isHovered
-      ? () => {
-        if(!player) {
-          return;
-        }
-        if(timerId) {
-          console.log('clear timeout');
-          clearTimeout(timerId);
-        }
-        player.pause();
-        player.src = '';
-      }
-      : () => void 0;
-  }, [isHovered, film.videoLink]);
-
-  const onMouseEnterHandler = (evt: SyntheticEvent) => {
-    console.log('hovered!!!');
-    evt.stopPropagation();
-    setHovered(true);
+      console.log('play+++');
+      videoRef.current.play();
+    }, 1000));
   };
   const onMouseExitHandler = (evt: SyntheticEvent) => {
-    console.log('mouse out');
+    console.log('hover OUT');
     evt.stopPropagation();
-    setHovered(false);
+    if(timer) {
+      clearTimeout(timer);
+    }
+    setTimer(null);
+    if(videoRef.current) {
+      videoRef.current.load();
+    }
   };
 
   return (
     <article data-testid="film-logo" onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
         {
-          (muted === undefined || muted)
-            ? <video ref={videoRef} poster={film.previewImage} width="280" height="175" muted/>
-            : <video ref={videoRef} poster={film.previewImage} width="280" height="175"/>
+          <video src={film.videoLink} ref={videoRef} poster={film.previewImage} width="280" height="175" muted={!!muted}/>
+          // (muted === undefined || muted)
+          //   ?
+          //   : <video src={film.videoLink} ref={videoRef} poster={film.previewImage} width="280" height="175"/>
         }
       </div>
       <h3 className="small-film-card__title">
