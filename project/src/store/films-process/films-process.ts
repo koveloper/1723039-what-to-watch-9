@@ -4,7 +4,7 @@ import { NameSpace } from '../../utils/constants';
 import { FilmsState } from '../types';
 
 const initialState: FilmsState = {
-  films: null,
+  all: null,
   promoFilm: null,
   fullDataFilms: {},
 };
@@ -14,7 +14,7 @@ export const filmsProcess = createSlice({
   initialState,
   reducers: {
     setFilms(state, action) {
-      state.films = action.payload;
+      state.all = action.payload;
     },
     setPromoFilm(state, action) {
       state.promoFilm = action.payload;

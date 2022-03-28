@@ -1,4 +1,4 @@
-import Logo from '../../components/logo/logo';
+import Logo from '../logo/logo';
 import { HeaderType } from './header-type';
 import { memo, PropsWithChildren } from 'react';
 
@@ -6,7 +6,7 @@ type HeaderLayoutProps = {
   type: HeaderType;
 };
 
-function HeaderLayout(props: PropsWithChildren<HeaderLayoutProps>): JSX.Element {
+function Header(props: PropsWithChildren<HeaderLayoutProps>): JSX.Element {
   return (
     <header className={props.type}>
       <Logo isLight={false}/>
@@ -15,4 +15,4 @@ function HeaderLayout(props: PropsWithChildren<HeaderLayoutProps>): JSX.Element 
   );
 }
 
-export default memo(HeaderLayout);
+export default memo(Header);

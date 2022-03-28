@@ -1,3 +1,4 @@
+import { MAX_GENRES_ON_SCREEN } from '../../utils/constants';
 import GenresListItem from './genres-list-item';
 
 type GenresListProps = {
@@ -8,8 +9,8 @@ type GenresListProps = {
 
 function GenresList(props: GenresListProps): JSX.Element {
   return (
-    <ul className="catalog__genres-list">
-      {props.genres.map((genre) => <GenresListItem onSelect={(title) => props.onGenreChange(title)} key={`genre-item-${genre}`} title={genre} selected={props.currentGenre===genre}></GenresListItem>)}
+    <ul data-testid="genre-list" className="catalog__genres-list">
+      {props.genres.slice(0, MAX_GENRES_ON_SCREEN).map((genre) => <GenresListItem onSelect={(title) => props.onGenreChange(title)} key={`genre-item-${genre}`} title={genre} selected={props.currentGenre===genre}></GenresListItem>)}
     </ul>
   );
 }

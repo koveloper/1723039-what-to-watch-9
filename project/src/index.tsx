@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { api } from './api/api';
 import { store } from './store';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AlertMessage from './components/alert-message/alert-message';
 
 api.fetchFilms();
 api.fetchPromoFilm();
@@ -15,6 +17,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
+        <AlertMessage />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

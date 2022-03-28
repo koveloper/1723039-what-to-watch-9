@@ -1,37 +1,35 @@
 import SimpleText from './simple-text';
 import Detail from './detail';
 import { useMemo } from 'react';
+import { FilmData } from '../../types/film-data-type';
 
 type FilmCardDetailsProps = {
-  runTime: number;
-  director: string;
-  starring: string[];
-  genre: string;
-  released: number;
+  film: FilmData;
 }
 
 function FilmCardDetails(props: FilmCardDetailsProps): JSX.Element {
+  const {runTime, director, starring, genre, released} = props.film;
   const timeStr = useMemo<string>((): string => {
-    if(props.runTime < 60) {
-      return `${props.runTime}m`;
+    if(runTime < 60) {
+      return `${runTime}m`;
     }
-    return `${Math.floor(props.runTime / 60)}h ${props.runTime % 60}m`;
-  }, [props.runTime]);
+    return `${Math.floor(runTime / 60)}h ${runTime % 60}m`;
+  }, [runTime]);
 
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
-        <Detail title='Director'>{props.director}</Detail>
+        <Detail title='Director'>{director}</Detail>
         <Detail title='Starring'>
-          {props.starring.map((actorName, i) => (
-            <SimpleText key={`details-actors-${i.toString()}`} addNewLine={i !== (props.starring.length - 1)}>{actorName}</SimpleText>
+          {starring.map((actorName, i) => (
+            <SimpleText key={`details-actors-${i.toString()}`} addNewLine={i !== (starring.length - 1)}>{actorName}</SimpleText>
           ))}
         </Detail>
       </div>
       <div className="film-card__text-col">
         <Detail title='Run Time'>{timeStr}</Detail>
-        <Detail title='Genre'>{props.genre}</Detail>
-        <Detail title='Released'>{props.released}</Detail>
+        <Detail title='Genre'>{genre}</Detail>
+        <Detail title='Released'>{released}</Detail>
       </div>
     </div>
   );

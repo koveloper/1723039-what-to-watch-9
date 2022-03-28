@@ -8,11 +8,10 @@ import { APIRoute } from './constants';
 import { changeFavoriteFilmState, setAuthStatus, setFavoriteFilms, setUserData } from '../store/user-process/user-process';
 import { getNetworkInstance } from './network';
 import { LoginData } from '../types/login-data';
-import { createFakeComment, createFakeComments, createFakeEmail, createFakeFilmData, createFakeFilmFullData, createFakeFilms, createFakePassword, createFakeUserResponse } from '../utils/mocks';
-import { AuthStatus } from '../store/constants';
+import { createFakeComment, createFakeComments, createFakeEmail, createFakeFilmData, createFakeFilmFullData, createFakeFilms, createFakePassword, createFakeUserResponse, createInitialState } from '../utils/mocks';
 import { setFilms, setFullDataFilm, setPromoFilm, updateComments } from '../store/films-process/films-process';
 import { FilmData, FilmFullData, Films } from '../types/film-data-type';
-import { setRedirect } from '../store/service-process/service-process';
+import { setAppError, setRedirect } from '../store/service-process/service-process';
 import { AppRoute } from '../utils/constants';
 
 describe('API functions', () => {
@@ -23,21 +22,7 @@ describe('API functions', () => {
   const middlewares = [thunk.withExtraArgument(network)];
   const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
   //create state initial state
-  const initialState:State = {
-    user: {
-      authStatus: AuthStatus.Unknown,
-      userData: null,
-      favoriteFilmsIdList: null,
-    },
-    films: {
-      films: null,
-      promoFilm: null,
-      fullDataFilms: {},
-    },
-    service: {
-      redirect: null,
-    },
-  };
+  const initialState:State = createInitialState();
 
   it('should authorization status is «auth» when server return 200', async () => {
     //create mock store instance
@@ -58,7 +43,7 @@ describe('API functions', () => {
     expect(actions).toContain(setAuthStatus.toString());
   });
 
-  it('should dispatch loginAction and expect and auth status userData when POST /login', async () => {
+  it('should dispatch loginAction and expect auth status and userData when POST /login', async () => {
     const fakeUser:LoginData = {login: createFakeEmail(), password: createFakePassword()};
     //create mock store instance
     const store = mockStore(initialState);
@@ -87,6 +72,29 @@ describe('API functions', () => {
     //check conditions on storage
     expect(Storage.prototype.setItem).toBeCalledTimes(1);
     expect(Storage.prototype.setItem).toBeCalledWith('what-to-watch', fakeUserResponse.token);
+  });
+
+  it('should dispatch loginAction with UnAuthorized status when DELETE /logout', async () => {
+    //create mock store instance
+    const store = mockStore(initialState);
+    //create mock API instance with mocked store and mocked network
+    const mockApi = createAPI(store as Store, network);
+    //immitate answer on POST to login URL
+    networkMockWrapper
+      .onDelete(APIRoute.Logout)
+      .reply(204);
+    //call API method
+    await mockApi.logout();
+    //analize store actions queue
+    const authAction = store.getActions().find((action) => action.type === setAuthStatus.toString());
+    const userDataAction = store.getActions().find((action) => action.type === setUserData.toString());
+    //check for actions in queue
+    expect(authAction).not.toBe(undefined);
+    expect(userDataAction).not.toBe(undefined);
+    //check for action contains auth state
+    expect(authAction).toMatchObject({payload: 'UnAuthorized'});
+    //check for action contains user data
+    expect(userDataAction).toMatchObject({payload: null});
   });
 
   it('should dispatch setFilms action with films data', async () => {
@@ -214,7 +222,7 @@ describe('API functions', () => {
     expect(redirectAction).toMatchObject({payload: `${AppRoute.Films}/${fakeComment.id}`});
   });
 
-  it('should dispatch setRedirect to 404 on uncorrect film id on post review operation', async () => {
+  it('should dispatch setAppError with type PostReviewError', async () => {
     //create mock store instance
     const store = mockStore(initialState);
     //create mock API instance with mocked store and mocked network
@@ -228,11 +236,9 @@ describe('API functions', () => {
     //call login request threw mocked API
     await mockApi.postReview({id: fakeComment.id, comment: fakeComment.comment, rating: fakeComment.rating});
     //analize store actions queue
-    const redirectAction = store.getActions().find((action) => action.type === setRedirect.toString());
+    const setAppErr = store.getActions().find((action) => action.type === setAppError.toString());
     //check for action in queue
-    expect(redirectAction).not.toBe(undefined);
-    //check for action contains correct payload
-    expect(redirectAction).toMatchObject({payload: AppRoute.Err404});
+    expect(setAppErr).not.toBe(undefined);
   });
 
   it('should dispatch setFavoriteFilms with favor films id array on favorite films request', async () => {

@@ -1,6 +1,9 @@
 function Spinner(): JSX.Element {
   return (
-    <div className="spinner">Loading...<br/>Please wait...</div>
+    <div className="spinner">
+      <span>Loading...</span>
+      <span>Please wait...</span>
+    </div>
   );
 }
 

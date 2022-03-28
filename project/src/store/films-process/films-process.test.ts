@@ -4,7 +4,7 @@ import { filmsProcess, setFilms, setFullDataFilm, setPromoFilm } from './films-p
 
 describe('Reducer: filmsProcess', () => {
   const initialState:FilmsState = {
-    films: null,
+    all: null,
     promoFilm: null,
     fullDataFilms: {},
   };
@@ -16,7 +16,7 @@ describe('Reducer: filmsProcess', () => {
     const fakeFilms = createFakeFilms();
     it('on setFilms action', () => {
       expect(filmsProcess.reducer(initialState, setFilms(fakeFilms)))
-        .toEqual(Object.assign({}, initialState, {films: fakeFilms}));
+        .toEqual(Object.assign({}, initialState, {all: fakeFilms}));
     });
   });
   describe('promoFilm tree', () => {

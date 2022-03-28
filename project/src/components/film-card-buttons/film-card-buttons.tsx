@@ -13,7 +13,7 @@ type FilmCardButtonsProps = {
 
 function FilmCardButtons(props: FilmCardButtonsProps): JSX.Element {
   return (
-    <div className="film-card__buttons">
+    <div data-testid="film-buttons" className="film-card__buttons">
       <SvgButton onClick={() => props.onButtonClick(ButtonType.Play)} title='Play'>
         <Svg width={19} height={19} href='#play-s'></Svg>
       </SvgButton>

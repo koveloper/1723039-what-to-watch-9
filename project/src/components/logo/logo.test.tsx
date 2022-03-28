@@ -1,8 +1,8 @@
 import {render, screen} from '@testing-library/react';
 import { BrowserRouter, Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { createMemoryHistory, History } from 'history';
 import Logo from './logo';
 import userEvent from '@testing-library/user-event';
-import { createMemoryHistory, History } from 'history';
 
 describe('Component: Logo', () => {
   it('should render correctly', () => {

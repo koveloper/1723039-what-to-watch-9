@@ -9,7 +9,8 @@ describe('Component: FilmCardPoster', () => {
     render(
       <FilmCardPoster posterUrl={fakeUrl} size={PosterSize.Big} title='fake-poster'/>,
     );
-    //check all genres names on screenц
+    //check elements on screen
     expect(screen.getByAltText('fake-poster')).toBeInTheDocument();
+    expect(screen.getByRole('img')).toBeInTheDocument();
   });
 });

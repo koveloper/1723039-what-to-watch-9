@@ -4,6 +4,7 @@ import { ServiceState } from '../types';
 
 const initialState: ServiceState = {
   redirect: null,
+  error: null,
 };
 
 export const serviceProcess = createSlice({
@@ -13,7 +14,10 @@ export const serviceProcess = createSlice({
     setRedirect(state, action) {
       state.redirect = action.payload;
     },
+    setAppError(state, action) {
+      state.error = action.payload;
+    },
   },
 });
 
-export const {setRedirect} = serviceProcess.actions;
+export const {setRedirect, setAppError} = serviceProcess.actions;

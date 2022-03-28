@@ -1,30 +1,40 @@
-import CatalogLayout from '../../layouts/catalog-layout/catalog-layout';
 import Spinner from '../../components/spinner/spinner';
-import HeaderLayout from '../../layouts/header-layout/header-layout';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
 import FilmCardMain from '../../components/film-card-main/film-card-main';
-import { useAuth, useButtonsDefaultHandler, useFavorite, useFilms, usePromoFilm } from '../../hooks';
-import { HeaderType } from '../../layouts/header-layout/header-type';
-import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
-import { useState } from 'react';
-import { filterFilmsByGenre, getGenresFromFilms } from '../app/utils';
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import Catalog from '../../components/catalog/catalog';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
+import { useState } from 'react';
+import { HeaderType } from '../../components/header/header-type';
+import { useAuth } from '../../hooks/use-auth';
+import { useFilms } from '../../hooks/use-films';
+import { usePromoFilm } from '../../hooks/use-promo-film';
+import { useFavorite } from '../../hooks/use-favorite';
+import { useFilmButtonsDefaultHandler } from '../../hooks/use-film-buttons-default-handler';
+import { useFilmsByGenre } from '../../hooks/use-films-by-genre';
+import { useGenres } from '../../hooks/use-genres';
 
-export default function MainPage(): JSX.Element | null {
+type MainPageProps = {
+  muted?: boolean;
+}
+
+export default function MainPage(props : MainPageProps): JSX.Element | null {
   const promoFilm = usePromoFilm();
   const films = useFilms();
   const [genre, setGenre] = useState(ALL_GENRES);
   const [maxFilmsOnPage, setMaxFilmsOnPage] = useState(FILMS_ON_PAGE_INITIAL);
-  const genres: string[] = [ALL_GENRES, ...getGenresFromFilms(films || [])];
-  const filmsByGenre = filterFilmsByGenre(films || [], genre);
+  const genres: string[] = useGenres();
+  const filmsByGenre = useFilmsByGenre(genre);
   const isPromoFilmFavorite = useFavorite(promoFilm ? promoFilm.id : -1);
-  const actionButtonClickHandler = useButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
+  const filmButtonsClickHandler = useFilmButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
   const isAuthorized = useAuth();
-  if(!promoFilm) {
+  if(!promoFilm || !films) {
     return <Spinner />;
   }
   return (
@@ -34,10 +44,10 @@ export default function MainPage(): JSX.Element | null {
           <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <HeaderLayout type={HeaderType.FilmCard}>
+        <Header type={HeaderType.FilmCard}>
           <UserBlock/>
-        </HeaderLayout>
-        <div className="film-card__wrap">
+        </Header>
+        <div data-testid="film-card-main" className="film-card__wrap">
           <div className="film-card__info">
             <FilmCardPoster title={promoFilm.name} posterUrl={promoFilm.posterImage} size={PosterSize.Medium}/>
             <FilmCardMain
@@ -46,24 +56,27 @@ export default function MainPage(): JSX.Element | null {
               releaseYear={promoFilm.released}
             >
               <FilmCardButtons
-                onButtonClick={actionButtonClickHandler}
+                onButtonClick={filmButtonsClickHandler}
                 isShowAddReviewButton={false}
                 isShowAddToFavorsButton={isAuthorized}
-                isFavorite={isPromoFilmFavorite}
+                isFavorite={!!isPromoFilmFavorite}
               />
             </FilmCardMain>
           </div>
         </div>
       </section>
-      <CatalogLayout title='Catalog' titleHidden type='full'>
-        <GenresList currentGenre={genre} onGenreChange={(newGenre) => setGenre(newGenre)} genres={genres}/>
-        <FilmsList films={filmsByGenre.slice(0, maxFilmsOnPage)}/>
-        {
-          filmsByGenre.length > maxFilmsOnPage
-            ? <ShowMoreButton onClick={() => setMaxFilmsOnPage(maxFilmsOnPage + FILMS_ON_PAGE_STEP)} />
-            : null
-        }
-      </CatalogLayout>
+      <div className="page-content">
+        <Catalog title='Catalog' titleHidden type='full'>
+          <GenresList currentGenre={genre} onGenreChange={(newGenre) => setGenre(newGenre)} genres={genres}/>
+          <FilmsList films={filmsByGenre.slice(0, maxFilmsOnPage)} muted={props.muted}/>
+          {
+            filmsByGenre.length > maxFilmsOnPage
+              ? <ShowMoreButton onClick={() => setMaxFilmsOnPage(maxFilmsOnPage + FILMS_ON_PAGE_STEP)} />
+              : null
+          }
+        </Catalog>
+        <Footer />
+      </div>
     </>
   );
 }
