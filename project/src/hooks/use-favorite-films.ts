@@ -3,12 +3,17 @@ import { useSelector } from 'react-redux';
 import { api } from '../api/api';
 import { State } from '../store/types';
 import { Films } from '../types/film-data-type';
+import { useAuth } from './use-auth';
 import { useFilms } from './use-films';
 
 export const useFavoriteFilms = (): undefined | null | Films  => {
   const favoriteFilmsId = useSelector((state: State) => state.user.favoriteFilmsIdList);
   const films = useFilms();
+  const isAuthorized = useAuth();
   const favors = useMemo<Films | undefined | null>(() => {
+    if(!isAuthorized) {
+      return [];
+    }
     const arr:Films = [];
     if(!favoriteFilmsId) {
       api.fetchFavoriteFilms();

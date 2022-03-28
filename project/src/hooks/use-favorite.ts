@@ -1,12 +1,9 @@
-import { useSelector } from 'react-redux';
-import { api } from '../api/api';
-import { State } from '../store/types';
+import { useFavoriteFilms } from './use-favorite-films';
 
-export const useFavorite = (id: number): boolean | undefined => {
-  const favorIds = useSelector((state: State) => state.user.favoriteFilmsIdList);
-  if(!favorIds) {
-    api.fetchFavoriteFilms();
-    return undefined;
+export const useFavorite = (id: number): boolean => {
+  const favorFilms = useFavoriteFilms();
+  if(!favorFilms) {
+    return false;
   }
-  return !!favorIds.find((i) => i === id);
+  return !!favorFilms.find((f) => f.id === id);
 };
