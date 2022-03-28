@@ -1,5 +1,4 @@
-import { useMemo } from 'react';
-import { FilmMark } from '../../utils/constants';
+import { FILM_MARK_TABLE } from '../../utils/constants';
 
 type FilmCardOverviewProps = {
   rating: number;
@@ -10,21 +9,7 @@ type FilmCardOverviewProps = {
 }
 
 function FilmCardOverview(props: FilmCardOverviewProps): JSX.Element {
-  const mark = useMemo((): string => {
-    if(props.rating === 10) {
-      return FilmMark.Awesome;
-    }
-    if(props.rating >= 8) {
-      return FilmMark.VeryGood;
-    }
-    if(props.rating >= 5) {
-      return FilmMark.Good;
-    }
-    if(props.rating >= 3) {
-      return FilmMark.Normal;
-    }
-    return FilmMark.Bad;
-  }, [props.rating]);
+  const mark = FILM_MARK_TABLE[Math.floor(props.rating)];
   return (
     <>
       <div className="film-rating">
