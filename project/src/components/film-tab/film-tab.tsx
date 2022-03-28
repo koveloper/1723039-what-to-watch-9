@@ -16,11 +16,7 @@ export default function FilmTab({film, comments, tab} : FilmTabProps):JSX.Elemen
     case FilmInfoType.Overview:
       return (
         <FilmCardOverview
-          description={film.description}
-          director={film.director}
-          rating={film.rating}
-          scoresCount={film.scoresCount}
-          starring={film.starring}
+          film={film}
         />
       );
     case FilmInfoType.Details:
