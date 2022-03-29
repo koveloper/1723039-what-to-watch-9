@@ -25,10 +25,11 @@ export enum PosterSize {
 
 export enum FilmMark {
     Bad = 'Bad',
-    Normal = 'Norma',
+    Normal = 'Normal',
     Good = 'Good',
     VeryGood = 'Very good',
-    Awesome = 'Awesome'
+    Awesome = 'Awesome',
+    Unknown = 'Unknown',
 }
 
 export enum NameSpace {
@@ -39,7 +40,25 @@ export enum NameSpace {
 
 export enum AppError {
     PostReview = 'post-review',
+    GetFavorite = 'get-favorite',
+    SetFavorite = 'set-favorite',
+    LogOut = 'log-out',
+    LogIn = 'log-in',
 }
+
+export const FILM_MARK_TABLE: FilmMark[] = [
+  FilmMark.Unknown, //0
+  FilmMark.Bad, //1
+  FilmMark.Bad, //2
+  FilmMark.Normal, //3
+  FilmMark.Normal, //4
+  FilmMark.Good, //5
+  FilmMark.Good, //6
+  FilmMark.Good, //7
+  FilmMark.VeryGood, //8
+  FilmMark.VeryGood, //9
+  FilmMark.Awesome, //10
+];
 
 export const APP_TITLE = 'WTW';
 export const ALL_GENRES = 'All genres';

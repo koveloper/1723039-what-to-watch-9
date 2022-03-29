@@ -22,16 +22,15 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
   const isAuthorized = useAuth();
   const navigate = useNavigate();
   const [isPosting, setPosting] = useState(false);
-  const [appError, setAppError] = useAppError();
+  const [appError] = useAppError();
   useEffect(() => {
     if(isPosting && appError && appError.type === AppError.PostReview) {
       setPosting(false);
-      setAppError(null);
     }
     if(!isAuthorized) {
       navigate(AppRoute.SignIn);
     }
-  }, [appError, isAuthorized]);
+  }, [appError, isAuthorized, isPosting]);
   const addReviewSubmitHandler = (rating: number, commentary: string) => {
     if(!commentary.length) {
       return;

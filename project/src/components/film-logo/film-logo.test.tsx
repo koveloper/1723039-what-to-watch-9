@@ -1,10 +1,10 @@
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
-import userEvent from '@testing-library/user-event';
-import FilmLogo from './film-logo';
 import { createFakeFilmData } from '../../utils/mocks';
 import { AppRoute } from '../../utils/constants';
+import userEvent from '@testing-library/user-event';
+import FilmLogo from './film-logo';
 
 describe('Component: FilmLogo', () => {
   const fakeFilm = createFakeFilmData();

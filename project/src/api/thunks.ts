@@ -27,7 +27,7 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
         const {data} = await network.get<Films>(APIRoute.Films);
         dispatch(setFilms(data));
       } catch (error) {
-        // errorHandle(error);
+        // do nothing
       }
     },
   ),
@@ -39,7 +39,7 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
         const {data} = await network.get<FilmData>(APIRoute.PromoFilm);
         dispatch(setPromoFilm(data));
       } catch (error) {
-        // errorHandle(error);
+        // don nothing
       }
     },
   ),
@@ -52,7 +52,7 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
         dispatch(setAuthStatus(AuthStatus.Authorized));
         dispatch(setUserData(data));
       } catch (error) {
-        // errorHandle(error);
+        // do nothing
       }
     },
   ),
@@ -65,8 +65,11 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
         token.save(data.token);
         dispatch(setAuthStatus(AuthStatus.Authorized));
         dispatch(setUserData(data));
-      } catch (error) {
-        // errorHandle(error);
+      } catch (err) {
+        dispatch(setAppError({
+          type: AppError.LogIn,
+          message: (err as Error).message,
+        } as AppErrorType));
       }
     },
   ),
@@ -81,8 +84,11 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
         }
         dispatch(setAuthStatus(AuthStatus.UnAuthorized));
         dispatch(setUserData(null));
-      } catch (error) {
-        // errorHandle(error);
+      } catch (err) {
+        dispatch(setAppError({
+          type: AppError.LogOut,
+          message: (err as Error).message,
+        } as AppErrorType));
       }
     },
   ),
@@ -101,6 +107,7 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
           similar,
         } as FilmFullData));
       } catch (error) {
+        //redirect to 404 page
         dispatch(setRedirect(AppRoute.Err404));
       }
     },
@@ -131,8 +138,11 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
       try {
         const {data} = await network.get<Films>(APIRoute.FavoriteFilms);
         dispatch(setFavoriteFilms(data.map((film) => film.id)));
-      } catch (error) {
-        //
+      } catch (err) {
+        dispatch(setAppError({
+          type: AppError.GetFavorite,
+          message: (err as Error).message,
+        } as AppErrorType));
       }
     },
   ),
@@ -143,8 +153,11 @@ export const createAsyncActions = (dispatch: AppDispatch, network: AxiosInstance
       try {
         const {data} = await network.post<FilmData>(APIRoute.SetFavoriteFilm(id, isFavorite));
         dispatch(changeFavoriteFilmState(data));
-      } catch (error) {
-        //
+      } catch (err) {
+        dispatch(setAppError({
+          type: AppError.SetFavorite,
+          message: (err as Error).message,
+        } as AppErrorType));
       }
     },
   ),
