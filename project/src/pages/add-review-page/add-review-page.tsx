@@ -30,7 +30,7 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
     if(!isAuthorized) {
       navigate(AppRoute.SignIn);
     }
-  }, [appError, isAuthorized]);
+  }, [appError, isAuthorized, isPosting]);
   const addReviewSubmitHandler = (rating: number, commentary: string) => {
     if(!commentary.length) {
       return;

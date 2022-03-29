@@ -3,11 +3,10 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../../store/types';
 import { Action } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createFakeFilms, createInitialState } from '../../utils/mocks';
-import UserListPage from './user-list-page';
 import { AuthStatus } from '../../store/constants';
-import { AppRoute } from '../../utils/constants';
+import UserListPage from './user-list-page';
 
 describe('Component: UserListPage', () => {
   const mockStore = configureMockStore<State, Action>();
