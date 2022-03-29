@@ -5,8 +5,5 @@ import { useAuth } from './use-auth';
 export const useFavorite = (id: number): boolean => {
   const isAuthorized = useAuth();
   const favorIds = useSelector((state: State) => state.user.favoriteFilmsIdList);
-  if(!isAuthorized || ! favorIds) {
-    return false;
-  }
-  return !!favorIds.find((i) => i === id);
+  return !!isAuthorized && !!favorIds?.includes(id);
 };

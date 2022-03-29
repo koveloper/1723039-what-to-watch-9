@@ -45,24 +45,4 @@ describe('Component: FilmLogo', () => {
     userEvent.click(screen.getByRole('link'));
     expect(screen.getByText(/This is fake film page/i)).toBeInTheDocument();
   });
-  // non undserstand behavior on this TEST...
-  // it('should play video on hover event', async () => {
-  //   const pauseMock = jest.fn();
-  //   const playMock = jest.fn();
-  //   HTMLMediaElement.prototype.pause = pauseMock;
-  //   HTMLMediaElement.prototype.play = playMock;
-  //   //
-  //   render(
-  //     <BrowserRouter>
-  //       <FilmLogo film={fakeFilm} muted={false}/>
-  //     </BrowserRouter>,
-  //   );
-  //   fireEvent(screen.getByTestId('film-logo'), new Event('mouseenter'));
-
-  //   await waitFor(() => {
-  //     expect(HTMLMediaElement.prototype.play).toBeCalled();
-  //   }, {
-  //     timeout: 1500,
-  //   });
-  // });
 });
