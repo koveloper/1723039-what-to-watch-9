@@ -2,14 +2,17 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
+import { api } from '../api/api';
 import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
-import { createInitialState } from '../utils/mocks';
+import { createFakeFilms, createInitialState } from '../utils/mocks';
 import { useFavorite } from './use-favorite';
 
 describe('Hook: useFavorite', () => {
   const mockStore = configureMockStore<State, Action>();
   const initialState:State = createInitialState();
+  const favoriteFilmsIdList = [100, 105, 110, 117];
+  const films = createFakeFilms(40);
 
   it('should return false on startup', async () => {
     const store = mockStore(initialState);
@@ -23,11 +26,13 @@ describe('Hook: useFavorite', () => {
     expect(value).toBe(false);
   });
 
-  it('should return true or false after init in case of auth is ok', async () => {
-    const favoriteFilmsIdList = [100, 105, 110, 117];
+  it('should return true or false after init in case of auth is ok and ALL data fetched', async () => {
     const store = mockStore(Object.assign(
       initialState,
       {
+        films: {
+          all: films,
+        },
         user: {
           authStatus: AuthStatus.Authorized,
           favoriteFilmsIdList,
@@ -55,11 +60,41 @@ describe('Hook: useFavorite', () => {
       expect(value).toBe(false);
     }
   });
-  it('should return false ONLY after init in case of NO auth', async () => {
-    const favoriteFilmsIdList = [100, 105, 110, 117];
+
+  it('should return false and call api method after init in case of auth is ok, films fetched, but NO favors fetched', async () => {
+    const getFavorsMock = jest.fn();
+    api.fetchFavoriteFilms = getFavorsMock;
     const store = mockStore(Object.assign(
       initialState,
       {
+        films: {
+          all: films,
+        },
+        user: {
+          authStatus: AuthStatus.Authorized,
+        },
+      },
+    ));
+    expect(getFavorsMock).toBeCalledTimes(0);
+    for(const id of favoriteFilmsIdList){
+      const {result} = renderHook(
+        () => useFavorite(id),
+        {
+          wrapper: ({ children }) => (<Provider store={store}>{children}</Provider>),
+        },
+      );
+      const value = result.current;
+      expect(value).toBe(false);
+    }
+    expect(getFavorsMock).toBeCalledTimes(favoriteFilmsIdList.length);
+  });
+  it('should return false ONLY after init in case of NO auth', async () => {
+    const store = mockStore(Object.assign(
+      initialState,
+      {
+        films: {
+          all: films,
+        },
         user: {
           authStatus: AuthStatus.UnAuthorized,
           favoriteFilmsIdList,
