@@ -31,7 +31,7 @@ export const createFakeFilmData = (idValue?: number): FilmData => ({
   previewImage: generator.image.imageUrl(),
   backgroundImage: generator.image.imageUrl(),
   backgroundColor: generator.commerce.color(),
-  description: generator.lorem.paragraphs(1 + generator.datatype.number(2)),
+  description: generator.lorem.paragraph(),
   rating: 1 + generator.datatype.number(10),
   scoresCount: generator.datatype.number(30000),
   director: createRandomName(),
