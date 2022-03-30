@@ -27,7 +27,6 @@ describe('Hook: useFavorite', () => {
   });
 
   it('should return true or false after init in case of auth is ok and ALL data fetched', async () => {
-    const films = createFakeFilms(40);
     const store = mockStore(Object.assign(
       initialState,
       {
