@@ -2,6 +2,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
+import { api } from '../api/api';
 import { AuthStatus } from '../store/constants';
 import { State } from '../store/types';
 import { createFakeFilms, createInitialState } from '../utils/mocks';
@@ -23,7 +24,9 @@ describe('Hook: useFavoriteFilms', () => {
     expect(value).toBe(null);
   });
 
-  it('should return undefined in case of auth OK and NO data fetched', async () => {
+  it('should return undefined and call api method in case of auth OK and NO data fetched', async () => {
+    const getFavorsMock = jest.fn();
+    api.fetchFavoriteFilms = getFavorsMock;
     const store = mockStore(Object.assign(
       initialState,
       {
@@ -32,6 +35,7 @@ describe('Hook: useFavoriteFilms', () => {
         },
       },
     ));
+    expect(getFavorsMock).toBeCalledTimes(0);
     const {result} = renderHook(
       () => useFavoriteFilms(),
       {
@@ -40,6 +44,7 @@ describe('Hook: useFavoriteFilms', () => {
     );
     const value = result.current;
     expect(value).toBe(undefined);
+    expect(getFavorsMock).toBeCalled();
   });
 
   it('should return null on favor films fetched but no films data fetched and auth OK', async () => {

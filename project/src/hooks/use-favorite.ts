@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { State } from '../store/types';
 import { useAuth } from './use-auth';
 import { useFavoriteFilms } from './use-favorite-films';
 
