@@ -11,7 +11,7 @@ type FilmTabProps = {
     tab: FilmInfoType;
 }
 
-export default function FilmTab({film, comments, tab} : FilmTabProps):JSX.Element | null {
+function FilmTab({film, comments, tab} : FilmTabProps):JSX.Element | null {
   switch(tab) {
     case FilmInfoType.Overview:
       return (
@@ -31,3 +31,5 @@ export default function FilmTab({film, comments, tab} : FilmTabProps):JSX.Elemen
       return null;
   }
 }
+
+export default FilmTab;

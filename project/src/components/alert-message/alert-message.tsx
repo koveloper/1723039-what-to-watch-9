@@ -1,6 +1,6 @@
 import { useAppError } from '../../hooks/use-app-error';
 
-export default function AlertMessage(): JSX.Element | null {
+function AlertMessage(): JSX.Element | null {
   const [appError, setAppError] = useAppError();
   if(!appError) {
     return null;
@@ -17,3 +17,5 @@ export default function AlertMessage(): JSX.Element | null {
     </div>
   );
 }
+
+export default AlertMessage;

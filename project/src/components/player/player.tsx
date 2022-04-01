@@ -9,7 +9,7 @@ export type PlayerProps = {
     videoLink: string;
 }
 
-export default function Player(props: PlayerProps): JSX.Element {
+function Player(props: PlayerProps): JSX.Element {
   //
   const playerRef = useRef<HTMLDivElement>(null);
   const player = playerRef.current;
@@ -103,3 +103,5 @@ export default function Player(props: PlayerProps): JSX.Element {
     </div>
   );
 }
+
+export default Player;
