@@ -1410,7 +1410,7 @@ main {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%); }
 
-.spinner {
+/* .spinner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1428,7 +1428,7 @@ main {
   backdrop-filter: blur(5px);
   z-index: 700;
   font-size: 24px;
-  color: black;}
+  color: black;} */
           
 .alert-wrapper {
   position: fixed;
@@ -1486,3 +1486,99 @@ main {
 
 .app-alert-close:active {
   opacity: 0.4;}
+
+.spinner {
+  position: fixed;
+  left: 0;
+  top: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(3px);
+  z-index: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: 0.3s;
+  padding: 0;  
+  color: wheat;
+  gap: 6px;
+}
+
+.spinner-anime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;  
+}
+
+.spinner-anime-item {
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-name: wait;
+  animation-fill-mode: forwards;
+  transform: translateX(-400px);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin: 0 10px 0 0;
+  opacity: 0;
+  background: burlywood;
+  box-shadow: 0 0 8px burlywood;
+  transition: 0.2s;
+}
+
+.spinner-anime-item:nth-child(1) {
+  animation-delay: 2s;
+} 
+.spinner-anime-item:nth-child(2) {
+  animation-delay: 1.6s;
+} 
+.spinner-anime-item:nth-child(3) {
+  animation-delay: 1.2s;
+} 
+.spinner-anime-item:nth-child(4) {
+  animation-delay: 0.8s;
+} 
+.spinner-anime-item:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+@keyframes wait {
+  from {
+      transform: translateX(-400px) scale(0.01);
+      opacity: 0;        
+  }
+  10% {
+      opacity: 0;
+  }
+  30% {
+      transform: translateX(0) scale(0.5);
+      opacity: 1;
+  }
+  50% {
+      transform: translateX(0) scale(0.5);
+  }
+  60% {
+      transform: translateX(0) scale(0.5);
+  }
+  65% {
+      transform: translateX(0) scale(0.8);
+  }
+  70% {
+      transform: translateX(0) scale(0.5);
+      opacity: 1;
+  }
+  80% {
+      opacity: 0;
+  }
+  to {
+      transform: translateX(400px) scale(0.01);
+      opacity: 0;
+  }
+}
