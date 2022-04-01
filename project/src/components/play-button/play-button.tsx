@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import Svg from '../svg/svg';
 
 type PlayButtonProps = {
     playing: boolean,
@@ -10,14 +11,10 @@ function PlayButton(props: PlayButtonProps):JSX.Element {
     <button onClick={props.onClick} type="button" className="player__play">
       {props.playing
         ? (
-          <svg viewBox="0 0 14 21" width="14" height="21">
-            <use xlinkHref="#pause"></use>
-          </svg>
+          <Svg width={14} height={21} href="#pause"/>
         )
         : (
-          <svg viewBox="0 0 19 19" width="19" height="19">
-            <use xlinkHref="#play-s"></use>
-          </svg>
+          <Svg width={19} height={19} href="#play-s"/>
         )}
       <span>{props.playing ? 'Play' : 'Pause'}</span>
     </button>

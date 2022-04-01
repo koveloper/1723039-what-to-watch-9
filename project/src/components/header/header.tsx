@@ -1,6 +1,6 @@
 import Logo from '../logo/logo';
-import { HeaderType } from './header-type';
 import { memo, PropsWithChildren } from 'react';
+import { HeaderType } from '../../utils/constants';
 
 type HeaderLayoutProps = {
   type: HeaderType;

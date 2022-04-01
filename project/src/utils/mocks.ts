@@ -82,10 +82,6 @@ export const createFakeGenres = (count?: number): string[] => Array(count ? coun
 
 export const createFakeUrl = (): string => generator.internet.url();
 
-export const createFakeName = (): string => createRandomName();
-
-export const createFakeNames = (count?: number): string[] => Array(count ? count : 8).fill(null).map(() => createRandomName());
-
 export const createFakeParagraph = (): string => generator.lorem.paragraph();
 
 export const createInitialState = ():State => ({

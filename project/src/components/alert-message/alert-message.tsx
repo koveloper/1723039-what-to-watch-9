@@ -6,7 +6,7 @@ export default function AlertMessage(): JSX.Element | null {
     return null;
   }
   return (
-    <div className='alert-wrapper'>
+    <div data-testid='alert-message' className='alert-wrapper'>
       <div className="app-alert">
         <button className="app-alert-close" onClick={() => setAppError(null)}>X</button>
         <h2>Error during server data exchange!</h2>

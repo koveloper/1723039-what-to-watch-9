@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { getTimeFromSeconds } from './utils';
 import { useNavigate } from 'react-router-dom';
-import PlayButton from './play-button';
+import PlayButton from '../play-button/play-button';
 import Spinner from '../spinner/spinner';
 
 export type PlayerProps = {

@@ -1,5 +1,10 @@
 import { PropsWithChildren } from 'react';
-import { CatalogProps } from './catalog-props';
+
+type CatalogProps = {
+  type: 'full' | 'filtered';
+  title: string;
+  titleHidden?: boolean;
+};
 
 function Catalog(props: PropsWithChildren<CatalogProps>): JSX.Element {
   return (

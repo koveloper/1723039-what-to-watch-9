@@ -6,7 +6,7 @@ import Spinner from '../../components/spinner/spinner';
 import { AppError, AppRoute, PosterSize } from '../../utils/constants';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
-import { HeaderType } from '../../components/header/header-type';
+import { HeaderType } from '../../utils/constants';
 import { useAuth } from '../../hooks/use-auth';
 import { useEffect, useState } from 'react';
 import { useAppError } from '../../hooks/use-app-error';

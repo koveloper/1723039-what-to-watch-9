@@ -1,11 +1,11 @@
 import {render, screen} from '@testing-library/react';
 import { BrowserRouter, Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
+import { FilmCardButtonType } from '../../utils/constants';
 import userEvent from '@testing-library/user-event';
 import FilmCardButtons from './film-card-buttons';
-import { ButtonType } from './constants';
 
-describe('Component: SvgButton', () => {
+describe('Component: FilmCardButtons', () => {
 
   describe('should render correctly', () => {
     it('2 buttons and link', () => {
@@ -50,15 +50,15 @@ describe('Component: SvgButton', () => {
         <HistoryRouter history={history}>
           <Routes>
             <Route
-              path={`/${ButtonType.Play}`}
+              path={`/${FilmCardButtonType.Play}`}
               element={<h1>This is Play page</h1>}
             />
             <Route
-              path={`/${ButtonType.MyList}`}
+              path={`/${FilmCardButtonType.MyList}`}
               element={<h1>This is MyList page</h1>}
             />
             <Route
-              path={`/${ButtonType.AddReview}`}
+              path={`/${FilmCardButtonType.AddReview}`}
               element={<h1>This is AddReview page</h1>}
             />
             <Route
@@ -81,15 +81,15 @@ describe('Component: SvgButton', () => {
         <HistoryRouter history={history}>
           <Routes>
             <Route
-              path={`/${ButtonType.Play}`}
+              path={`/${FilmCardButtonType.Play}`}
               element={<h1>This is Play page</h1>}
             />
             <Route
-              path={`/${ButtonType.MyList}`}
+              path={`/${FilmCardButtonType.MyList}`}
               element={<h1>This is MyList page</h1>}
             />
             <Route
-              path={`/${ButtonType.AddReview}`}
+              path={`/${FilmCardButtonType.AddReview}`}
               element={<h1>This is AddReview page</h1>}
             />
             <Route
@@ -112,15 +112,15 @@ describe('Component: SvgButton', () => {
         <HistoryRouter history={history}>
           <Routes>
             <Route
-              path={`/${ButtonType.Play}`}
+              path={`/${FilmCardButtonType.Play}`}
               element={<h1>This is Play page</h1>}
             />
             <Route
-              path={`/${ButtonType.MyList}`}
+              path={`/${FilmCardButtonType.MyList}`}
               element={<h1>This is MyList page</h1>}
             />
             <Route
-              path={`/${ButtonType.AddReview}`}
+              path={`/${FilmCardButtonType.AddReview}`}
               element={<h1>This is AddReview page</h1>}
             />
             <Route

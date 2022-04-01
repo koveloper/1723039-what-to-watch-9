@@ -32,6 +32,10 @@ describe('Component: Player', () => {
   });
 
   it('should render component only', () => {
+    const mockedPause = jest.fn();
+    const mockedPlay = jest.fn();
+    HTMLMediaElement.prototype.pause = mockedPause;
+    HTMLMediaElement.prototype.play = mockedPlay;
     render(
       <BrowserRouter>
         <Player title={film.name} videoLink={film.videoLink}/>
@@ -60,20 +64,22 @@ describe('Component: Player', () => {
     //check no pause and no play actions
     expect(mockedPause.mock.calls.length).toBe(0);
     expect(mockedPlay.mock.calls.length).toBe(0);
-    //click play button and check play command
-    userEvent.click(screen.getAllByRole('button')[1]);
-    // wait for effect in component
-    act(() => {
-      (() => void 0)();
-    });
-    expect(mockedPlay.mock.calls.length).toBe(1);
     //click play button and check pause command
     userEvent.click(screen.getAllByRole('button')[1]);
     // wait for effect in component
     act(() => {
       (() => void 0)();
     });
+    expect(mockedPlay.mock.calls.length).toBe(0);
     expect(mockedPause.mock.calls.length).toBe(1);
+    //click play button and check play command
+    userEvent.click(screen.getAllByRole('button')[1]);
+    // wait for effect in component
+    act(() => {
+      (() => void 0)();
+    });
+    expect(mockedPause.mock.calls.length).toBe(1);
+    expect(mockedPlay.mock.calls.length).toBe(1);
   });
 
   it('should call container.requestFullMode on button click', () => {

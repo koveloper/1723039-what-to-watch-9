@@ -6,7 +6,7 @@ type MenuLinkProps = {
     onClick: () => void;
 };
 
-function MenuLink(props: PropsWithChildren<MenuLinkProps>): JSX.Element {
+function FilmCardMenuLink(props: PropsWithChildren<MenuLinkProps>): JSX.Element {
   const handleLinkClick = (evt: SyntheticEvent) => {
     evt.preventDefault();
     props.onClick();
@@ -18,4 +18,4 @@ function MenuLink(props: PropsWithChildren<MenuLinkProps>): JSX.Element {
   );
 }
 
-export default memo(MenuLink, (prevProps, newProps) => (prevProps.isActive === newProps.isActive));
+export default memo(FilmCardMenuLink, (prevProps, newProps) => (prevProps.isActive === newProps.isActive));

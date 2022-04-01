@@ -1,13 +1,13 @@
 import {render, screen} from '@testing-library/react';
 import { createFakeComment } from '../../utils/mocks';
-import Review from './review';
+import FilmCardReview from './film-card-review';
 
 describe('Component: Review', () => {
   const fakeComment = createFakeComment();
 
   it('should render correctly', () => {
     render(
-      <Review {...fakeComment}/>,
+      <FilmCardReview {...fakeComment}/>,
     );
     //check all genres names on screen
     expect(screen.getByText(fakeComment.rating)).toBeInTheDocument();

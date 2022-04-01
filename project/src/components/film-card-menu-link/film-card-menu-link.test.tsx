@@ -2,16 +2,16 @@ import {render, screen} from '@testing-library/react';
 import { BrowserRouter, Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
 import userEvent from '@testing-library/user-event';
-import MenuLink from './menu-link';
+import FilmCardMenuLink from './film-card-menu-link';
 
 describe('Component: MenuLink', () => {
 
   it('should render correctly', () => {
     render(
       <BrowserRouter>
-        <MenuLink isActive onClick={() => void 0}>
+        <FilmCardMenuLink isActive onClick={() => void 0}>
             Fake menu link
-        </MenuLink>
+        </FilmCardMenuLink>
       </BrowserRouter>,
     );
     //check that links count is equal to genres count
@@ -33,7 +33,7 @@ describe('Component: MenuLink', () => {
           />
           <Route
             path="*"
-            element={<MenuLink isActive onClick={() => history.push(fakeUri)} />}
+            element={<FilmCardMenuLink isActive onClick={() => history.push(fakeUri)} />}
           />
         </Routes>
       </HistoryRouter>,

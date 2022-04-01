@@ -6,7 +6,7 @@ enum DateFormat {
     forOut = 'MMMM DD, YYYY'
 }
 
-function Review(props: Comment): JSX.Element {
+function FilmCardReview(props: Comment): JSX.Element {
   const attrDate = dayjs(props.date).format(DateFormat.forAttr);
   const displayDate = dayjs(props.date).format(DateFormat.forOut);
   return (
@@ -23,4 +23,4 @@ function Review(props: Comment): JSX.Element {
   );
 }
 
-export default Review;
+export default FilmCardReview;

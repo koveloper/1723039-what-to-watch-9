@@ -4,7 +4,7 @@ import Footer from '../../components/footer/footer';
 import Spinner from '../../components/spinner/spinner';
 import UserBlock from '../../components/user-block/user-block';
 import Header from '../../components/header/header';
-import { HeaderType } from '../../components/header/header-type';
+import { HeaderType } from '../../utils/constants';
 import { useFavoriteFilms } from '../../hooks/use-favorite-films';
 
 type UserListPageProps = {

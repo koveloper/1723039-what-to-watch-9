@@ -46,6 +46,18 @@ export enum AppError {
     LogIn = 'log-in',
 }
 
+export enum FilmCardButtonType {
+    Play = 'Play',
+    MyList = 'MyList',
+    AddReview = 'AddReview'
+}
+
+export enum HeaderType {
+    FilmCard = 'page-header film-card__head',
+    UserOrSignIn = 'page-header user-page__head',
+    AddReview = 'page-header'
+}
+
 export const FILM_MARK_TABLE: FilmMark[] = [
   FilmMark.Unknown, //0
   FilmMark.Bad, //1

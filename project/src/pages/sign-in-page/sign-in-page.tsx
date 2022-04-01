@@ -4,7 +4,7 @@ import Header from '../../components/header/header';
 import { api } from '../../api/api';
 import { LoginData } from '../../types/login-data';
 import { AppRoute } from '../../utils/constants';
-import { HeaderType } from '../../components/header/header-type';
+import { HeaderType } from '../../utils/constants';
 import { useAuth } from '../../hooks/use-auth';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';

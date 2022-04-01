@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FilmInfoType } from '../../utils/constants';
-import MenuLink from './menu-link';
+import FilmCardMenuLink from '../film-card-menu-link/film-card-menu-link';
 
 type FilmCardMenuProps = {
   onTabSelect: (activeTab: FilmInfoType) => void;
@@ -17,15 +17,15 @@ function FilmCardMenu(props: FilmCardMenuProps): JSX.Element {
   return (
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
-        <MenuLink key='overview' isActive={activeTab === FilmInfoType.Overview} onClick={() => handleLinkClick(FilmInfoType.Overview)}>
+        <FilmCardMenuLink key='overview' isActive={activeTab === FilmInfoType.Overview} onClick={() => handleLinkClick(FilmInfoType.Overview)}>
           Overview
-        </MenuLink>
-        <MenuLink key='details' isActive={activeTab === FilmInfoType.Details} onClick={() => handleLinkClick(FilmInfoType.Details)}>
+        </FilmCardMenuLink>
+        <FilmCardMenuLink key='details' isActive={activeTab === FilmInfoType.Details} onClick={() => handleLinkClick(FilmInfoType.Details)}>
           Details
-        </MenuLink>
-        <MenuLink key='reviews' isActive={activeTab === FilmInfoType.Reviews} onClick={() => handleLinkClick(FilmInfoType.Reviews)}>
+        </FilmCardMenuLink>
+        <FilmCardMenuLink key='reviews' isActive={activeTab === FilmInfoType.Reviews} onClick={() => handleLinkClick(FilmInfoType.Reviews)}>
           Reviews
-        </MenuLink>
+        </FilmCardMenuLink>
       </ul>
     </nav>
   );

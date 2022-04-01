@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { HeaderType } from './header-type';
+import { HeaderType } from '../../utils/constants';
 import Header from './header';
 
 describe('Component: HeaderLayout', () => {

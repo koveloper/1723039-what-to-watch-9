@@ -12,7 +12,7 @@ import { Comments } from '../../types/commentary';
 import { FilmData } from '../../types/film-data-type';
 import { FilmInfoType, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
-import { HeaderType } from '../../components/header/header-type';
+import { HeaderType } from '../../utils/constants';
 import { useAuth } from '../../hooks/use-auth';
 import { useFavorite } from '../../hooks/use-favorite';
 import { useFilmButtonsDefaultHandler } from '../../hooks/use-film-buttons-default-handler';

@@ -1,5 +1,5 @@
 import SimpleText from './simple-text';
-import Detail from './detail';
+import Detail from '../film-card-detail/detail';
 import { useMemo } from 'react';
 import { FilmData } from '../../types/film-data-type';
 

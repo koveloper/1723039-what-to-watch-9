@@ -11,7 +11,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { ALL_GENRES, FILMS_ON_PAGE_INITIAL, FILMS_ON_PAGE_STEP, PosterSize } from '../../utils/constants';
 import { useState } from 'react';
-import { HeaderType } from '../../components/header/header-type';
+import { HeaderType } from '../../utils/constants';
 import { useAuth } from '../../hooks/use-auth';
 import { useFilms } from '../../hooks/use-films';
 import { usePromoFilm } from '../../hooks/use-promo-film';

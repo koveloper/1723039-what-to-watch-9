@@ -1,5 +1,5 @@
 import { MAX_GENRES_ON_SCREEN } from '../../utils/constants';
-import GenresListItem from './genres-list-item';
+import GenresListItem from '../genres-list-item/genres-list-item';
 
 type GenresListProps = {
   genres: string[];

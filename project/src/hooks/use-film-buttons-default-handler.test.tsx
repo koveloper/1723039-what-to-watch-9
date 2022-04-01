@@ -6,8 +6,7 @@ import { State } from '../store/types';
 import { BrowserRouter } from 'react-router-dom';
 import { useFilmButtonsDefaultHandler } from './use-film-buttons-default-handler';
 import { createFakeFilms, createInitialState } from '../utils/mocks';
-import { ButtonType } from '../components/film-card-buttons/constants';
-import { AppRoute } from '../utils/constants';
+import { AppRoute, FilmCardButtonType } from '../utils/constants';
 import { api } from '../api/api';
 
 const mockedSetFavorite = jest.fn();
@@ -74,7 +73,7 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
       },
     );
     const callbackFunc = result.current;
-    callbackFunc(ButtonType.Play);
+    callbackFunc(FilmCardButtonType.Play);
     //check correct navigate to player
     expect(mockedNavigate).toHaveBeenCalled();
     expect(mockedNavigate).toHaveBeenCalledTimes(1);
@@ -103,7 +102,7 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
       },
     );
     const callbackFunc = result.current;
-    callbackFunc(ButtonType.AddReview);
+    callbackFunc(FilmCardButtonType.AddReview);
     //check correct navigate to player
     expect(mockedNavigate).toHaveBeenCalled();
     expect(mockedNavigate).toHaveBeenCalledTimes(1);
@@ -134,7 +133,7 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
       },
     );
     const callbackFunc = result.current;
-    callbackFunc(ButtonType.MyList);
+    callbackFunc(FilmCardButtonType.MyList);
     expect(mockedSetFavorite).toHaveBeenCalledWith(fakeFilms[fakeFilmNumber].id, true);
   });
 
@@ -162,7 +161,7 @@ describe('Hook: useFilmButtonsDefaultHandler', () => {
       },
     );
     const callbackFunc = result.current;
-    callbackFunc(ButtonType.MyList);
+    callbackFunc(FilmCardButtonType.MyList);
     expect(mockedSetFavorite).toHaveBeenCalledWith(fakeFilms[fakeFilmNumber].id, true);
   });
 });

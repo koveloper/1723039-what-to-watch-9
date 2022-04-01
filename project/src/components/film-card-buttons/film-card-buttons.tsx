@@ -1,26 +1,26 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { ButtonType } from './constants';
-import Svg from './svg';
-import SvgButton from './svg-button';
+import { FilmCardButtonType } from '../../utils/constants';
+import SvgButton from '../svg-button/svg-button';
+import Svg from '../svg/svg';
 
 type FilmCardButtonsProps = {
   isShowAddReviewButton: boolean;
   isShowAddToFavorsButton: boolean;
   isFavorite: boolean;
-  onButtonClick: (type: ButtonType) => void;
+  onButtonClick: (type: FilmCardButtonType) => void;
 }
 
 function FilmCardButtons(props: FilmCardButtonsProps): JSX.Element {
   return (
     <div data-testid="film-buttons" className="film-card__buttons">
-      <SvgButton onClick={() => props.onButtonClick(ButtonType.Play)} title='Play'>
+      <SvgButton onClick={() => props.onButtonClick(FilmCardButtonType.Play)} title='Play'>
         <Svg width={19} height={19} href='#play-s'></Svg>
       </SvgButton>
       {
         props.isShowAddToFavorsButton
           ? (
-            <SvgButton onClick={() => props.onButtonClick(ButtonType.MyList)} title='My list'>
+            <SvgButton onClick={() => props.onButtonClick(FilmCardButtonType.MyList)} title='My list'>
               {
                 props.isFavorite
                   ? <Svg width={18} height={14} href='#in-list'></Svg>
@@ -32,7 +32,7 @@ function FilmCardButtons(props: FilmCardButtonsProps): JSX.Element {
       }
       {
         props.isShowAddReviewButton
-          ? <Link onClick={(evt) => {evt.preventDefault(); props.onButtonClick(ButtonType.AddReview);}} to="#" className="btn film-card__button">Add review</Link>
+          ? <Link onClick={(evt) => {evt.preventDefault(); props.onButtonClick(FilmCardButtonType.AddReview);}} to="#" className="btn film-card__button">Add review</Link>
           : null
       }
     </div>
