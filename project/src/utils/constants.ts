@@ -79,4 +79,5 @@ export const FILMS_ON_PAGE_STEP = 8;
 export const MAX_GENRES_ON_SCREEN = 10;
 export const MIN_REVIEW_LENGTH = 50;
 export const MAX_REVIEW_LENGTH = 400;
-
+export const UNKNOWN_FILM_ID = -99999;
+export const MAX_FILM_MARK = 10;

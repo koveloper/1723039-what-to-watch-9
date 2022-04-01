@@ -1,3 +1,4 @@
+import { useGenerateKeys } from '../../hooks/use-generate-keys';
 import { Comments } from '../../types/commentary';
 import FilmCardReview from '../film-card-review/film-card-review';
 
@@ -6,13 +7,22 @@ type FilmCardReviewsProps = {
 }
 
 function FilmCardReviews({comments}: FilmCardReviewsProps): JSX.Element {
+  const reviewsKeys = useGenerateKeys('review', comments.length);
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {comments.filter((r, index) => (index % 2) === 0).map((review, i) => <FilmCardReview key={`col-1-${i.toString()}`} {...review}/>)}
+        {comments.map((review, index) => (
+          (index % 2) === 0
+            ? <FilmCardReview key={reviewsKeys[index]} {...review}/>
+            : null
+        ))}
       </div>
       <div className="film-card__reviews-col">
-        {comments.filter((r, index) => (index % 2) === 1).map((review, i) => <FilmCardReview key={`col-2-${i.toString()}`} {...review}/>)}
+        {comments.map((review, index) => (
+          (index % 2) === 1
+            ? <FilmCardReview key={reviewsKeys[index]} {...review}/>
+            : null
+        ))}
       </div>
     </div>
   );

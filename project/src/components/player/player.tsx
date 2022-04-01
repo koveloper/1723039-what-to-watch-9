@@ -18,7 +18,7 @@ function Player(props: PlayerProps): JSX.Element {
   //
   const [initialized, setInitialized] = useState(false);
   //must playing on page open
-  const [playing, setPlaying] = useState<boolean>(true);
+  const [isOnPause, setOnPause] = useState<boolean | undefined>(undefined);
   const [fullscreen, setFullscreen] = useState<boolean | undefined>(undefined);
   const [videoDuration, setVideoDuration] = useState(0);
   const [secondsWatched, setSecondsWatched] = useState(0);
@@ -41,18 +41,18 @@ function Player(props: PlayerProps): JSX.Element {
       return;
     }
     setVideoDuration(video.duration);
-    if(playing === undefined) {
+    if(isOnPause === undefined) {
       return;
     }
-    if(playing) {
-      video.play();
-    } else {
+    if(isOnPause) {
       video.pause();
+    } else {
+      video.play();
     }
-  }, [video, playing]);
+  }, [video, isOnPause]);
   //setup handlers and vars
   const handlePlayButtonClick = () => {
-    setPlaying(!playing);
+    setOnPause(!isOnPause);
   };
   const handleFullScreenButtonClick = () => {
     setFullscreen(!fullscreen);
@@ -70,6 +70,7 @@ function Player(props: PlayerProps): JSX.Element {
         onTimeUpdate={() => setSecondsWatched(video ? video.currentTime : 0)}
         className="player__video"
         poster="img/player-poster.jpg"
+        autoPlay
       >
         <source src={props.videoLink}/>
       </video>
@@ -89,7 +90,7 @@ function Player(props: PlayerProps): JSX.Element {
         </div>
 
         <div className="player__controls-row">
-          <PlayButton playing={!!playing} onClick={handlePlayButtonClick} />
+          <PlayButton playing={!isOnPause} onClick={handlePlayButtonClick} />
           <div className="player__name">{props.title}</div>
 
           <button onClick={handleFullScreenButtonClick} type="button" className="player__full-screen">
