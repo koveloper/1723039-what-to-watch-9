@@ -17,7 +17,8 @@ export default function Player(props: PlayerProps): JSX.Element {
   const video = videoRef.current;
   //
   const [initialized, setInitialized] = useState(false);
-  const [playing, setPlaying] = useState<boolean | undefined>(undefined);
+  //must playing on page open
+  const [playing, setPlaying] = useState<boolean>(true);
   const [fullscreen, setFullscreen] = useState<boolean | undefined>(undefined);
   const [videoDuration, setVideoDuration] = useState(0);
   const [secondsWatched, setSecondsWatched] = useState(0);
