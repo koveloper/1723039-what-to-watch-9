@@ -7,13 +7,13 @@ type MenuLinkProps = {
 };
 
 function MenuLink(props: PropsWithChildren<MenuLinkProps>): JSX.Element {
-  const onClickHandler = (evt: SyntheticEvent) => {
+  const handleLinkClick = (evt: SyntheticEvent) => {
     evt.preventDefault();
     props.onClick();
   };
   return (
     <li className={props.isActive ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-      <Link onClick={onClickHandler} to='#' className="film-nav__link">{props.children}</Link>
+      <Link onClick={handleLinkClick} to='#' className="film-nav__link">{props.children}</Link>
     </li>
   );
 }

@@ -7,12 +7,11 @@ type StarProps = {
 }
 
 function Star(props: StarProps): JSX.Element {
-  const onChangeHandler = () => props.onClickCallback(props.value);
   return (
     <>
       <input
         checked={props.checked}
-        onChange={onChangeHandler}
+        onChange={() => props.onClickCallback(props.value)}
         className="rating__input"
         id={`star-${props.value}`}
         type="radio"

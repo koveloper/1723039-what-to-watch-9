@@ -13,7 +13,7 @@ export default function SignInPage(): JSX.Element | null {
   const isAuthorized = useAuth();
   const navigate = useNavigate();
   const [dataError, setDataError] = useState<string | undefined>(undefined);
-  const onSubmitHandler = (args: LoginData) => {
+  const handleSubmit = (args: LoginData) => {
     const regExpLetters = RegExp(/[A-Za-z]+/g);
     const regExpDigits = RegExp(/[0-9]+/g);
 
@@ -34,7 +34,7 @@ export default function SignInPage(): JSX.Element | null {
         <h1 className="page-title user-page__title">Sign in</h1>
       </Header>
       <div className="sign-in user-page__content">
-        <SignInForm onSubmit={onSubmitHandler} message={dataError} isError={!!dataError} />
+        <SignInForm onSubmit={handleSubmit} message={dataError} isError={!!dataError} />
       </div>
       <Footer />
     </div>

@@ -26,7 +26,7 @@ type MoviePageProps = {
 
 export default function MoviePage(props: MoviePageProps): JSX.Element {
   const isAuthorized = useAuth();
-  const filmButtonsClickHandler = useFilmButtonsDefaultHandler(props.film.id);
+  const handleFilmButtonsClick = useFilmButtonsDefaultHandler(props.film.id);
   const isFavorite = useFavorite(props.film.id);
   const [activeTab, setActiveTab] = useState(FilmInfoType.Overview);
   return (
@@ -48,7 +48,7 @@ export default function MoviePage(props: MoviePageProps): JSX.Element {
                 releaseYear={props.film.released}
               >
                 <FilmCardButtons
-                  onButtonClick={filmButtonsClickHandler}
+                  onButtonClick={handleFilmButtonsClick}
                   isShowAddReviewButton={isAuthorized}
                   isShowAddToFavorsButton={isAuthorized}
                   isFavorite={!!isFavorite}

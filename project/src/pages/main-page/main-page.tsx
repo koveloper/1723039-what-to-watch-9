@@ -32,7 +32,7 @@ export default function MainPage(props : MainPageProps): JSX.Element | null {
   const genres: string[] = useGenres();
   const filmsByGenre = useFilmsByGenre(genre);
   const isPromoFilmFavorite = useFavorite(promoFilm ? promoFilm.id : -1);
-  const filmButtonsClickHandler = useFilmButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
+  const handleFilmButtonsClick = useFilmButtonsDefaultHandler(promoFilm ? promoFilm.id : -1);
   const isAuthorized = useAuth();
   if(!promoFilm || !films) {
     return <Spinner />;
@@ -56,7 +56,7 @@ export default function MainPage(props : MainPageProps): JSX.Element | null {
               releaseYear={promoFilm.released}
             >
               <FilmCardButtons
-                onButtonClick={filmButtonsClickHandler}
+                onButtonClick={handleFilmButtonsClick}
                 isShowAddReviewButton={false}
                 isShowAddToFavorsButton={isAuthorized}
                 isFavorite={!!isPromoFilmFavorite}

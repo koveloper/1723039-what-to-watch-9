@@ -9,7 +9,7 @@ type FilmCardMenuProps = {
 function FilmCardMenu(props: FilmCardMenuProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(FilmInfoType.Overview);
 
-  const onClickHandler = (tab: FilmInfoType) => {
+  const handleLinkClick = (tab: FilmInfoType) => {
     setActiveTab(tab);
     props.onTabSelect(tab);
   };
@@ -17,13 +17,13 @@ function FilmCardMenu(props: FilmCardMenuProps): JSX.Element {
   return (
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
-        <MenuLink key='overview' isActive={activeTab === FilmInfoType.Overview} onClick={() => onClickHandler(FilmInfoType.Overview)}>
+        <MenuLink key='overview' isActive={activeTab === FilmInfoType.Overview} onClick={() => handleLinkClick(FilmInfoType.Overview)}>
           Overview
         </MenuLink>
-        <MenuLink key='details' isActive={activeTab === FilmInfoType.Details} onClick={() => onClickHandler(FilmInfoType.Details)}>
+        <MenuLink key='details' isActive={activeTab === FilmInfoType.Details} onClick={() => handleLinkClick(FilmInfoType.Details)}>
           Details
         </MenuLink>
-        <MenuLink key='reviews' isActive={activeTab === FilmInfoType.Reviews} onClick={() => onClickHandler(FilmInfoType.Reviews)}>
+        <MenuLink key='reviews' isActive={activeTab === FilmInfoType.Reviews} onClick={() => handleLinkClick(FilmInfoType.Reviews)}>
           Reviews
         </MenuLink>
       </ul>

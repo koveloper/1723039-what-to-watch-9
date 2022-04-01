@@ -13,8 +13,8 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>();
-  const onClickHandler = useCallback(() => navigate(`${AppRoute.Films}/${film.id}`), [film.id]);
-  const onMouseEnterHandler = (evt: SyntheticEvent) => {
+  const handleFilmLogoClick = useCallback(() => navigate(`${AppRoute.Films}/${film.id}`), [film.id]);
+  const handleMouseEnter = (evt: SyntheticEvent) => {
     evt.stopPropagation();
     setTimer(setTimeout(() => {
       if(!videoRef.current) {
@@ -23,7 +23,7 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
       videoRef.current.play();
     }, 1000));
   };
-  const onMouseExitHandler = (evt: SyntheticEvent) => {
+  const handleMouseExit = (evt: SyntheticEvent) => {
     evt.stopPropagation();
     if(timer) {
       clearTimeout(timer);
@@ -35,7 +35,7 @@ function FilmLogo({film, muted} : FilmLogoProps): JSX.Element {
   };
 
   return (
-    <article data-testid="film-logo" onClick={onClickHandler} onMouseLeave={onMouseExitHandler} onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
+    <article data-testid="film-logo" onClick={handleFilmLogoClick} onMouseLeave={handleMouseExit} onMouseEnter={handleMouseEnter} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
         <video src={film.videoLink} ref={videoRef} poster={film.previewImage} width="280" height="175" muted={muted === undefined ? true : muted}/>
       </div>

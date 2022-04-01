@@ -31,7 +31,7 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
       navigate(AppRoute.SignIn);
     }
   }, [appError, isAuthorized, isPosting]);
-  const addReviewSubmitHandler = (rating: number, commentary: string) => {
+  const handleReviewSubmit = (rating: number, commentary: string) => {
     if(!commentary.length) {
       return;
     }
@@ -74,7 +74,7 @@ export default function AddReviewPage(props: AddReviewPageProps): JSX.Element | 
           size={PosterSize.Small}
         />
       </div>
-      <AddReviewForm onReviewSubmit={addReviewSubmitHandler}/>
+      <AddReviewForm onReviewSubmit={handleReviewSubmit}/>
     </section>
   );
 }

@@ -51,10 +51,10 @@ export default function Player(props: PlayerProps): JSX.Element {
     }
   }, [video, playing]);
   //setup handlers and vars
-  const playButtonClickHandler = () => {
+  const handlePlayButtonClick = () => {
     setPlaying(!playing);
   };
-  const fullScreenButtonClickHandler = () => {
+  const handleFullScreenButtonClick = () => {
     setFullscreen(!fullscreen);
   };
   const progress = Math.round((secondsWatched / videoDuration) * 100) || 0;
@@ -89,10 +89,10 @@ export default function Player(props: PlayerProps): JSX.Element {
         </div>
 
         <div className="player__controls-row">
-          <PlayButton playing={!!playing} onClick={playButtonClickHandler} />
+          <PlayButton playing={!!playing} onClick={handlePlayButtonClick} />
           <div className="player__name">{props.title}</div>
 
-          <button onClick={fullScreenButtonClickHandler} type="button" className="player__full-screen">
+          <button onClick={handleFullScreenButtonClick} type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>

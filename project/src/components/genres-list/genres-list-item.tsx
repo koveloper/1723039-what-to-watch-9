@@ -8,13 +8,13 @@ type GenresListItemProps = {
 }
 
 function GenresListItem({title, selected, onSelect}: GenresListItemProps): JSX.Element {
-  const clickCallback = (evt: SyntheticEvent) => {
+  const handleLinkClick = (evt: SyntheticEvent) => {
     evt.preventDefault();
     onSelect(title);
   };
   return (
     <li className={selected ? 'catalog__genres-item  catalog__genres-item--active' : 'catalog__genres-item'}>
-      <Link to='' onClick={clickCallback} className="catalog__genres-link">{title}</Link>
+      <Link to='' onClick={handleLinkClick} className="catalog__genres-link">{title}</Link>
     </li>
   );
 }
